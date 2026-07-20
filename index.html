@@ -22,6 +22,20 @@
   .sortable:hover { color: #2563eb; }
   .sort-arrow { display: inline-block; width: 12px; text-align: center; color: #9ca3af; font-size: 10px; }
   .sort-active { color: #2563eb; }
+  .name-link { color:#2563eb; font-weight:600; cursor:pointer; text-decoration:none; }
+  .name-link:hover { text-decoration:underline; }
+  .count-cell { color:#374151; font-weight:500; }
+  .count-cell .preview { color:#6b7280; font-size:10px; margin-top:2px; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .truncate-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:50; display:none; overflow-y:auto; }
+  .modal-backdrop.show { display:block; }
+  .modal-card { background:#fff; max-width:960px; margin:2rem auto; border-radius:8px; padding:1.75rem 2rem; box-shadow:0 20px 40px rgba(0,0,0,.2); position:relative; }
+  .modal-close { position:absolute; top:.6rem; right:1rem; font-size:1.75rem; color:#9ca3af; background:none; border:none; cursor:pointer; }
+  .modal-close:hover { color:#111827; }
+  .modal-section { margin-top:1.1rem; }
+  .modal-section h3 { font-size:12px; font-weight:700; color:#1f2937; border-bottom:1px solid #e5e7eb; padding-bottom:4px; margin-bottom:6px; letter-spacing:.02em; }
+  .modal-section ul { list-style:disc; padding-left:1.1rem; }
+  .modal-section li { font-size:12px; line-height:1.6; margin-bottom:2px; }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -91,19 +105,19 @@
   </div>
 
   <div class="bg-white rounded-lg border border-gray-200 overflow-x-auto">
-    <table class="text-xs" style="min-width:2600px">
+    <table class="text-xs" style="min-width:1800px">
       <thead class="bg-gray-100 border-b border-gray-200 sticky top-0 z-10">
         <tr class="align-bottom">
           <th class="text-left px-2 py-2 sortable whitespace-nowrap" data-sort="rank">順位</th>
-          <th class="text-left px-3 py-2 sortable whitespace-nowrap" data-sort="name" style="min-width:140px">氏名（クリックでプロフィール）</th>
+          <th class="text-left px-3 py-2 sortable whitespace-nowrap" data-sort="name" style="min-width:160px">氏名<br><span class="text-[10px] font-normal text-gray-500">クリックで詳細</span></th>
           <th class="text-left px-2 py-2 sortable whitespace-nowrap" data-sort="birth">生年</th>
           <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:100px">ジャンル</th>
-          <th class="text-left px-2 py-2" style="min-width:220px">所属ギャラリー</th>
-          <th class="text-left px-2 py-2" style="min-width:320px">展示歴（全て・年付き）</th>
-          <th class="text-left px-2 py-2" style="min-width:220px">美術館収蔵</th>
-          <th class="text-left px-2 py-2" style="min-width:220px">受賞歴</th>
-          <th class="text-left px-2 py-2" style="min-width:240px">セカンダリ市場</th>
-          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:160px">Instagram</th>
+          <th class="text-left px-2 py-2" style="min-width:180px">所属ギャラリー</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:80px">展示歴</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:80px">収蔵</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:80px">受賞</th>
+          <th class="text-left px-2 py-2" style="min-width:200px">セカンダリ市場</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:140px">Instagram</th>
           <th class="text-right px-2 py-2 sortable whitespace-nowrap" data-sort="sns_followers" style="min-width:100px">IG フォロワー</th>
           <th class="text-center px-1 py-2 col-narrow sortable" data-sort="awards" title="受賞歴">受賞</th>
           <th class="text-center px-1 py-2 col-narrow sortable" data-sort="collections" title="美術館収蔵">収蔵</th>
@@ -114,14 +128,21 @@
           <th class="text-center px-1 py-2 col-narrow sortable" data-sort="reputation" title="海外評価">評価</th>
           <th class="text-center px-1 py-2 col-narrow sortable" data-sort="sns" title="SNS 発信力">SNS</th>
           <th class="text-center px-2 py-2 sortable whitespace-nowrap" data-sort="total">総合</th>
-          <th class="text-left px-2 py-2" style="min-width:240px">弊社の所感</th>
-          <th class="text-left px-2 py-2" style="min-width:240px">出典・確認状況</th>
+          <th class="text-left px-2 py-2" style="min-width:200px">弊社の所感</th>
+          <th class="text-left px-2 py-2" style="min-width:180px">出典</th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
     </table>
   </div>
 </section>
+
+<div id="artist-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card">
+    <button id="modal-close" class="modal-close" aria-label="閉じる">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
 <footer class="max-w-[1600px] mx-auto px-6 py-8 text-xs text-gray-500">
   <p>本リストは M.I. GARDEN 株式会社 COO による叩き台であり、丹原健翔氏をはじめとする外部レビュアーの意見を反映して更新される。</p>
@@ -3272,6 +3293,20 @@ function bindUI() {
     });
   });
   document.getElementById('download-json').addEventListener('click', downloadJSON);
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('artist-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'artist-modal') closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+  document.getElementById('tbody').addEventListener('click', (e) => {
+    const link = e.target.closest('.name-link');
+    if (!link) return;
+    const name = link.getAttribute('data-artist-name');
+    if (name) openModal(name);
+  });
 }
 
 function render() {
@@ -3342,18 +3377,32 @@ function render() {
   });
 }
 
+function escapeAttr(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function countCell(v, unit) {
+  if (!v) return '<span class="text-gray-300">—</span>';
+  if (Array.isArray(v)) {
+    if (v.length === 0) return '<span class="text-gray-300">—</span>';
+    const preview = v.slice(0, 2).join(' / ');
+    return `<div class="count-cell">${v.length} ${unit}<div class="preview">${preview}</div></div>`;
+  }
+  return `<div class="truncate-2">${v}</div>`;
+}
+
+function galleryCell(v) {
+  if (!v || (Array.isArray(v) && v.length === 0)) return '<span class="text-gray-300">—</span>';
+  if (Array.isArray(v)) {
+    if (v.length <= 2) return v.map(x => `<div>${x}</div>`).join('');
+    return `<div>${v.slice(0,2).map(x => `<div>${x}</div>`).join('')}<div class="text-[10px] text-gray-500 mt-0.5">ほか ${v.length - 2} 件</div></div>`;
+  }
+  return `<div>${v}</div>`;
+}
+
 function renderRow(a, rank) {
   const badge = g => `<span class="grade-badge grade-${g}">${g}</span>`;
   const s = a.scores || {};
-
-  const listCell = (v) => {
-    if (!v) return '<span class="text-gray-300">—</span>';
-    if (Array.isArray(v)) {
-      if (v.length === 0) return '<span class="text-gray-300">—</span>';
-      return '<ul class="list-disc pl-4 space-y-0.5">' + v.map(x => `<li>${x}</li>`).join('') + '</ul>';
-    }
-    return `<div>${v}</div>`;
-  };
 
   const igUrl = a.instagram_url || '';
   const igCell = igUrl
@@ -3366,29 +3415,31 @@ function renderRow(a, rank) {
     : (typeof followers === 'number' ? followers.toLocaleString('ja-JP') : followers);
 
   const impressionCell = a.impression
-    ? `<div>${a.impression}</div>`
+    ? `<div class="truncate-2">${a.impression}</div>`
     : '<span class="text-gray-300 italic">（CEO 記入待ち）</span>';
+
+  const secondaryCell = a.secondary_note
+    ? `<div class="truncate-2">${a.secondary_note}</div>`
+    : '<span class="text-gray-300">—</span>';
+
+  const sourcesCell = a.sources
+    ? `<div class="truncate-2 text-[10px] text-gray-500">${a.sources}</div>`
+    : '';
 
   return `
     <tr class="border-b border-gray-100 hover:bg-blue-50 align-top">
       <td class="px-2 py-2 font-bold text-gray-500">${rank}</td>
       <td class="px-3 py-2">
-        <details>
-          <summary>
-            <div class="font-semibold text-gray-900">${a.name}</div>
-            <div class="text-[11px] text-gray-500">${a.name_kana || ''} ${a.name_en ? '／ '+a.name_en : ''}</div>
-            <div class="text-[10px] text-blue-600 mt-0.5">▶ プロフィール</div>
-          </summary>
-          <div class="mt-2 p-3 bg-gray-50 rounded text-[11px] leading-relaxed">${a.profile || '（未記入）'}</div>
-        </details>
+        <a class="name-link" data-artist-name="${escapeAttr(a.name)}">${a.name}</a>
+        <div class="text-[11px] text-gray-500">${a.name_kana || ''}${a.name_en ? ' ／ '+a.name_en : ''}</div>
       </td>
       <td class="px-2 py-2 text-gray-600 whitespace-nowrap">${a.birth_year || '-'}</td>
       <td class="px-2 py-2 text-gray-600">${(a.genre || []).join(' / ')}</td>
-      <td class="px-2 py-2">${listCell(a.gallery)}</td>
-      <td class="px-2 py-2">${listCell(a.exhibitions)}</td>
-      <td class="px-2 py-2">${listCell(a.collections)}</td>
-      <td class="px-2 py-2">${listCell(a.awards)}</td>
-      <td class="px-2 py-2">${listCell(a.secondary_note)}</td>
+      <td class="px-2 py-2">${galleryCell(a.gallery)}</td>
+      <td class="px-2 py-2">${countCell(a.exhibitions, '件')}</td>
+      <td class="px-2 py-2">${countCell(a.collections, '件')}</td>
+      <td class="px-2 py-2">${countCell(a.awards, '件')}</td>
+      <td class="px-2 py-2">${secondaryCell}</td>
       <td class="px-2 py-2">${igCell}</td>
       <td class="px-2 py-2 text-right whitespace-nowrap">${followersCell}</td>
       <td class="text-center px-1 py-2">${badge(s.awards || 'E')}</td>
@@ -3404,9 +3455,66 @@ function renderRow(a, rank) {
         <div class="text-[10px] text-gray-400 mt-0.5">${a._total.toFixed(1)}</div>
       </td>
       <td class="px-2 py-2">${impressionCell}</td>
-      <td class="px-2 py-2 text-[10px] text-gray-500">${a.sources || ''}</td>
+      <td class="px-2 py-2">${sourcesCell}</td>
     </tr>
   `;
+}
+
+function modalListItems(v) {
+  if (!v) return '<span class="text-gray-400">—</span>';
+  if (Array.isArray(v)) {
+    if (v.length === 0) return '<span class="text-gray-400">—</span>';
+    return '<ul>' + v.map(x => `<li>${x}</li>`).join('') + '</ul>';
+  }
+  return `<div class="text-xs leading-relaxed">${v}</div>`;
+}
+
+function modalContent(a) {
+  const section = (title, body) => `<section class="modal-section"><h3>${title}</h3>${body}</section>`;
+  const ig = a.instagram_url
+    ? `<a href="${a.instagram_url}" target="_blank" rel="noopener" class="text-blue-600 hover:underline">${a.instagram_url}</a>`
+      + (a.instagram_followers != null && a.instagram_followers !== '' ? `　<span class="text-gray-500 text-xs">フォロワー：${typeof a.instagram_followers === 'number' ? a.instagram_followers.toLocaleString('ja-JP') : a.instagram_followers}</span>` : '')
+    : '<span class="text-gray-400">要 Verify</span>';
+
+  return `
+    <div>
+      <div class="flex items-baseline flex-wrap gap-3">
+        <div class="text-2xl font-bold">${a.name}</div>
+        <div class="text-sm text-gray-500">${a.name_kana || ''}${a.name_en ? ' ／ '+a.name_en : ''}</div>
+      </div>
+      <div class="text-xs text-gray-500 mt-1">${a.birth_year || '?'} 年生 ／ ${(a.genre || []).join(' / ')}</div>
+      <div class="mt-2 flex items-center gap-2">
+        <span class="grade-total grade-${a._band}">${a._band}</span>
+        <span class="text-xs text-gray-500">総合スコア ${a._total.toFixed(1)}</span>
+      </div>
+    </div>
+    ${section('プロフィール', `<div class="text-xs leading-relaxed">${a.profile || '（未記入）'}</div>`)}
+    ${section('所属ギャラリー', modalListItems(a.gallery))}
+    ${section(`展示歴 ${Array.isArray(a.exhibitions) ? '（' + a.exhibitions.length + '件）' : ''}`, modalListItems(a.exhibitions))}
+    ${section(`美術館収蔵 ${Array.isArray(a.collections) ? '（' + a.collections.length + '件）' : ''}`, modalListItems(a.collections))}
+    ${section(`受賞歴 ${Array.isArray(a.awards) ? '（' + a.awards.length + '件）' : ''}`, modalListItems(a.awards))}
+    ${section('セカンダリ市場', modalListItems(a.secondary_note))}
+    ${section('Instagram', `<div class="text-xs">${ig}</div>`)}
+    ${section('弊社の所感', `<div class="text-xs leading-relaxed">${a.impression || '<span class="text-gray-400 italic">（CEO 記入待ち）</span>'}</div>`)}
+    ${section('出典・確認状況', `<div class="text-xs text-gray-600 leading-relaxed">${a.sources || ''}</div>`)}
+  `;
+}
+
+function openModal(name) {
+  const a = DATA.find(x => x.name === name);
+  if (!a) return;
+  document.getElementById('modal-body').innerHTML = modalContent(a);
+  const m = document.getElementById('artist-modal');
+  m.classList.add('show');
+  m.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const m = document.getElementById('artist-modal');
+  m.classList.remove('show');
+  m.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
 
 function downloadJSON() {
