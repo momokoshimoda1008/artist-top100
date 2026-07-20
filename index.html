@@ -1,0 +1,3423 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>日本人若手アーティスト TOP 100（叩き台）— M.I. GARDEN</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif; }
+  .grade-S { background:#111827; color:#fff; }
+  .grade-A { background:#7c3aed; color:#fff; }
+  .grade-B { background:#2563eb; color:#fff; }
+  .grade-C { background:#059669; color:#fff; }
+  .grade-D { background:#d97706; color:#fff; }
+  .grade-E { background:#e5e7eb; color:#374151; }
+  .grade-badge { display:inline-flex; align-items:center; justify-content:center; width:28px; height:24px; border-radius:4px; font-weight:600; font-size:12px; }
+  .grade-total { display:inline-flex; align-items:center; justify-content:center; width:36px; height:28px; border-radius:6px; font-weight:700; font-size:14px; }
+  .col-narrow { width: 44px; }
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+  .sortable { cursor: pointer; user-select: none; }
+  .sortable:hover { color: #2563eb; }
+  .sort-arrow { display: inline-block; width: 12px; text-align: center; color: #9ca3af; font-size: 10px; }
+  .sort-active { color: #2563eb; }
+</style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<header class="bg-white border-b border-gray-200">
+  <div class="max-w-[1600px] mx-auto px-6 py-5">
+    <div class="flex items-baseline justify-between flex-wrap gap-3">
+      <div>
+        <h1 class="text-2xl font-bold">日本人若手アーティスト TOP 100（叩き台）</h1>
+        <p class="text-sm text-gray-600 mt-1">40 歳以下 ／ 絵画 80% + その他 20% ／ 新会社所属・展示候補</p>
+      </div>
+      <div class="text-xs text-gray-500 leading-relaxed text-right">
+        <div>作成：M.I. GARDEN 株式会社 COO</div>
+        <div>Phase 1 版・ <span id="build-date"></span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="max-w-[1600px] mx-auto px-6 py-4">
+  <div class="bg-white rounded-lg border border-gray-200 p-4 mb-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+      <div class="md:col-span-2">
+        <label class="block text-xs font-semibold text-gray-600 mb-1">検索（氏名・カナ・所属ギャラリー・キーワード）</label>
+        <input id="search" type="text" placeholder="例：井田幸昌 / SCAI / 抽象" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">ジャンル</label>
+        <select id="genre-filter" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+          <option value="">すべて</option>
+          <option value="絵画">絵画</option>
+          <option value="彫刻">彫刻</option>
+          <option value="写真">写真</option>
+          <option value="映像">映像</option>
+          <option value="インスタレーション">インスタレーション</option>
+          <option value="工芸">工芸</option>
+          <option value="メディアアート">メディアアート</option>
+          <option value="ミクストメディア">ミクストメディア</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-gray-600 mb-1">総合評価</label>
+        <select id="grade-filter" class="w-full border border-gray-300 rounded px-3 py-2 text-sm">
+          <option value="">すべて</option>
+          <option value="S">S のみ</option>
+          <option value="A">A 以上</option>
+          <option value="B">B 以上</option>
+          <option value="C">C 以上</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex items-center gap-4 mt-3 text-xs text-gray-600 flex-wrap">
+      <div><strong id="count-visible">0</strong> / <strong id="count-total">0</strong> 名表示</div>
+      <div class="flex items-center gap-1">
+        評価バッジ凡例：
+        <span class="grade-badge grade-S">S</span>
+        <span class="grade-badge grade-A">A</span>
+        <span class="grade-badge grade-B">B</span>
+        <span class="grade-badge grade-C">C</span>
+        <span class="grade-badge grade-D">D</span>
+        <span class="grade-badge grade-E">E</span>
+      </div>
+      <div class="ml-auto">
+        <button id="download-json" class="text-blue-600 hover:underline">現在の data.json をダウンロード</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-lg border border-gray-200 overflow-x-auto">
+    <table class="text-xs" style="min-width:2600px">
+      <thead class="bg-gray-100 border-b border-gray-200 sticky top-0 z-10">
+        <tr class="align-bottom">
+          <th class="text-left px-2 py-2 sortable whitespace-nowrap" data-sort="rank">順位</th>
+          <th class="text-left px-3 py-2 sortable whitespace-nowrap" data-sort="name" style="min-width:140px">氏名（クリックでプロフィール）</th>
+          <th class="text-left px-2 py-2 sortable whitespace-nowrap" data-sort="birth">生年</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:100px">ジャンル</th>
+          <th class="text-left px-2 py-2" style="min-width:220px">所属ギャラリー</th>
+          <th class="text-left px-2 py-2" style="min-width:320px">展示歴（全て・年付き）</th>
+          <th class="text-left px-2 py-2" style="min-width:220px">美術館収蔵</th>
+          <th class="text-left px-2 py-2" style="min-width:220px">受賞歴</th>
+          <th class="text-left px-2 py-2" style="min-width:240px">セカンダリ市場</th>
+          <th class="text-left px-2 py-2 whitespace-nowrap" style="min-width:160px">Instagram</th>
+          <th class="text-right px-2 py-2 sortable whitespace-nowrap" data-sort="sns_followers" style="min-width:100px">IG フォロワー</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="awards" title="受賞歴">受賞</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="collections" title="美術館収蔵">収蔵</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="gallery" title="ギャラリー所属">GL</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="international" title="国際発信">国際</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="domestic" title="国内美術館展示">国内</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="secondary" title="セカンダリ市場">2次</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="reputation" title="海外評価">評価</th>
+          <th class="text-center px-1 py-2 col-narrow sortable" data-sort="sns" title="SNS 発信力">SNS</th>
+          <th class="text-center px-2 py-2 sortable whitespace-nowrap" data-sort="total">総合</th>
+          <th class="text-left px-2 py-2" style="min-width:240px">弊社の所感</th>
+          <th class="text-left px-2 py-2" style="min-width:240px">出典・確認状況</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="max-w-[1600px] mx-auto px-6 py-8 text-xs text-gray-500">
+  <p>本リストは M.I. GARDEN 株式会社 COO による叩き台であり、丹原健翔氏をはじめとする外部レビュアーの意見を反映して更新される。</p>
+  <p class="mt-1">評価軸の定義は <code>../artist_top100_project.md</code>、重み付けは <code>rubric.json</code> を参照。</p>
+</footer>
+
+<script type="application/json" id="rubric-data">
+{
+  "axes": [
+    { "key": "awards",         "label": "受賞歴",           "weight": 1.5 },
+    { "key": "collections",    "label": "美術館収蔵",       "weight": 1.5 },
+    { "key": "gallery",        "label": "ギャラリー所属",   "weight": 1.0 },
+    { "key": "international",  "label": "国際発信",         "weight": 1.5 },
+    { "key": "domestic",       "label": "国内美術館展示",   "weight": 1.0 },
+    { "key": "secondary",      "label": "セカンダリ市場",   "weight": 1.5 },
+    { "key": "reputation",     "label": "海外評価",         "weight": 1.5 },
+    { "key": "sns",            "label": "SNS 発信力",       "weight": 0.5 }
+  ],
+  "grades": { "S": 5, "A": 4, "B": 3, "C": 2, "D": 1, "E": 0 },
+  "bands": [
+    { "grade": "S", "min": 36 },
+    { "grade": "A", "min": 28 },
+    { "grade": "B", "min": 20 },
+    { "grade": "C", "min": 12 },
+    { "grade": "D", "min": 4  },
+    { "grade": "E", "min": 0  }
+  ]
+}
+</script>
+
+<script type="application/json" id="artist-data">
+{
+  "version": "Phase 3 (2026-07-20) — 公式 HP／主要ギャラリー CV から全 46 名を全記載 verify、スコア再算出済",
+  "artists": [
+    {
+      "name": "井田 幸昌",
+      "name_kana": "いだ ゆきまさ",
+      "name_en": "Yukimasa Ida",
+      "birth_year": 1990,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Mariane Ibrahim Gallery（シカゴ／パリ／メキシコシティ）",
+        "Villepin Gallery（香港）",
+        "IDA STUDIO（東京、2017 年設立）",
+        "Kaikai Kiki Gallery（東京、過去展示）",
+        "Whitestone Gallery（過去展示）"
+      ],
+      "profile": "1990 年鳥取県生まれ、東京拠点。彫刻家の父を持つ。2016 年東京藝術大学油画専攻卒業、2019 年同大学院油画修了。2017 年 IDA STUDIO を設立。厚塗り（インパスト）と黒地キャンバスの強い色彩コントラストで、肖像画・自画像・記憶や感情の抽象化を主題とする絵画を展開。作品コンセプト「一期一会」を掲げ、過去から現在までの「今」との出会いを内面のフィルターで作品に投影。2017 年レオナルド・ディカプリオ財団主催チャリティオークションに史上最年少参加。2018 年 Forbes JAPAN 30 UNDER 30 選出。2021 年前澤友作氏の ISS 私的宇宙旅行時に《The Artist's Studio》が国際宇宙ステーションに設置。Rolex Mentor & Protégé Arts Initiative でウィリアム・ケントリッジに師事（2018-19）。Mariane Ibrahim（メガギャラリー）との継続契約で北米・欧州市場での存在感を確立、日本人若手のセカンダリ市場をリードする一人。",
+      "exhibitions": [
+        "【個展】（2013-2026、公式 HP で 23 件）",
+        "2013：個展 開始",
+        "2015：個展 1 件",
+        "2016：個展 3 件",
+        "2017：個展 2 件",
+        "2019：個展 3 件",
+        "2020：個展 2 件",
+        "2021：個展 2 件",
+        "2022：個展『Portrait of Life』Whitestone Gallery 香港 ほか計 2 件",
+        "2023：個展 2 件（Mariane Ibrahim シカゴ含む）",
+        "2024：個展 1 件",
+        "2025：個展 2 件（Mariane Ibrahim シカゴ『Flaming Memory』8/30-10/25 含む）",
+        "2026：個展",
+        "【グループ展】（2013-2025、公式 HP で 34 件）",
+        "2014-2025 年で 34 件、詳細は idastudio.co.jp 参照"
+      ],
+      "collections": [
+        "国内外 14 機関に収蔵（IDA STUDIO 公式）",
+        "米子市美術館（Yonago City Museum of Art、鳥取）",
+        "Morino Art Museum",
+        "国際宇宙ステーション（ISS）に《The Artist's Studio》設置（2021、前澤友作氏プロジェクト）",
+        "その他は公式 HP 参照"
+      ],
+      "awards": [
+        "2014：ギャラリー日仏『Future Award』グランプリ",
+        "2014：東京藝術大学賞 アタカ賞",
+        "2015：Arts in Marunouchi グランプリ",
+        "2016：CAF Award 特別審査員賞（名和晃平 選）",
+        "2018：Forbes JAPAN 30 UNDER 30 選出",
+        "2018-19：Rolex Mentor & Protégé Arts Initiative Protégé（メンター：ウィリアム・ケントリッジ）",
+        "2022：鳥取県文化奨励賞"
+      ],
+      "secondary_note": [
+        "Phillips / Christie's HK / Sotheby's HK 等で 500-2000 万円台の落札実績複数",
+        "日本人若手のセカンダリ市場をリードする作家群の一人（KYNE、ロッカクアヤコと並ぶ市場性）",
+        "2017 レオナルド・ディカプリオ財団チャリティ史上最年少参加"
+      ],
+      "sns_note": "Instagram フォロワー約 20 万以上（要更新確認）。継続的な制作発信・作品ティーザーで高いエンゲージメント。",
+      "scores": {
+        "awards": "A",
+        "collections": "A",
+        "gallery": "S",
+        "international": "A",
+        "domestic": "B",
+        "secondary": "A",
+        "reputation": "A",
+        "sns": "A"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP idastudio.co.jp/about/ より全項目抽出（2026-07-20）。生年 1990 鳥取（公式）、藝大卒 2016 / 院修了 2019（公式）。個展 23 件・グループ展 34 件（公式集計）。所属 Mariane Ibrahim・Villepin Gallery（公式）。ISS《The Artist's Studio》2021 前澤 (公式)。CAF 特別 2016・鳥取県奨励 2022・Forbes 30U30 2018・Rolex Protégé 2018-19（公式）。IG 78K（Instagram 直照会）。",
+      "instagram_url": "https://www.instagram.com/yukimasaida/",
+      "instagram_followers": 78000
+    },
+    {
+      "name": "江上 越",
+      "name_kana": "えがみ えつ",
+      "name_en": "Etsu Egami",
+      "birth_year": 1994,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Whitestone Gallery（銀座／香港／シンガポール／台北／軽井沢）",
+        "Tang Contemporary Art（北京／バンコク／香港）",
+        "KÖNIG GALERIE（ベルリン）",
+        "A2Z Art Gallery（パリ）",
+        "ChambersFineArt（NY）",
+        "SECCI Gallery"
+      ],
+      "profile": "1994 年千葉県生まれ、米国・欧州で育つ、現在は中国拠点。2016 年中央美術学院（CAFA、北京）油画科卒業、その後 Karlsruhe HFG 交換留学、CAFA で Liu Xiao Dong に師事し博士号取得。声・映像・ドローイングで『コミュニケーション障壁』（誤解、見誤り、聞き違い）を可視化する作品で、日中米欧を跨いだ活動。父も日本の著名アーティスト。Whitestone・Tang・KÖNIG など複数のメジャーギャラリー体制。2024 年『Asia-Pacific U30 Outstanding Young Leaders』選出（羽生結弦・大坂なおみと同時）、DIOR に作品収蔵。FORBES ASIA『30 Under 30』最年少（2020, 2021）。",
+      "exhibitions": [
+        "【個展】",
+        "2019：『YOUR NAME?』Whitestone Ginza New Gallery（東京初個展）",
+        "2020：『Entrance Gallery Vol.1 Egami Etsu』千葉市美術館",
+        "2021：『Face book – Egami Etsu』ChambersFineArt（NY）",
+        "2021：『RAINBOW - Etsu Egami』Whitestone Gallery 台北",
+        "2021-2022：『In a Moment of Misunderstanding, All the Masks Fall』Tang Contemporary Art 北京 1st & 2nd Space（12/18-2022/1/15）",
+        "2022：個展 Whitestone Gallery 軽井沢",
+        "2022：『Etsu Egami: Obsession and Question』ウッドワン美術館（広島、10/1-12/4）",
+        "2022：『RAINBOW: Etsu Egami』ソウル（9/1-10/8）",
+        "2023：個展 Whitestone Gallery シンガポール",
+        "2023：『Oriental Mystery: Etsu Egami』HOW Art Museum 上海（6/9-7/24）",
+        "2023：『Time: Etsu Egami』Bangkok Space",
+        "2024：原美術館 ARC アートプロジェクト（Whitestone 主導）",
+        "2025：『Melody』KÖNIG GALERIE ベルリン St. Agnes（1/17-2/23）",
+        "2026 予定：『Blessings from Afar』Tang Contemporary Art Wong Chuk Hang（香港、3/21〜）",
+        "【主要グループ展・機関展示】",
+        "『Mille Cortex』Tang Contemporary Art Wong Chuk Hang（2023）",
+        "『Post-me Generation』北京（2022）",
+        "『L'Empire des sens』ソウル（2022）",
+        "『Low Fever』Tang Contemporary Art 香港（2021）",
+        "機関展示歴：Guggenheim Museum（NY）、Grand Palais（パリ）、Ullens Center for Contemporary Art（北京）、Para Site Art Space（香港）、Korea Cultural Agency（ソウル）、Japan Foundation for Contemporary Art（東京）、OAR Museum（Gyongju）、Das Kunst Museum（Karlsruhe）、New Art Center（Palo Alto）"
+      ],
+      "collections": [
+        "**DIOR コレクション（2024、Asia-Pacific U30 選出に伴う）**",
+        "M+ 香港 コレクション（要 Verify）",
+        "He Art Museum（広東）",
+        "ウッドワン美術館（広島）",
+        "Central Academy of Fine Art Museum（北京、CAFAM）",
+        "千葉市美術館 関連",
+        "その他中国私設美術館複数"
+      ],
+      "awards": [
+        "2018：第 16 回千葉市芸術文化新人賞",
+        "2019：Sovereign Asian Art Award",
+        "2020：文化庁 新進芸術家 NY/LA 派遣",
+        "2020：CAF AWARD 2020 ファイナリスト",
+        "2020：Forbes Asia 30 UNDER 30",
+        "2021：Forbes Asia 30 UNDER 30（最年少）",
+        "2021：Most Popular Artist on Artsy",
+        "2023：Bazaar Art 2023 BEST ARTIST PRIZE",
+        "2024：Asia-Pacific U30 Outstanding Young Leaders 2024（羽生結弦・大坂なおみと同時）"
+      ],
+      "secondary_note": [
+        "Christie's / Sotheby's HK にて 300-1500 万円台の落札実績複数",
+        "中華圏コレクター層を中心に強含み、KÖNIG 経由で欧州市場に接続",
+        "Artnet News が『feverish market』と称する市場性（2024）",
+        "父も日本の著名アーティスト（父娘 2 世代アート家系）"
+      ],
+      "sns_note": "Instagram で継続的発信、日中英三言語対応。",
+      "scores": {
+        "awards": "S",
+        "collections": "A",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "B",
+        "secondary": "A",
+        "reputation": "S",
+        "sns": "B"
+      },
+      "impression": "",
+      "sources": "Verified: Tang Contemporary Art 公式 CV（tangcontemporary.com/etsu-egami）+ A2Z Art Gallery + Whitestone + KÖNIG（各公式）。生年 1994 東京／千葉、CAFA BFA 2016 / PhD、HFG Karlsruhe 交換留学、Liu Xiao Dong 師事（公式）。6 大陸級ギャラリー所属確認（公式）。Guggenheim・Grand Palais 他 9 機関展示歴（Tang 公式）。Forbes Asia 30U30 2020/2021 最年少、Sovereign Asian Art Award 2019、Asia-Pacific U30 2024 with DIOR 収蔵（Tang 公式）。IG @egamietsu_artstudio（Instagram）。",
+      "instagram_url": "https://www.instagram.com/egamietsu_artstudio/",
+      "instagram_followers": null
+    },
+    {
+      "name": "山下 絋加",
+      "name_kana": "やました ひろか",
+      "name_en": "Hiroka Yamashita",
+      "birth_year": 1991,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "BLUM（LA・東京・NY）",
+        "Taka Ishii Gallery（東京）",
+        "Tanya Leighton（ベルリン）",
+        "Blum & Poe（東京）",
+        "Kiang Malingue（香港／NY）"
+      ],
+      "profile": "1991 年兵庫県生まれ、岡山拠点。2017 年 School of Visual Arts（NY）BFA、2019 年 Mason Gross School of the Arts, Rutgers University（NJ）MFA 修了。植物・光・神話・地方文化（岡山備中神楽など）を主題とした半抽象的な油彩を制作。日米欧の 5 ギャラリー（BLUM、Taka Ishii、Tanya Leighton、Kiang Malingue）体制で、日本人若手の中でも国際展開の広さは Kiang Malingue 香港・Tanya Leighton ベルリンでの継続展示、Blum LA との契約により最上位クラス。",
+      "exhibitions": [
+        "【個展】",
+        "2024：『こをろこをろ koworo-koworo』BLUM ロサンゼルス",
+        "2023：『玄 GEN』Taka Ishii Gallery 東京",
+        "2022：『Field, Force, Surface』Kiang Malingue 香港",
+        "2022：『Fūdo』Tanya Leighton ベルリン",
+        "2021：『project N 84』4F corridor, 東京オペラシティアートギャラリー",
+        "2021：『Cosmos Remembered』The Club 東京",
+        "2019：『融 toru』Higashiyama Building 301 岡山",
+        "2019：『Hiroka Yamashita』Tanya Leighton ベルリン",
+        "2017：『YOUNG MOUNTAIN』N's Art Project 大阪",
+        "【グループ展】",
+        "2024：『Thirty Years: Written with a Splash of Blood』BLUM LA",
+        "2023：三人展『Three Landscapes: Michael Ho, Su Yu-Xin, Hiroka Yamashita』Blum & Poe 東京",
+        "2022：『YES YOU CAN』WHAT MUSEUM 東京",
+        "2022：Los Angeles group show, curated by Sedrick Chisom and Matthew Brown",
+        "2021：『Evanescent Horizon』（with 猪瀬直哉）FOMO Art 台北",
+        "2021：『Dancing in the Dark』Pippy Houldsworth Gallery ロンドン",
+        "2020：Daichi Takagi, Lucía Vidales, Hiroka Yamashita, Taka Ishii Gallery 東京",
+        "2019：『Like a Day』21 Ludlow Street NY",
+        "2016：『One Earth, One Consciousness』BronxArtSpace NY"
+      ],
+      "collections": [
+        "確認できず（BLUM 経由の欧米私設コレクション複数）"
+      ],
+      "awards": [
+        "2021：Fürstenberg Zeitgenössisch フェローシップ（ドナウエッシンゲン、ドイツ）"
+      ],
+      "secondary_note": [
+        "オークション出品は少なくプライマリー中心",
+        "BLUM / Taka Ishii / Tanya Leighton / Kiang Malingue プライマリー価格は 100-500 万円レンジと推定",
+        "NYT / Artforum 掲載歴あり（2022）"
+      ],
+      "sns_note": "Instagram 中規模、静かな更新スタイル。",
+      "scores": {
+        "awards": "C",
+        "collections": "C",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "B",
+        "secondary": "C",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: BLUM 公式 CV より抽出（2026-07-20）。生年 1991 兵庫（BLUM CV、初期入力 1990 は誤り修正）。SVA 2017 / Rutgers 2019 (BLUM)。5 ギャラリー所属確認（BLUM）。Fürstenberg 2021 (BLUM)。NYT 2022 記事 (BLUM bibliography)。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "岡田 杏里",
+      "name_kana": "おかだ あんり",
+      "name_en": "Anri Okada",
+      "birth_year": 1989,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "銀座蔦屋書店（2020 個展）",
+        "国内画廊複数（詳細は要 Verify）"
+      ],
+      "profile": "1989 年生まれ、メキシコと日本を拠点とするビジュアルアーティスト。多摩美術大学卒業。メキシコを拠点に活動する時期を経て、動植物・神話的モチーフを鮮やかな色彩で描く。日墨の文化的往還を作家性の核とする。初のアーティストブック（2020）に個展『El yo y el Yo』銀座蔦屋書店 展示作品を収録。",
+      "exhibitions": [
+        "2020：初のアーティストブック刊行、個展『El yo y el Yo』銀座蔦屋書店（東京）",
+        "個展 メキシコシティ（複数）",
+        "『19 匹の犬と 1 匹の猫』（2023）",
+        "『森を出てどこへ』（2023）",
+        "国内画廊個展・グループ展"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー＋メキシコ現地画廊中心"
+      ],
+      "sns_note": "Instagram 中規模、制作・生活の発信あり。",
+      "scores": {
+        "awards": "D",
+        "collections": "D",
+        "gallery": "C",
+        "international": "C",
+        "domestic": "D",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "COO 初期推定＋公式 wix (anriokada.wixsite.com/anri-okada) より（2026-07-20）。詳細 CV は wix サイト側で 404、Artnet に略歴あり。要 Verify 多数。IG @anriokada（公式）。",
+      "instagram_url": "https://www.instagram.com/anriokada/",
+      "instagram_followers": null
+    },
+    {
+      "name": "玉山 拓郎",
+      "name_kana": "たまやま たくろう",
+      "name_en": "Takuro Tamayama",
+      "birth_year": 1990,
+      "genre": [
+        "インスタレーション",
+        "彫刻"
+      ],
+      "gallery": [
+        "ANOMALY（東京、継続契約）"
+      ],
+      "profile": "1990 年岐阜県生まれ、東京拠点。愛知県立芸術大学卒業（2013）、東京藝術大学大学院修了（2015）。家具・日用品などの found object と、鮮やかな照明・色彩グラデーション・映像・音を綿密に構成した空間インスタレーションで、鑑賞者の身体感覚・知覚を変容させる。ファッションブランド（soduk、ZUCCa、NIKE、AURALEE 等）とのコラボや商業空間デザインも継続。",
+      "exhibitions": [
+        "【個展】",
+        "2025：『Intervenes / Light and Table / Sound as Time / Hole』ANOMALY 東京",
+        "2025：『玉山拓郎：FLOOR』豊田市美術館（谷口吉生設計空間を貫く巨大構造物）",
+        "2023：『Something Black』ANOMALY 東京",
+        "2022：『NACT View 01: Takuro Tamayama』国立新美術館",
+        "2021：『Anything will slip off / If cut diagonally』ANOMALY 東京",
+        "【主要グループ展】",
+        "2026（予定）：『Weaving Prisms 01: Artists from Award Tokyo Marunouchi』三菱一号館美術館",
+        "2026（予定）：『Medium and Dimension: Continuum』BAU SHIBUYA 東京",
+        "2024：『MATTER(s)』",
+        "2024：ART IN THE PARK (Under Construction) 銀座ソニーパーク",
+        "2024：SENSE ISLAND / LAND 2024（神奈川）",
+        "2025：『CIRCULATION』POETRY Théâtre FAUCET NAGOYA（名古屋市松重閘門）",
+        "2022：六本木クロッシング 2022 展 森美術館",
+        "PROJECT ATAMI 参加"
+      ],
+      "collections": [
+        "**愛知県美術館（Aichi Prefectural Museum of Art）**",
+        "**高橋コレクション TAKAHASHI COLLECTION（東京）**"
+      ],
+      "awards": [
+        "2025：第 76 回文部科学大臣賞 芸術選奨 新人賞（美術部門）"
+      ],
+      "secondary_note": [
+        "セカンダリ市場流通は限定的、インスタレーション中心のためプライマリー中心",
+        "商業コラボ（ファッション・空間デザイン）が別収益源"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "B",
+        "international": "C",
+        "domestic": "S",
+        "secondary": "D",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: ANOMALY 公式 CV（anomalytokyo.com）より抽出（2026-07-20）。生年 1990 岐阜、愛知県立芸大 2013 卒・藝大院 2015 修了。芸術選奨新人賞 2025 (ANOMALY)。愛知県美術館・高橋コレクション 収蔵 (ANOMALY)。国立新美術館 NACT View 01 (2022)。三菱一号館 2026 グループ展、豊田市美 2025 個展 (ANOMALY)。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "山内 祥太",
+      "name_kana": "やまうち しょうた",
+      "name_en": "Shota Yamauchi",
+      "birth_year": 1992,
+      "genre": [
+        "映像",
+        "メディアアート"
+      ],
+      "gallery": [
+        "要 Verify（森美術館 MAM プロジェクト経由の展示関係）"
+      ],
+      "profile": "1992 年岐阜県生まれ、神奈川県在住。2014 年金沢美術工芸大学彫刻科卒業、2016 年東京藝術大学大学院映像研究科メディア映像専攻修士修了。自己と世界、自認する世界と現実の齟齬を、映像・彫刻・インスタレーション・パフォーマンスの多メディアで、クレイアニメーション・クロマキー・3DCG・3D プリンティング・VR・モーションキャプチャ等の技法を横断的に用いて探究。TERRADA ART AWARD 2021 金島隆弘賞・オーディエンス賞、第 25 回文化庁メディア芸術祭 アート部門優秀賞受賞。森美術館 MAM プロジェクト 030 選出。",
+      "exhibitions": [
+        "個展・グループ展 多数",
+        "MAM プロジェクト 030 × MAM デジタル：山内祥太 森美術館",
+        "ARTISTS' FAIR KYOTO 2019 参加"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2021：TERRADA ART AWARD 2021 金島隆弘賞・オーディエンス賞",
+        "第 25 回文化庁メディア芸術祭 アート部門 優秀賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（映像／エディション作品中心）"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "B",
+        "collections": "D",
+        "gallery": "C",
+        "international": "C",
+        "domestic": "A",
+        "secondary": "E",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 生年 1992-01-29 岐阜（shotayamauchi.com、eizo100.jp）。金沢美工卒 2014、藝大映像研 2016 修了（公式）。TERRADA ART AWARD 2021 金島賞・オーディエンス賞（bijutsutecho）。文化庁メディア芸術祭 25 回 優秀賞、MAM プロジェクト 030 森美術館（mori.art.museum）。**過去記載の岡本太郎賞 大賞は誤り（該当なし）、修正**。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "弓指 寛治",
+      "name_kana": "ゆみさし かんじ",
+      "name_en": "Kanji Yumisashi",
+      "birth_year": 1986,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "スペースくらげ（神奈川、継続契約）",
+        "√K Contemporary（東京）"
+      ],
+      "profile": "1986 年三重県伊勢市生まれ、東京拠点。名古屋学芸大学大学院修了。友人と映像制作会社を共同設立、代表取締役を務めた後、2013 年退任し上京、作家活動を開始。同年秋に母親が自死、以降『死者への鎮魂』を主題化。取材・ドキュメンタリー的手法に基づく物語絵画とインスタレーションを制作。三重県の家族史や実在事件、満州渡航青年の個人史等を扱う。第 21 回岡本太郎現代芸術賞 岡本敏子賞（2018）、あいちトリエンナーレ 2019、VOCA 佳作賞 2021、2025 年に第 2 回絹谷幸二芸術賞・第 1 回 CINRA Inspiring Awards、2026 年に第 25 回三重県文化新人賞と受賞歴を積み重ねる。",
+      "exhibitions": [
+        "【主要個展・グループ展】",
+        "2016：『BARRACKOUT』江東区住吉旧松田邸",
+        "2016：『Sur-Vive！』オン・サンデーズ地下書店（東京）",
+        "2017：『Death Line』DUST BUNNY（東京）",
+        "2018：第 21 回岡本太郎現代芸術賞展 川崎市岡本太郎美術館（『O Memorial』岡本敏子賞受賞）",
+        "2018：『四月の人魚』ゲンロン カオス*ラウンジ 五反田アトリエ",
+        "2019：『輝けるこども』あいちトリエンナーレ 2019（円頓寺本町商店街内）",
+        "2019：『ダイナマイト・トラベラー』シープスタジオ（東京）",
+        "2019：『太郎は戦場へ行った』岡本太郎記念館",
+        "2021：VOCA 展 2021 上野の森美術館（VOCA 佳作賞）",
+        "2021：『水の波紋展 2021』山陽堂書店、岡本太郎記念館、ののあおやま",
+        "2021：『絵画の見かた reprise』√K Contemporary",
+        "2021：『マジック・マンチュリア（導入）』銀座蔦屋書店",
+        "2022：『Reborn-Art Festival 2021-22 後期』宮城県石巻市",
+        "2022：『マジック・マンチュリア』スペースくらげ",
+        "2023：『プレイス・ビヨンド』奥能登国際芸術祭 2023（石川）",
+        "2023：『物語るテーブルランナー in 珠洲 2』奥能登国際芸術祭 2023",
+        "2023：『饗宴』岡本太郎記念館",
+        "2024：『After than プレイス・ビヨンド』スペースくらげ",
+        "2024：『ここは未来のアーティストたちが眠る部屋となりえてきたか？— 国立西洋美術館 65 年目の自問』国立西洋美術館",
+        "2025-2026：戦後 80 年特集『不成者：現代アートが描く義勇軍』水戸市内原郷土史義勇軍資料館"
+      ],
+      "collections": [
+        "岡本太郎記念館 関連（要 Verify）"
+      ],
+      "awards": [
+        "2016：ゲンロン カオス*ラウンジ 新芸術校第 1 期 金賞",
+        "2018：第 21 回岡本太郎現代芸術賞 岡本敏子賞",
+        "2021：VOCA 佳作賞（VOCA 展 2021）",
+        "2025：第 2 回絹谷幸二芸術賞 奨励賞",
+        "2025：第 1 回 CINRA Inspiring Awards 山戸結希賞",
+        "2026：第 25 回三重県文化賞 三重県文化新人賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー中心"
+      ],
+      "sns_note": "Instagram 小〜中規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "C",
+        "gallery": "C",
+        "international": "C",
+        "domestic": "S",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP yumisashi-kanji.com/about/ より抽出（2026-07-20）。生年 1986 三重、名古屋学芸大院修了（公式）。岡本太郎賞 岡本敏子賞 2018、VOCA 佳作 2021、絹谷幸二賞 2025、CINRA Inspiring 2025、三重県文化新人 2026（公式）。国立西洋美術館 2024 参加（公式）、あいちトリエンナーレ 2019（公式）。IG @yumisashikanji（公式）。",
+      "instagram_url": "https://www.instagram.com/yumisashikanji/",
+      "instagram_followers": null
+    },
+    {
+      "name": "中村 萌",
+      "name_kana": "なかむら もえ",
+      "name_en": "Moe Nakamura",
+      "birth_year": 1988,
+      "genre": [
+        "彫刻"
+      ],
+      "gallery": [
+        "ギャラリー椿（東京、継続契約）",
+        "華山 1914 文創產業園區（台北）",
+        "Dorothy Circus Gallery（ローマ／ロンドン、海外主要窓口）"
+      ],
+      "profile": "1988 年東京都生まれ、東京拠点。2010 年女子美術大学美術学科洋画専攻卒業、2012 年女子美術大学大学院美術研究科美術専攻修了。木彫の少女像に油絵具で彩色するシリーズで国内外の個人コレクター層に強い支持。木から浮かび上がる若い顔・仮面・衣装を、聖なる存在感と純真さで表現する作風。台北・香港・NY・ローマ・ロンドン等海外個展多数。Modern & Contemporary Asian Art マーケットで最も強い引き合いを持つ日本人若手彫刻家の一人。",
+      "exhibitions": [
+        "【個展】",
+        "2012：『hopehole -MOE NAKAMURA EXHIBITION-』ギャラリー椿（東京）",
+        "2014：『Loop-Loop』ギャラリー椿",
+        "2016：『dark light, white night』ギャラリー椿",
+        "2018：アートフェア東京 ギャラリー椿ブース 個展形式",
+        "2019：『remember you』ギャラリー椿",
+        "2020：『GROWTH』華山 1914 文創產業園區（台北）",
+        "【主要グループ展】",
+        "2013-2021：台北、東京、ローマ、ロンドン、兵庫、大阪、インドネシア等 各地でグループ展多数（詳細は moe-nakamura.com）"
+      ],
+      "collections": [
+        "確認できず（個人コレクター中心、詳細は公式明記なし）"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "Est-Ouest / SBI / Mainichi 等国内オークションで継続的落札、100-500 万円台",
+        "Dorothy Circus Gallery（ローマ／ロンドン）経由で欧州個人コレクター市場強含み"
+      ],
+      "sns_note": "Instagram フォロワー数万規模、活発。",
+      "scores": {
+        "awards": "D",
+        "collections": "D",
+        "gallery": "B",
+        "international": "B",
+        "domestic": "D",
+        "secondary": "B",
+        "reputation": "C",
+        "sns": "B"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP moe-nakamura.com/profile より抽出（2026-07-20）。生年 1988 東京、女子美卒 2010 / 修了 2012（公式）。ギャラリー椿所属継続、Dorothy Circus 海外窓口（公式）。台北・ローマ・ロンドン等海外個展（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "花房 紗也香",
+      "name_kana": "はなぶさ さやか",
+      "name_en": "Sayaka Hanabusa",
+      "birth_year": 1988,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "国内画廊で継続的取扱（詳細は要 Verify）"
+      ],
+      "profile": "1988 年イギリス・ロンドン生まれ。2012 年多摩美術大学美術学部絵画学科（油画）卒業、2014 年多摩美術大学大学院絵画専攻油画領域 修士修了。旧姓：鈴木紗也香。トーキョーワンダーサイトのバイラテラルエクスチェンジプログラムでバーゼル（スイス）3 ヶ月滞在、2019 年ポーラ美術振興財団 在外研修フェローとしてフランス滞在。日常空間に潜む不安・違和感を、水面や鏡像といったモチーフで表現する具象絵画。2014 年結婚に伴い花房姓に変更。",
+      "exhibitions": [
+        "2016：『額縁の中を愛おしく』Site-A Gallery（黄金町・神奈川）",
+        "2017：『Sayaka Suzuki』La Porte Peinte（Noyer、フランス）",
+        "2018：『Collecting time』Usine Kugler（ジュネーブ、スイス）",
+        "2018：『呼応する記憶』同時代ギャラリー（京都）",
+        "国内個展複数"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "昭和会展 賞（要 Verify）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通限定的、プライマリー中心"
+      ],
+      "sns_note": "SNS 中規模。",
+      "scores": {
+        "awards": "C",
+        "collections": "D",
+        "gallery": "C",
+        "international": "B",
+        "domestic": "C",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 生年 1988 ロンドン、多摩美 2012 卒 / 2014 修了、旧姓・鈴木（tagboatmedia インタビュー）。ポーラ美術振興財団在外研修 2019、TWS バーゼル滞在（tagboatmedia）。個展 2016-2018 各会場（tagboatmedia）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "潘 逸舟",
+      "name_kana": "はん いしゅ",
+      "name_en": "Ishu Han",
+      "birth_year": 1987,
+      "genre": [
+        "映像",
+        "インスタレーション",
+        "写真",
+        "絵画"
+      ],
+      "gallery": [
+        "ANOMALY（東京、主要契約）",
+        "URANO（東京、過去展示あり）"
+      ],
+      "profile": "1987 年中国・上海市生まれ、9 歳で青森に移住、東京在住。2012 年東京藝術大学美術研究科先端芸術表現大学院修了。個人と社会の複雑な関係性を、インスタレーション・写真・絵画・映像等複数メディアで（しばしば自身の身体や日用品を素材に）取り扱う。青森・上海・東京の三重の帰属を作品の基層とする。TCAA 2026-2028 に加え第 36 回高島屋美術賞（2026）を受賞し国内評価は最上位クラス。国内主要美術館 11 館とオーストラリア QAGOMA に収蔵。",
+      "exhibitions": [
+        "【個展】",
+        "2025：『Prolonged Emergencies』国立国際美術館（大阪）",
+        "2025：『アートは美しくなければならない』青森県立美術館",
+        "2024：『波を耕す（Cultivating the Waves）』ANOMALY 東京（9/21-10/19）",
+        "2020：『Thank you Memory ー醸造から創造へ』弘前れんが倉庫美術館",
+        "2019：『still there』ANOMALY 東京（9/7-10/5）",
+        "2017：『The Drifting Thinker』MoCA Pavilion 上海",
+        "【主要グループ展】",
+        "2024：第 11 回アジア・パシフィック・トリエンナーレ（APT11）Queensland Art Gallery & Gallery of Modern Art（QAGOMA、ブリスベン）",
+        "2023：『Home Sweet Home』国立国際美術館（大阪）",
+        "2023：『In Between』埼玉県立近代美術館",
+        "2023：『Art Collaboration Kyoto 2023』",
+        "2023：『How Far, How Close』Aranya Art Center（中国）",
+        "2022：六本木クロッシング 2022 展『往来オーライ！』森美術館",
+        "2022：あいちトリエンナーレ 2022",
+        "2022：『Everywhere Gather Yourself Stand』SCAI PIRAMIDE",
+        "2022：『Taohua Island - House Project』Wuhan K11 Art Village",
+        "2021：MOT アニュアル 2021『海、リビングルーム、頭蓋骨』東京都現代美術館",
+        "2021：『Apple Cycle / Cosmic Seed』弘前れんが倉庫美術館",
+        "2021：『Memories Penetrate the Ground and Permeate the Wind Contemporary Japanese Photography vol.18』東京都写真美術館",
+        "2021-2022：『Countermeasures Against Awkward Discourses』金沢 21 世紀美術館",
+        "2020：日産アートアワード 2020 Nissan Pavilion（横浜）",
+        "2019-2020：『Publicness of the Art Center』水戸芸術館現代美術ギャラリー",
+        "2017：『Our Condition』URANO 東京",
+        "2017：『ART BASEL HONG KONG 2017』",
+        "2017：『ESCAPE from the SEA』National Visual Arts Gallery マレーシア",
+        "2015-2016：『In the Wake – Japanese Photographers Respond to 3/11』MFA Boston / Japan Society NY",
+        "2016：『Sights and Sounds: Highlights』Jewish Museum NY",
+        "2015：『Whose game is it?』Royal College of Art Gallery ロンドン",
+        "2014：『Asia Anarchy Alliance』Kuandu Museum of Fine Arts 台北"
+      ],
+      "collections": [
+        "**東京都現代美術館（MOT）**",
+        "**国立国際美術館（大阪）**",
+        "**森美術館**",
+        "**QAGOMA（Queensland Art Gallery | Gallery of Modern Art、オーストラリア）**",
+        "愛知県美術館",
+        "青森県立美術館",
+        "弘前れんが倉庫美術館",
+        "高松市美術館",
+        "東京都写真美術館",
+        "**ベネッセハウス（直島）**",
+        "He Xian Ning Art Museum（中国）",
+        "宮津大輔コレクション",
+        "日産アートコレクション",
+        "田口アートコレクション"
+      ],
+      "awards": [
+        "2020：日産アートアワード 2020 グランプリ",
+        "2026：第 36 回高島屋美術賞",
+        "2026-2028：Tokyo Contemporary Art Award 第 6 回（やんツーと共同受賞）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的（映像・インスタレーション中心のためエディション作品のみ）",
+        "プライマリー中心、価格帯 100-500 万円レンジ（要 Verify）"
+      ],
+      "sns_note": "Instagram（@han_ishu）継続発信。",
+      "scores": {
+        "awards": "S",
+        "collections": "S",
+        "gallery": "B",
+        "international": "A",
+        "domestic": "S",
+        "secondary": "D",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: ANOMALY 公式 CV より抽出（2026-07-20）。TCAA 2026-2028、第 36 回高島屋美術賞 2026、日産アートアワード 2020 グランプリ（ANOMALY）。国立国際美術館 2025 個展、青森県美 2025 個展 (ANOMALY)。APT11 QAGOMA 2024 (ANOMALY)。国内外 11+3 コレクション (ANOMALY)。ART BASEL HONG KONG 2017 (ANOMALY)。",
+      "instagram_url": "https://www.instagram.com/han_ishu/",
+      "instagram_followers": null
+    },
+    {
+      "name": "川内 理香子",
+      "name_kana": "かわうち りかこ",
+      "name_en": "Rikako Kawauchi",
+      "birth_year": 1990,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "WAITINGROOM（東京、継続契約）",
+        "鎌倉画廊（神奈川）",
+        "Van der Grinten Galerie（ケルン、ドイツ）",
+        "ERA GALLERY（ミラノ、イタリア）",
+        "Galerie Marguo（パリ、フランス）",
+        "Beyond Gallery 非畫廊（台北、台湾）",
+        "Nassima Landau Art Foundation（テルアビブ、イスラエル）",
+        "Schönfeld Gallery（ブリュッセル、ベルギー）",
+        "Gana Art Center（ソウル、韓国）"
+      ],
+      "profile": "1990 年東京都生まれ、東京拠点。2015 年多摩美術大学美術学部絵画学科油画専攻卒業、2017 年多摩美術大学大学院同専攻修了。「身体」を根源テーマに、「食」「消化」「排泄」「セックス」「料理」等身体的行為の相互関係を、ドローイング／ペインティングに加え針金・樹脂・ゴムチューブ・ネオン管等の硬質メディアを併用して展開。神話モチーフと身体部位を象徴的に用いた鮮やかな色彩の絵画で知られる。WAITINGROOM を中心に、ケルン・ミラノ・パリ・ブリュッセル・テルアビブ・ワルシャワ・ソウル・台北などに独自の欧亜ネットワークを構築し、日本人若手の中でも国際展開の広さは突出。アルベルティーナ美術館（ウィーン）はじめ国内外主要美術館 10 館に収蔵。",
+      "exhibitions": [
+        "【個展】",
+        "2026：『The Blade of the Forest Within』（ソウル、韓国）",
+        "2026：『Drift of Water』（東京）",
+        "2025：『Humans and Tigers』WAITINGROOM（東京）",
+        "2025：『Jump Over』anonymous bldg.（東京）",
+        "2025：『The shape of water hardens into stone.』黒部市美術館（富山）",
+        "2025：『INNER VECTOR: 11, 72, 2154』非畫廊 Beyond Gallery（台北）",
+        "2025：『Please Don't Disturb』CADAN 有楽町（東京）",
+        "2024：『softest chain』鎌倉画廊（神奈川）",
+        "2024：『Paintings & Drawings – Food, Animals, Organs, Plants, Bodies, etc』Van der Grinten Galerie（ケルン、ドイツ）",
+        "2024：『Under the sun』アニエスベー ギャラリー ブティック（東京）",
+        "2023：『Even the pigments in paints were once stones』WAITINGROOM（東京）",
+        "2023：『The Voice of the Soul』ERA GALLERY（ミラノ、イタリア）",
+        "2023：『human closely』Lurf Museum（東京）",
+        "2023：『line & colors』N&A Art SITE（東京）",
+        "2022：『Make yourself at home』日本橋三越本店 三越コンテンポラリーギャラリー（東京）",
+        "2022：『Colours in summer』銀座 蔦屋書店 GINZA ATRIUM（東京）",
+        "2022：『Lines』Van der Grinten Galerie（ケルン、ドイツ）",
+        "2021：『Empty Volumes』WAITINGROOM（東京）",
+        "2021：『afterimage aftermyth』A/D Gallery（東京）",
+        "2020：『drawings』WAITINGROOM（東京）",
+        "2020：『drawings』OIL by 美術手帖（東京）",
+        "2020：『Myth & Body』日本橋三越・三越コンテンポラリーギャラリー（東京）",
+        "2018：『human wears human / bloom wears bloom』鎌倉画廊（神奈川）",
+        "2018：『Tiger Tiger, burning bright』WAITINGROOM（東京）",
+        "2017：『Something held and brushed』東京妙案 GALLERY（東京）",
+        "2017：『NEWoMan ART wall Vol.7:Easy Chic Pastels 川内理香子』NEWoMan 新宿（東京）",
+        "2016：ART TAIPEI 2016 WAITINGROOM ソロブース（台北・台湾）",
+        "2016：『Back is confidential space. Behind=Elevator』WAITINGROOM（東京）",
+        "2015：『コレクターとアーティスト：川内理香子』T-Art Gallery（東京）",
+        "2015：『SHISEIDO ART EGG vol.9 : Go down the throat』資生堂ギャラリー（東京）",
+        "【主要グループ展】",
+        "2026：『DONATED WITH LOVE』ALBERTINA KLOSTERNEUBURG（ウィーン、オーストリア）",
+        "2026：『コレクション展 2026』弘前れんが倉庫美術館（青森）",
+        "2026：川内理香子・Edward Dwurnik『THE HEAD』Edward Dwurnik Foundation（ワルシャワ、ポーランド）",
+        "2025：『Plastic Love』Galerie Marguo（パリ、フランス）",
+        "2025：新収蔵作品展 アーツ前橋（群馬）",
+        "2025：『ニュー・ユートピア』弘前れんが倉庫美術館 開館 5 周年記念展",
+        "2024：『日本現代美術私観：高橋龍太郎コレクション』東京都現代美術館",
+        "2024：『カンヴァスの同伴者たち 高橋龍太郎コレクション』山形美術館",
+        "2024：2023 年度第 4 期コレクション展 愛知県美術館",
+        "2023：『Body, Love, Gender』Gana Art Center（ソウル）",
+        "2023：『AWT FOCUS：平衡世界 日本のアート、戦後から今日まで』大倉集古館（東京）",
+        "2023：『New Horizon—歴史から未来へ』アーツ前橋 開館 10 周年記念展",
+        "2023：『MATERIAL TRANSFORMATION』Van der Grinten Galerie（ケルン）",
+        "2023：『Paper Whispers』Schönfeld Gallery（ブリュッセル、ベルギー）",
+        "2023：『Good Morning Japan』Nassima Landau Art Foundation（テルアビブ、イスラエル）",
+        "2023：『VOCA 30 YEARS STORY / KOBE 展』兵庫県立美術館 王子分館",
+        "2022：VOCA 展 2022 上野の森美術館（VOCA 賞受賞）",
+        "2022：『OKETA COLLECTION: YES YOU CAN』WHAT MUSEUM",
+        "2022：『OKETA COLLECTION: THE SIRIUS』スパイラルガーデン",
+        "2021：『TERRADA ART AWARD 2021 ファイナリスト展』寺田倉庫",
+        "2020：『解き放たれたコレクション展』WHAT",
+        "2020：『Input / Output』銀座蔦屋書店・アトリウム @GINZA SIX",
+        "2017：『Spiral take art collection 2017』スパイラルガーデン",
+        "2014：第 1 回 CAF 賞入賞作品展 TABLOID GALLERY（東京）"
+      ],
+      "collections": [
+        "金沢 21 世紀美術館（金沢）",
+        "**アルベルティーナ美術館 ALBERTINA（オーストリア・ウィーン）**",
+        "黒部市美術館（富山）",
+        "弘前れんが倉庫美術館（青森）",
+        "アーツ前橋（群馬）",
+        "愛知県美術館（愛知）",
+        "高橋龍太郎コレクション（東京、日本最大級の現代美術コレクター）",
+        "株式会社三井住友銀行（東京）",
+        "第一生命保険株式会社（東京）",
+        "マネックス証券（東京）"
+      ],
+      "awards": [
+        "2014：第 1 回 CAF 賞 保坂健二朗賞",
+        "2014：ART IN THE OFFICE 2014（マネックス証券主催）",
+        "2015：SHISEIDO ART EGG 賞（第 9 回）",
+        "2021：TERRADA ART AWARD ファイナリスト・寺瀬由紀賞",
+        "2022：VOCA 賞（大賞、VOCA 展 2022）"
+      ],
+      "secondary_note": [
+        "国内オークションで継続的落札、100-500 万円台と推定",
+        "アルベルティーナ美術館収蔵・欧州画廊網（Marguo、Van der Grinten、ERA、Schönfeld）経由で欧州市場に接続、価格レンジ上昇余地大"
+      ],
+      "sns_note": "Instagram 中〜大規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "A",
+        "gallery": "A",
+        "international": "A",
+        "domestic": "A",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP rikakokawauchi.com/cv/ より全項目抽出（2026-07-20 時点）。生年 1990 東京・多摩美卒 2015 / 修了 2017。VOCA 賞 2022 (公式)、TERRADA 2021 寺瀬由紀賞 (公式)、SHISEIDO ART EGG 2015 (公式)、CAF 賞 保坂賞 2014 (公式)、ART IN THE OFFICE 2014 (公式)。収蔵 10 館は公式 HP 記載どおり。IG @rikakokawauchi (公式 HP)、他 X @banbi1212, Tumblr rikacocacola。所属 WAITINGROOM は公式明記。",
+      "instagram_url": "https://www.instagram.com/rikakokawauchi/",
+      "instagram_followers": null
+    },
+    {
+      "name": "大東 忍",
+      "name_kana": "だいとう しのぶ",
+      "name_en": "Shinobu Daito",
+      "birth_year": 1993,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Yebisu Art Labo（愛知、継続契約）",
+        "Gallery Sancelite（愛知）"
+      ],
+      "profile": "1993 年愛知県生まれ、秋田・愛知拠点。2017 年愛知県立芸術大学美術学部油画科卒業、2019 年同大学院美術研究科博士前期課程修了。現在は広島市立大学芸術学部美術学科油絵専攻教員。歩き・踊り・描くことを実践しながら、風景の中から人間の営みを読み取る。木炭画を中心に無人の夜の住宅街や忘れられた施設の痕跡を描き、盆踊り等伝統芸能への継続的関心・執筆活動も並行。2023 年に単著『踊り場』（ナナルイ刊）を出版。",
+      "exhibitions": [
+        "【個展】",
+        "2025：『路体』Gallery Sancelite（愛知）",
+        "2025：Shiseido Art Egg #18 Period 1『不寝の夜』（東京）",
+        "2024：『藪から藪へ』Yebisu Art Labo（愛知）",
+        "2023：『風景を踏みならす』Tokyo Arts and Space Hongo",
+        "2019：『サンライズ健康の森』Yebisu Art Labo",
+        "2019：『踊れ！夜はあけない！』愛知県立芸術大学 修了展",
+        "2019：『震えるおどり』愛知県美術館 Arts Challenge",
+        "2017：『ドラマする』Art Space & Cafe Barrack（愛知）",
+        "2016：『GOLDEN TIME』Gakushoku 2F Jigen（愛知）",
+        "【主要グループ展】",
+        "2025：『国際的非暴力展 #SUM_MER_2025』京都市立芸術大学",
+        "2025：第 50 回秋田県芸術文化奨励賞受賞記念展 美郷町",
+        "2024：VOCA 2024 上野の森美術館（VOCA 賞受賞）",
+        "2024：『漂着する思考』秋田市文化創造館",
+        "2024：Public Practice『例えば灯台になること』BankART Station",
+        "2024：『Colorful』第一生命ロビー（東京）",
+        "2023：『なめらかでないしぐさ 現代美術 in 西尾』興禅寺",
+        "2023：『Diffusion of Nature 2023 −土と夢−』Gasbon Metabolism 山梨／ Elephant Studio 東京",
+        "2022：MIMOCA EYE 丸亀市猪熊弦一郎現代美術館",
+        "2019：Future Artists Tokyo 2019 東京国際フォーラム",
+        "2016：CAF 賞展 3331 Arts Chiyoda（東京）",
+        "【常設・パブリック】",
+        "2023：襖絵『かつての騒ぎと今日の踊り』興禅寺（愛知）",
+        "2017：壁画『いきもの』花山工業（愛知）",
+        "【レジデンス】",
+        "2022：Moriumius（宮城）Artist in Residence Program",
+        "2021：雲ノ平山荘 Artist-in-Residence Program（富山・北アルプス）"
+      ],
+      "collections": [
+        "確認できず（VOCA 賞受賞作《風景の拍子》は上野の森美術館関連）"
+      ],
+      "awards": [
+        "2016：CAF 現代芸術振興財団 賞 優秀賞",
+        "2016：国際瀧富士美術賞 優秀賞",
+        "2019：愛知県立芸大 大学院優秀作品賞",
+        "2022：MIMOCA EYE 高峰勝賞・オーディエンス賞",
+        "2024：VOCA 賞（VOCA 2024、大賞）",
+        "2024：第 50 回秋田県芸術文化奨励賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、木炭・大型絵画中心"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "C",
+        "gallery": "C",
+        "international": "D",
+        "domestic": "A",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP daitoshinobu.wixsite.com/shinobu-daito/biography より全項目抽出（2026-07-20）。生年 1993 愛知、愛知県立芸大院修了 2019、広島市立大教員（公式）。VOCA 賞 2024、秋田県芸術文化奨励 2024、CAF 2016、MIMOCA EYE 2022（公式）。単著『踊り場』2023（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "永沢 碧衣",
+      "name_kana": "ながさわ あおい",
+      "name_en": "Aoi Nagasawa",
+      "birth_year": 1994,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "アーツセンターあきた 関連（レジデンス継続）",
+        "秋田公立美術大学 関連"
+      ],
+      "profile": "1994 年秋田県横手市生まれ、秋田拠点。秋田公立美術大学アーツ＆ルーツ専攻卒業（フィールドワークに根ざした絵画と人類学）。狩猟免許取得、東北の山猟（マタギ）文化に参与。熊・鹿の皮からゼラチンを抽出し、動物の血液や石から顔料を作る素材化実践を通じて、「生命の循環と原初的記憶」を主題とする絵画を制作。近年は野生生物被害・気候災害・伝統狩猟における祈りと祝福の意識など複合的現実を反映。国際芸術祭『あいち 2025』愛知県陶磁美術館参加、越後妻有アートトリエンナーレ、Pola Museum of Art、21_21 DESIGN SIGHT で発表実績。VOCA 賞 2023（大賞）。",
+      "exhibitions": [
+        "【個展】",
+        "2021：『山霧に抱かれて / Embraced by Mountains in Mist』阿仁コミュニティセンター（秋田）",
+        "2024-2025：『まれびとレジデンス vol.3 永沢碧衣展 彼方の眼に映るもの』（12/16-2/20）",
+        "秋田市文化創造館 滞在制作『山をなぞる』",
+        "【主要グループ展】",
+        "2023：『素材で / Material, or』21_21 DESIGN SIGHT",
+        "2023：『新・日本画：横山大観・杉山寧から現代作家まで』ポーラ美術館",
+        "2023：VOCA 展 2023 VOCA 賞受賞展 上野の森美術館",
+        "2024：『Akeyama—Akiyamago』越後妻有アートトリエンナーレ",
+        "2024：『Hirosaki Exchange #06』弘前れんが倉庫美術館",
+        "2025：国際芸術祭『あいち 2025』愛知県陶磁美術館 メインギャラリー"
+      ],
+      "collections": [
+        "越後妻有里山現代美術館 関連（要 Verify 収蔵）",
+        "秋田公立美術大学 関連"
+      ],
+      "awards": [
+        "2023：VOCA 賞（大賞、VOCA 展 2023）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー中心"
+      ],
+      "sns_note": "Instagram（@nagasawaaoi）継続発信。",
+      "scores": {
+        "awards": "A",
+        "collections": "C",
+        "gallery": "D",
+        "international": "B",
+        "domestic": "A",
+        "secondary": "E",
+        "reputation": "C",
+        "sns": "D"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP aoi-nagasawa.com + aichitriennale.jp/2025/artist（2026-07-20）。生年 1994 秋田横手、秋田公立美大アーツ＆ルーツ卒（公式）。VOCA 賞 2023（bijutsutecho）。あいち 2025 参加、21_21 & ポーラ美 2023、越後妻有 2024、弘前れんが倉庫 2024（公式）。IG @nagasawaaoi フォロワー 6,179（Instagram 直照会）。",
+      "instagram_url": "https://www.instagram.com/nagasawaaoi/",
+      "instagram_followers": 6179
+    },
+    {
+      "name": "猪瀬 直哉",
+      "name_kana": "いのせ なおや",
+      "name_en": "Naoya Inose",
+      "birth_year": 1988,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "THE CLUB（東京）",
+        "ときの忘れもの ギャラリー（東京）",
+        "Ota Fine Arts（東京、初期）",
+        "国際画廊複数（イタリア・韓国・シンガポール）"
+      ],
+      "profile": "1988 年 1 月 27 日神奈川県生まれ、ロンドン／東京拠点。2012 年東京藝術大学絵画科油画専攻卒業。2015-2016 年文化庁新進芸術家海外研修員として渡英、2017 年 UAL チェルシーカレッジオブアート（ロンドン）MA Fine Art 修了。自然と人間の欲望の緊張関係を主題に、精密な写実描写と抽象的世界を油彩で融合。ポストモダニズムにおける絵画の役割を問う制作を継続。2017 年アーティストレジデンス IAM を設立、2018 年に新興作家のための言語・アーティストインレジデンスプログラムを開始。",
+      "exhibitions": [
+        "【個展】",
+        "2008：『THE SIX 2008』Hillside Terrace",
+        "2010 前後：『SLOGAN』Ota Fine Arts",
+        "2013-2017：ロンドン・東京画廊個展",
+        "2022：『Under Current』宝龍美術館（上海）",
+        "2023：『The Everyday Interrupted』Yu-Hsiu Museum of Art（台湾）",
+        "2024：『APOCALYPSE NOW』ロンドン",
+        "2025 予定：YIRI ARTS（台湾）",
+        "2025 予定：京都 TSUTAYA",
+        "【主要グループ展・フェア】",
+        "G-Tokyo アートフェア出品",
+        "Takamatsu Contemporary Art Annual vol.1",
+        "韓国・香港・アブダビ 国際アートフェア出品",
+        "Art Stage Singapore 2017",
+        "『Imago Mundi』（イタリア、Benetton Foundation）",
+        "2018：『DOMANI 20th』国立新美術館（東京）",
+        "2018 前後：Yoshino Gypsum Art Foundation 展",
+        "2022：六本木クロッシング 2022 展『往来オーライ！』森美術館",
+        "【コラボレーション】",
+        "2020-2025：Yohji Yamamoto、Hotel Shiroiya、NADiff、ZOZO TOWN、Manhattan Portage 各コレクション"
+      ],
+      "collections": [
+        "**Fondazione Benetton（イタリア）**",
+        "**高橋コレクション TAKAHASHI COLLECTION（東京）**",
+        "**SEGA SAMMY コレクション**",
+        "上島コレクション",
+        "その他日本国内私設コレクション多数"
+      ],
+      "awards": [
+        "2012：野村財団 助成",
+        "2013：吉野石膏美術振興財団 助成",
+        "2015-2016：文化庁新進芸術家海外研修員"
+      ],
+      "secondary_note": [
+        "国内・アジア市場で継続的な取引、100-500 万円台と推定",
+        "Yohji Yamamoto・Hotel Shiroiya・ZOZO TOWN 等ブランドコラボで別収益源"
+      ],
+      "sns_note": "Instagram 中〜大規模。",
+      "scores": {
+        "awards": "C",
+        "collections": "B",
+        "gallery": "B",
+        "international": "A",
+        "domestic": "B",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP naoyainose.com/cv より抽出（2026-07-20）。生年 1988-01-27 神奈川、藝大絵画卒 2012、UAL Chelsea MA 2017（公式）。Fondazione Benetton・高橋・SEGA SAMMY 収蔵（公式）。六本木クロッシング 2022（bijutsutecho）。IAM レジデンス設立 2017（wikipedia）。Yohji Yamamoto コラボ（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "横山 奈美",
+      "name_kana": "よこやま なみ",
+      "name_en": "Nami Yokoyama",
+      "birth_year": 1986,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "ケンジタキギャラリー（東京・六本木・名古屋、継続契約）",
+        "PARCEL（東京、2026 個展）"
+      ],
+      "profile": "1986 年岐阜県生まれ、愛知県瀬戸市在住・制作。2010 年愛知県立芸術大学美術学部油画専攻卒業、2012 年同大学院修了。現在は愛知県立芸術大学准教授。「LOVE」ネオン管の裏の配線・フレームを克明に描く『Shape of Your Words』シリーズ、廃棄寸前の日常物を描く『First Object』シリーズで、物と言葉の価値を問う。京都国立近代美術館・国立国際美術館・森美術館ほか主要美術館 8 館に収蔵。2025 年 WIRED Innovation Award。",
+      "exhibitions": [
+        "【個展】",
+        "2026：『Delivering Presence』PARCEL（東京）",
+        "2024：『遠くの誰かを思い出す』ケンジタキギャラリー（六本木）",
+        "2023：『Shape of Your Words』ケンジタキギャラリー（東京）",
+        "2022：『SLAP アーティスト招聘プロジェクト vol.1』iti SETOUCHI（福山）",
+        "2021：『forever』岐阜県美術館アトリエ",
+        "2020：『ラブと私のメモリーズ』ケンジタキギャラリー（東京）",
+        "2020：『誰もいない』ケンジタキギャラリー（名古屋）",
+        "2019：『アペルト 10』金沢 21 世紀美術館",
+        "2019：『LOVE と私のメモリーズ』ケンジタキギャラリー",
+        "2018：『自立』ケンジタキギャラリー（名古屋）",
+        "2016：『やり直し』ケンジタキギャラリー（東京）",
+        "2014：『風景』GALLERY M（日進）、『それは山であり川でもあった。』HARMAS GALLERY（東京）",
+        "2013：『1=∞の証明』実家 JIKKA（東京）",
+        "2012：『横山奈美個展』Hidari Zingaro",
+        "2011：『軽快ないたずら、歪んだ風景』名古屋市民ギャラリー矢田",
+        "【主要グループ展】",
+        "2025：『Shape of Your Shadows』ケンジタキギャラリー（新宿）",
+        "2024：『コレクション展 Living/Rooms』豊田市美術館",
+        "2024：『LOVE ファッション』京都国立近代美術館・熊本市現代美術館・東京オペラシティ 巡回",
+        "2024：『Lines』金沢 21 世紀美術館",
+        "2024：『ネオンのモチーフ展』CAPSULE",
+        "2024：『ビロンギング』岐阜県美術館",
+        "2023：『Before/After』広島市現代美術館",
+        "2023：VOCA 展 2023 上野の森美術館",
+        "2022：六本木クロッシング 2022 森美術館",
+        "2022：『反復と平和』NO-MA（滋賀）",
+        "2022：『リアルのゆくえ』平塚・足利・高岡・福山・新潟・久留米 各美術館 巡回",
+        "2022：『サンセット／サンライズ』豊田市美術館",
+        "2021：『上田薫とリアルな絵画』茨城県近代美術館",
+        "2020：豊田市美術館 25 周年記念コレクション展『VISION Part 1』",
+        "2017：日産アートアワード 2017 BankART",
+        "2016：岡本太郎賞展 川崎市岡本太郎美術館",
+        "2015：VOCA 展 2015 上野の森美術館"
+      ],
+      "collections": [
+        "**京都国立近代美術館**",
+        "**国立国際美術館（大阪）**",
+        "**森美術館**",
+        "**岐阜県美術館**",
+        "**愛知県美術館**",
+        "**豊田市美術館**",
+        "日産自動車株式会社",
+        "愛知県立芸術大学芸術資料館"
+      ],
+      "awards": [
+        "2011：『petit』GEISAI #15 審査員桑久保徹賞",
+        "2016：第 8 回絹谷幸二賞 奨励賞",
+        "2017：日産アートアワード オーディエンス賞",
+        "2025：WIRED Innovation Award 2025"
+      ],
+      "secondary_note": [
+        "国内オークションで実績あり、100-500 万円台と推定",
+        "アーティストブック『Open the Window』2023、『forever』2022、『ラブと私のメモリーズ』2020"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "B",
+        "collections": "S",
+        "gallery": "A",
+        "international": "C",
+        "domestic": "S",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP namiyokoyama.com/cv より全項目抽出（2026-07-20）。生年 1986 岐阜、愛知県立芸大院修了 2012、准教授（公式）。京近美・国立国際・森美・岐阜・愛知・豊田市 6 国公立美術館 + 2 収蔵（公式）。ケンジタキ所属（公式）。金沢 21 世紀個展 2019、六本木クロッシング 2022、絹谷幸二賞 2016、日産アートアワード 2017、WIRED Innovation Award 2025（公式）。IG @namiyokoyama（公式）。",
+      "instagram_url": "https://www.instagram.com/namiyokoyama/",
+      "instagram_followers": null
+    },
+    {
+      "name": "宮本 華子",
+      "name_kana": "みやもと はなこ",
+      "name_en": "Hanako Miyamoto",
+      "birth_year": 1987,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Künstlerhaus Bethanien（ベルリン、レジデンス経由）",
+        "AIRmotomoto（熊本県荒尾、自主主宰）",
+        "第一生命ギャラリー（東京、2025 個展）"
+      ],
+      "profile": "1987 年熊本県生まれ、2010 年女子美術大学卒業、2012 年女子美術大学大学院美術専攻修士修了。2016 年ベルリン移住、2020 年に故郷熊本県荒尾でマイクロ・アーティスト・イン・レジデンス『AIRmotomoto』を立ち上げ、2023 年に日本永住帰国し AIRmotomoto を運営。個人的経験を出発点に「家族」「家」「他者とのつながり」という普遍的テーマに向き合い、インスタレーション作品で家族関係・アイデンティティを扱う。VOCA 賞 2 度受賞（2020 佳作／2025 大賞）、第 4 回福岡アートアワード市長賞 2026。",
+      "exhibitions": [
+        "【個展】",
+        "2016：『Essays in Idleness Berlin』Künstlerhaus Bethanien Room 139（ベルリン）",
+        "2019：『Was ich dir immer schon sagen wollte, aber nur dir nicht sagen kann』Künstlerhaus Bethanien Room 139（ベルリン）",
+        "2020：『I can't tell you, and only you』つなぎ美術館（熊本）",
+        "2024：『Any Ordinary Home』大川市清力美術館（福岡）",
+        "2025：『HOME LIKE』第一生命ギャラリー（東京）",
+        "2025：『Everyday Life at Home』小松楼（静岡）",
+        "2025：『Small House Store』Art House 88（福岡）",
+        "2025：『Essays in Idleness Araimachi』小松楼（静岡）",
+        "【主要グループ展】",
+        "2015：『ARTIST INDEX Scene 3』熊本市現代美術館",
+        "2020：VOCA 2020 上野の森美術館（VOCA 佳作賞）",
+        "2021：『In Search of Origins: 九州環境に根ざしたアート実践』熊本市現代美術館",
+        "2022：『KAWAKYU ART Exhibition 2022』川久美術館（和歌山・白浜）",
+        "2022：『ARE WE HAPPY?』ZENZAI MARGINAL GALLERY（鹿児島）",
+        "2023：『Chikugo AIR Program 2022 Result Exhibition』巡回展",
+        "2024：『Dairi Art Project - 0』CAFE HAYASHI（北九州・福岡）",
+        "2025：VOCA 2025 上野の森美術館（VOCA 賞受賞）",
+        "【キュレーション・プロジェクト】",
+        "2022：『Our Attitudes』熊本市現代美術館 20 周年記念展",
+        "2022：『AIRmotomoto Presents: Takashi Sonoda & Tatsuma Takeda Duo Exhibition』大川市清力美術館",
+        "2023：『Manda Pit Artfes 2023』万田坑（熊本・荒尾）",
+        "【レジデンス】",
+        "2019：Künstlerhaus Bethanien（ベルリン）",
+        "2022：川久ホテル（和歌山・白浜）",
+        "2023：旧上庄小学校（福岡・みやま）",
+        "2024：JOSHIBI AIR Studio（相模原・神奈川）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2005：熊本県美術展 努力賞",
+        "2015：シチズンアートパレード 水間末雄賞、第 7 回紅梅アートアワード",
+        "2016：女子美術大学賞",
+        "2019：第 2 回 JOSHIBI ベルリン賞",
+        "2020：VOCA 2020 佳作賞",
+        "2025：VOCA 2025 VOCA 賞（大賞）",
+        "2025：JOSHIBI パリ賞",
+        "2026：第 4 回福岡アートアワード 市長賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、AIRmotomoto を軸とした地域アート実践中心"
+      ],
+      "sns_note": "SNS 中規模、レジデンス motomoto の発信も。",
+      "scores": {
+        "awards": "A",
+        "collections": "D",
+        "gallery": "C",
+        "international": "A",
+        "domestic": "A",
+        "secondary": "D",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP hanakomiyamoto.com/about より抽出（2026-07-20）。生年 1987 熊本、女子美修士 2012、ベルリン移住 2016、AIRmotomoto 主宰 2020（公式）。VOCA 2020 佳作・2025 大賞、福岡アートアワード 市長賞 2026、JOSHIBI パリ賞 2025 & ベルリン賞 2019（公式）。ベルリン Bethanien 2016・2019 個展・レジデンス（公式）。IG @hanakomiyamotono（公式）。",
+      "instagram_url": "https://www.instagram.com/hanakomiyamotono/",
+      "instagram_followers": null
+    },
+    {
+      "name": "戸田 沙也加",
+      "name_kana": "とだ さやか",
+      "name_en": "Sayaka Toda",
+      "birth_year": 1988,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "KANA KAWANISHI GALLERY / PHOTOGRAPHY（東京、継続契約）"
+      ],
+      "profile": "1988 年埼玉県生まれ、埼玉在住。2012 年女子美術大学大学院美術専攻洋画研究領域修了。写真と絵画を並置して複層的な時間・記憶を表現する作風。前年 VOCA 賞受賞者・宮本華子と同級生。VOCA 展 2026 で受賞作《語られざる者の残響》（油彩・インクジェットプリント・キャンバス・木製パネル・アルミ複合板・アルミフレーム・木材）にて VOCA 賞受賞（女子美から 2 年連続の VOCA 賞受賞、加藤千晶が同時に佳作賞）。",
+      "exhibitions": [
+        "【個展】",
+        "2021：『海を超えて、あるいは夜の向こうに』KANA KAWANISHI PHOTOGRAPHY（東京）",
+        "2023：『The glitter of the shadow and color of the light』GALLERY MERROW（東京）",
+        "2023：『生い茂る雑草の地に眠る』KANA KAWANISHI GALLERY（東京）",
+        "【グループ展】",
+        "2026：VOCA 展 2026 VOCA 賞受賞展（上野の森美術館、3/14-3/29、《語られざる者の残響》）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2026：VOCA 賞（大賞、VOCA 展 2026、《語られざる者の残響》）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通確認できず"
+      ],
+      "sns_note": "Instagram（@sayakatoda_）",
+      "scores": {
+        "awards": "A",
+        "collections": "D",
+        "gallery": "B",
+        "international": "D",
+        "domestic": "B",
+        "secondary": "E",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: VOCA 展 2026 賞受賞（tokyoartbeat, bijutsutecho, JOSHIBI NEWS）。生年 1988 埼玉、女子美院修了 2012（tokyoartsandspace）。KANA KAWANISHI GALLERY/PHOTOGRAPHY 継続契約（tokyoartbeat）。IG @sayakatoda_artwork（Instagram）。",
+      "instagram_url": "https://www.instagram.com/sayakatoda_artwork/",
+      "instagram_followers": null
+    },
+    {
+      "name": "佐藤 允",
+      "name_kana": "さとう あたる",
+      "name_en": "Ataru Sato",
+      "birth_year": 1986,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "KOSAKU KANECHIKA（東京、主要契約）",
+        "Gallery Koyanagi（東京、初期）",
+        "Office Baroque（ブリュッセル）",
+        "Ruttkowski;68（パリ）",
+        "NICOLAS KRUPP（バーゼル）",
+        "flatmarkus（チューリッヒ）"
+      ],
+      "profile": "1986 年千葉県生まれ、東京拠点。2009 年京都造形芸術大学 情報デザイン学部 総合造形コース卒業。KOSAKU KANECHIKA を主要窓口に、ブリュッセル・パリ・バーゼル・チューリッヒと欧州画廊網を構築。個人的な記憶や日常の断片を集積させた画面を展開。10 代からアーティスト活動を開始し、2007 年 NY 個展、2010 年光州ビエンナーレ・VOCA 2010、2011 年横浜トリエンナーレ、2013 年アムステルダム／札幌／鹿児島巡回、2014 年 Palais de Tokyo（パリ）、2019 年原美術館・Dojima River Biennale、2023 年 Palais de Tokyo 個別展示など、20 代から国際的評価。**東京都現代美術館（高橋龍太郎コレクション展 2024）、Louis Vuitton Malletier、Spencer Museum of Art（米カンザス）等 6 コレクション**に収蔵。",
+      "exhibitions": [
+        "【個展】",
+        "2007：『ATARU SATO: His Sea』Mehr（Midtown、NY）",
+        "2011：『First Love』Gallery Koyanagi 東京",
+        "2015：『MAN』Gallery Koyanagi 東京",
+        "2017：『Courtship』KOSAKU KANECHIKA 東京",
+        "2018：『+10』KOSAKU KANECHIKA 東京",
+        "2019：『Ataru Sato』Office Baroque ブリュッセル",
+        "2020：『Øth (Zeroth)』KOSAKU KANECHIKA 東京",
+        "2022：『111 / triple one』KOSAKU KANECHIKA 東京",
+        "2023：『First Love 2』KOSAKU KANECHIKA 東京",
+        "【主要グループ展】",
+        "2006：『Vier Junge Japanische Künstler』Werkraum Godula Buchholz ドイツ",
+        "2008：『TERASE!』京都タワービル",
+        "2009：『Dorodoro, Doron』広島市現代美術館",
+        "2009：『neoneo Part1 [boys]』高橋コレクション日比谷",
+        "2010：VOCA 2010 上野の森美術館",
+        "2010：『第 8 回光州ビエンナーレ 10,000 Lives』韓国",
+        "2011：横浜トリエンナーレ 2011『OUR MAGIC HOUR』横浜美術館",
+        "2012：『Cosmic Travelers - Toward the Unknown』Espace Louis Vuitton Tokyo",
+        "2013：『Now Japan』Kunsthal KAdE アメルスフォールト（オランダ）",
+        "2013：『Takahashi Collection – Mindfulness!』霧島アートの森 & 札幌芸術の森美術館",
+        "2014：『Inside』Palais de Tokyo パリ",
+        "2016：『Jitto』Anne Mosseri-Marlio Galerie バーゼル",
+        "2019：『INTERPRETATIONS, TOKYO』原美術館",
+        "2019：『DOJIMA RIVER BIENNALE 2019』",
+        "2019：『My Name is Tokyo Kai and I am an Artoholic』熊本市現代美術館",
+        "2021：『Obayashi Collection Self-History』WHAT MUSEUM",
+        "2021：『Daily Cat Essen』Ruttkowski;68 パリ",
+        "2023：『LA MORSURE DES TERMITES』Palais de Tokyo パリ",
+        "2023：『Portraits – OBAYASHI COLLECTION』SMBC 東京",
+        "2023：山原アートフェスティバル 2022-2023",
+        "2024：『日本現代美術私観：高橋龍太郎コレクション』東京都現代美術館",
+        "2024：『Here and There and Back Again, Japanese Art 1964-2024』NICOLAS KRUPP バーゼル",
+        "2024：『undisclosed sensibilities』flatmarkus チューリッヒ",
+        "2025：Frieze Seoul 2025 出品（KOSAKU KANECHIKA ブース）",
+        "2025：『Himekore!』奈良市美術館"
+      ],
+      "collections": [
+        "**Japigozzi Collection ジャピゴッツィコレクション（ジュネーブ）**",
+        "**J Art Foundation（北海道）**",
+        "**Louis Vuitton Malletier**",
+        "**OKETA COLLECTION（東京）**",
+        "**Spencer Museum of Art（米カンザス）**",
+        "**高橋龍太郎コレクション（東京）**"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー中心。国際画廊網経由の欧米市場強含み"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "D",
+        "collections": "A",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "A",
+        "secondary": "C",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: KOSAKU KANECHIKA 公式 CV（kosakukanechika.com/en/artist/ataru_sato/）より全項目抽出（2026-07-20）。生年 1986 千葉、京都造形芸大 2009 卒（公式）。所属 6 ギャラリー（KOSAKU KANECHIKA、Gallery Koyanagi、Office Baroque、Ruttkowski;68、NICOLAS KRUPP、flatmarkus）（公式）。Japigozzi・J Art Foundation・LV・OKETA・Spencer Museum・高橋龍太郎の 6 コレクション（公式）。VOCA 2010・光州ビエンナーレ 2010・横浜トリエンナーレ 2011・Palais de Tokyo 2014 & 2023（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "平松 天貴",
+      "name_kana": "ひらまつ てんき",
+      "name_en": "Tenki Hiramatsu",
+      "birth_year": 1986,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "KOSAKU KANECHIKA（東京、主要契約）",
+        "Barbara Seiler Galerie（チューリッヒ）",
+        "Half Gallery（ニューヨーク）",
+        "Sebastian Gladstone（ロサンゼルス）",
+        "Super Dakota（ブリュッセル）",
+        "Robert Grunenberg（ベルリン）",
+        "Claas Reiss（ロンドン）",
+        "Gabi（ライプツィヒ）"
+      ],
+      "profile": "1986 年和歌山県生まれ。2009 年日本大学芸術学部デザイン学科コミュニケーションデザインコース卒業。2016-2019 年 Karlsruhe State Academy of Fine Arts（ドイツ）留学。KOSAKU KANECHIKA 主要契約に加え、チューリッヒ・NY・LA・ブリュッセル・ベルリン・ロンドン・ライプツィヒと 8 か国のギャラリー体制を構築、日本人若手 30 代の中でも国際展開の広さは最上位クラス。**Zurich Insurance Company、Burger COLLECTION、M WOODS、UBS Art Collection、X Museum** 収蔵。",
+      "exhibitions": [
+        "【個展】",
+        "2013：個展 Hidari Zingaro（東京）",
+        "2019：『Der Räuber und der Prinz』UNG5（ケルン）",
+        "2019：『Never Again』Kunstverein Rastatt",
+        "2020：『Lügen haben Beine』Robert Grunenberg（ベルリン）",
+        "2020：『Beginner's Improvisation』Furniture Gallery（オークランド）",
+        "2021：『Good Con Man』Claas Reiss（ロンドン）",
+        "2022：『Where There Is Smoke, There Is No Fire』Sukima（東京）",
+        "2022：『Should I Wait For Everyone To Get Up』Barbara Seiler（チューリッヒ）",
+        "2023：『Unendliche Zigarettenpause』Karlsruhe City Art Museum（ドイツ）",
+        "2024：『Here and Elsewhere』Barbara Seiler（チューリッヒ）",
+        "2024：『Slow Living』Half Gallery（NY）",
+        "2024：『Breather』Sebastian Gladstone（LA）",
+        "2025：『Hira Hira』Super Dakota（ブリュッセル）",
+        "2025：『Is this love? What is sophistication?』Gabi（ライプツィヒ）",
+        "2025：『鼾』ARTRO（京都）",
+        "2026：『汗と涙』KOSAKU KANECHIKA（東京）",
+        "【主要グループ展】",
+        "2025：Frieze Seoul 2025 KOSAKU KANECHIKA ブース出品",
+        "2025：『Penumbral』Galerie Sardine NY",
+        "2025：『Silent Witness』曼殊院 京都",
+        "2025：『IN THE SIGHT OF A MAN』M+M Gallery 香港",
+        "2024：『Beau Travail』Zirkusgasse ウィーン",
+        "2024：『Splendore』Fondation Fernet Branca（サンルイ、フランス）",
+        "2024：『Moon River』Cage Gallery 東京",
+        "2023：『Me and My Shadow / My Shadow and I』EUROPA NY",
+        "2023：『Tenki and Jerry』Castle LA"
+      ],
+      "collections": [
+        "**Zurich Insurance Company（チューリッヒ）**",
+        "**Burger COLLECTION（香港／スイス、Monique と Michael Burger のグローバル私設コレクション）**",
+        "**M WOODS Museum（北京）**",
+        "**UBS Art Collection（グローバル銀行コレクション）**",
+        "**X Museum（北京）**"
+      ],
+      "awards": [
+        "2013：GEISAI #19 ヨシタケ ミカ賞",
+        "2014：3331 千代田芸術祭 飯沢耕太郎賞",
+        "2017：Rastatt Art Association Prize",
+        "2022：Werner Stöber Foundation Art Prize"
+      ],
+      "secondary_note": [
+        "国際画廊網でプライマリー中心、価格レンジ拡大中",
+        "8 か国ギャラリー体制、5 大コレクション収蔵は日本人若手最上位級"
+      ],
+      "sns_note": "SNS 情報は要確認。",
+      "scores": {
+        "awards": "B",
+        "collections": "A",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "C",
+        "secondary": "C",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: KOSAKU KANECHIKA 公式 CV（kosakukanechika.com/en/artist/tenki_hiramatsu/）より全項目抽出（2026-07-20）。生年 1986 和歌山、日大芸術デザ卒 2009、Karlsruhe HFG 2016-19（公式）。8 か国 8 ギャラリー所属（公式）。Zurich Insurance / Burger / M WOODS / UBS / X Museum 5 コレクション（公式）。個人サイト tenkihiramatsu.com（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "庄司 朝美",
+      "name_kana": "しょうじ あさみ",
+      "name_en": "Asami Shoji",
+      "birth_year": 1988,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "gallery21yo-j（東京、継続契約）",
+        "biscuit gallery（東京）",
+        "Semiose（パリ、フランス）",
+        "François Ghebaly（NY、2025 三人展）",
+        "LC Queisser（トビリシ、ジョージア）",
+        "LINSEED（上海）"
+      ],
+      "profile": "1988 年福島県生まれ、大阪・青森・東京で育つ。2012 年多摩美術大学大学院美術研究科絵画専攻版画研究領域修了。2019-2021 年東京造形大学絵画科講師。カンヴァスや窓ガラスを支持体に、身体を起点として発生するイメージを「絵画言語」として記述する。第 31 回（最終）五島記念文化賞美術新人賞受賞後、そのフェローシップとしてトビリシに滞在。2024-2025 年に日米中欧（Semiose パリ、François Ghebaly NY、LC Queisser トビリシ、LINSEED 上海）で個展を並行開催し急速に国際評価を確立。",
+      "exhibitions": [
+        "【個展】",
+        "2025：横浜市民ギャラリーあざみ野『あざみ野コンテンポラリー vol.16 トビリシより愛を込めて』",
+        "2025：LC Queisser（トビリシ、ジョージア）",
+        "2025：LINSEED（上海）",
+        "2024：Semiose（パリ、フランス）",
+        "2024：Independent Art Fair（ニューヨーク）個展ブース",
+        "2023：gallery21yo-j（東京）",
+        "2022-23：DECAMERON（東京）",
+        "2021：gallery21yo-j（東京）、void+（東京）",
+        "2019：gallery21yo-j（東京）",
+        "2018：Cale（東京）",
+        "2017：gallery21yo-j（東京）、TWS Shibuya（東京）",
+        "2016：Ogallery（東京）、東京都庁（東京）",
+        "2014：Sakura gallery（東京）",
+        "【主要グループ展】",
+        "2025：六本木クロッシング 2025 展 森美術館",
+        "2025：曼殊院（京都）",
+        "2025：三人展『Elizabeth Glaessner, Asami Shoji, Oda Iselin Sonderland』François Ghebaly（NY）",
+        "2025：『ACT Vol.7 複数形の身体』Tokyo Arts and Space",
+        "2024：MOT アニュアル 2024『こうふくのしま』東京都現代美術館",
+        "2024：『百年後芸術祭』山武市歴史民俗資料館（千葉）",
+        "2023：『Body, Love, Gender』Gana Art Center（ソウル）",
+        "2022：Obscura（トビリシ、ジョージア）",
+        "2022：SOMPO 美術館",
+        "2021：BankART Station",
+        "2020：渋谷ヒカリエ",
+        "2015：東京都写真美術館",
+        "2015：Atelier Controsegno（イタリア）",
+        "2011-2012：タイの大学ギャラリー"
+      ],
+      "collections": [
+        "SOMPO 美術館",
+        "OKETA COLLECTION",
+        "高橋龍太郎コレクション"
+      ],
+      "awards": [
+        "2011：第 1 回宮本三郎記念デッサン大賞 審査員賞",
+        "2015：トーキョーワンダーウォール賞",
+        "2016：第 11 回大黒屋現代美術賞",
+        "2019：FACE 2019 グランプリ（損保ジャパン）",
+        "2020：五島記念文化賞 美術新人賞（第 31 回、最終回受賞者）"
+      ],
+      "secondary_note": [
+        "国内オークションで実績、100-500 万円台と推定",
+        "2024-2025 年に日米中欧複数ギャラリー個展を並行、価格レンジ拡大中"
+      ],
+      "sns_note": "Instagram 中規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "A",
+        "international": "A",
+        "domestic": "S",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP shojiasami.com/biography/ より全項目抽出（2026-07-20）。多摩美修了 2012 (公式)、五島記念文化賞 2020 (公式)、FACE 2019 (公式)、大黒屋 2016 (公式)、東京造形大講師 2019-21 (公式)。SOMPO・OKETA・高橋コレクション 3 館 (公式)。六本木クロッシング 2025 (mori.art.museum)。IG は公式 HP に非掲載。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "細井 美裕",
+      "name_kana": "ほそい みゆ",
+      "name_en": "Miyu Hosoi",
+      "birth_year": 1993,
+      "genre": [
+        "メディアアート",
+        "映像"
+      ],
+      "gallery": [
+        "ICC・YCAM・21_21 design sight 等公的機関中心",
+        "Barbican Centre（ロンドン）・IRCAM（フランス）等海外主要施設と協働"
+      ],
+      "profile": "1993 年愛知県生まれ、東京拠点。声・音を素材とするサウンド／メディア・アート作家。自身の声を多重録音した作品に加え、マルチチャンネル・オーディオを用いたサウンドインスタレーション、屋外インスタレーション、舞台作品を制作。空間の知覚・状況を変容させる音を主題とする。ICC・YCAM・国際音響学会議（ICA）・長野県立美術館・愛知県芸術劇場・羽田空港・日比谷公園・Barbican Centre（ロンドン）・IRCAM（フランス）等での発表歴。",
+      "exhibitions": [
+        "【主要作品】",
+        "2020：『Vocalise』Ars Electronica パフォーマンス",
+        "2022：『Theatre me』インスタレーション",
+        "2024〜：『Human Archive Center』サウンドピース連作",
+        "2024：『OBSERVATIO BLANK』インスタレーション",
+        "2025：『Nénette』森美術館 サウンドピース",
+        "2025：『World Operator』ROHM Theatre Kyoto シアターピース",
+        "2025：『Observatory Station』Barbican Centre インスタレーション",
+        "2025：『Living Room』アンスティチュ・フランセ東京 インスタレーション",
+        "2025：『轍 – Traces』福島県大熊町 インスタレーション",
+        "2025：『Past Forecast』江之浦観測所 パフォーマンス",
+        "2025：六本木クロッシング 2025 展 森美術館 参加"
+      ],
+      "collections": [
+        "ICC（NTT インターコミュニケーション・センター）関連",
+        "YCAM（山口情報芸術センター）関連"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "セカンダリ流通なし（サウンドピース・パフォーマンス中心）"
+      ],
+      "sns_note": "SNS 継続発信。",
+      "scores": {
+        "awards": "C",
+        "collections": "C",
+        "gallery": "C",
+        "international": "A",
+        "domestic": "S",
+        "secondary": "E",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP miyuhosoi.com/en（2026-07-20）。生年 1993 愛知（ICC）。Barbican Centre・IRCAM・Ars Electronica（2020 Vocalise）等国際的発表（公式）。ICC・YCAM 継続発表（公式）。六本木クロッシング 2025（mori.art.museum）。IG @miyuhosoi（公式）。",
+      "instagram_url": "https://www.instagram.com/miyuhosoi/",
+      "instagram_followers": null
+    },
+    {
+      "name": "仲村 浩一",
+      "name_kana": "なかむら ひろかず",
+      "name_en": "Hirokazu Nakamura",
+      "birth_year": 1999,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "無所属（公式明記、個展・作品依頼募集中）"
+      ],
+      "profile": "1999 年千葉県船橋市生まれ、27 歳。2024 年武蔵野美術大学造形学部油絵学科卒業、現在東京藝術大学美術研究科技法材料研究室に在籍。房総半島の海岸線を 10 歩ごとにセロテープで砂を貼り付けながら 4 年かけて銚子市から船橋市の三番瀬まで踏破し、その砂を絵具に混ぜて描く《房総半島勝景奇覧／千葉海岸線砂旅行》シリーズで第 28 回岡本太郎現代芸術賞（2025）大賞受賞。第 28 回では武蔵美から井下紗希（特別賞）、毛利華子（入選）も同時に受賞。無所属で個展・作品依頼を募集中。",
+      "exhibitions": [
+        "2025：第 28 回岡本太郎現代芸術賞展（川崎市岡本太郎美術館、2/23-4/13、岡本太郎賞受賞作《房総半島勝景奇覧》展示）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2025：第 28 回岡本太郎現代芸術賞（TARO 賞）大賞（賞金 200 万円）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（プライマリー市場もこれから）"
+      ],
+      "sns_note": "SNS 情報は要確認。",
+      "scores": {
+        "awards": "A",
+        "collections": "D",
+        "gallery": "D",
+        "international": "E",
+        "domestic": "B",
+        "secondary": "E",
+        "reputation": "D",
+        "sns": "D"
+      },
+      "impression": "",
+      "sources": "Verified: 生年 1999 千葉船橋（bijutsutecho, 武蔵美 news, atpress）。武蔵美油絵卒 2024、藝大院技法材料研究室在籍（公式）。岡本太郎賞 2025（bijutsutecho, 武蔵美, atpress）。連絡先 nhirokazu369@gmail.com、無所属公表（bijutsutecho）。IG @hirokazu333（Threads）。",
+      "instagram_url": "https://www.instagram.com/hirokazu333/",
+      "instagram_followers": null
+    },
+    {
+      "name": "Kisho Kakutani",
+      "name_kana": "かくたに きしょう（漢字要 Verify）",
+      "name_en": "Kisho Kakutani",
+      "birth_year": 1993,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Whitestone Gallery（銀座／香港／台北）",
+        "MU GALLERY（東京）",
+        "SEOJUNG ART（釜山）"
+      ],
+      "profile": "1993 年神戸生まれ。2022 年東京藝術大学大学院美術研究科日本画博士課程修了（博士号）。スナップショット的な曖昧さと水分の多い日本画技法で風景を静かに描き、「人が想像することを可能にする道具」を主題とする。『Frosted Window』『Curtain』シリーズ等。Whitestone を主要窓口に台北・香港・釜山へ展開する若手日本画家。",
+      "exhibitions": [
+        "【個展】",
+        "2023：『White Night』Courtyard HIROO 東京",
+        "2023：『Medium and Protective Barrier』銀座蔦屋書店（色彩舎）",
+        "2025：『Realm of Dispersal』Whitestone Gallery 台北",
+        "2025：『FOG』MU GALLERY 東京",
+        "【二人展・グループ展】",
+        "2024：『The torrent in seconds』（竹内優大と）Whitestone Ginza New Gallery",
+        "2024：『Un certain regard』SEOJUNG ART 釜山",
+        "2025：『Imprinting』（遠藤瞳と）Whitestone Ginza New Gallery",
+        "2026：『Intersection』（Kosuke Harasawa と）Whitestone Gallery M Place 香港"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "Whitestone プライマリー中心、セカンダリはまだ育っていない"
+      ],
+      "sns_note": "SNS 中規模。",
+      "scores": {
+        "awards": "D",
+        "collections": "D",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "C",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: Whitestone Gallery 公式 CV（whitestone-gallery.com/blogs/artist/kisho-kakutani）より抽出（2026-07-20）。生年 1993 神戸、藝大日本画博士 2022（公式）。Whitestone 銀座・台北・香港＋ MU GALLERY 東京＋ SEOJUNG ART 釜山（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "Kosuke Harasawa",
+      "name_kana": "はらさわ こうすけ（漢字要 Verify）",
+      "name_en": "Kosuke Harasawa",
+      "birth_year": 1997,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Whitestone Gallery（銀座・香港、二人展）",
+        "Gallery Wada（東京、2024 個展）",
+        "Yoh Gallery（東京、2023 個展）",
+        "Gallery Binosha（東京、2022 個展）",
+        "Shinseido（東京、2021 個展）"
+      ],
+      "profile": "1997 年東京生まれ。東京藝術大学美術学部絵画科日本画専攻 学士（2018 入学）、大学院美術研究科（2022）修了、2026 年現在博士課程 2 年次在籍。「内省と現実の鋭い観察」をアプローチとし、雨に濡れた夜の街を、透明な傘を持つ幽玄な白い通行人を舞台の主役として登場させる超現実的な絵画で描く。「静寂・雑音・雨の街の薄暗い雰囲気」を主題とする。東京藝大内での賞複数、Whitestone Gallery 香港での二人展で国際展開を開始。",
+      "exhibitions": [
+        "【個展】",
+        "2021：個展 Shinseido（東京）",
+        "2022：『Scenery of Memory』Gallery Binosha（東京）",
+        "2023：『Sky』Yoh Gallery（東京）",
+        "2024：個展 Gallery Wada（東京）",
+        "【グループ展】",
+        "2021：『Hope 展』Art Space Rashinban（東京）",
+        "2025：『Dimensions IV – art is』Whitestone Ginza New Gallery",
+        "2025：『現代日本画展』Sogo & Seibu 池袋本店",
+        "2026：二人展『Intersection』Whitestone Gallery 香港（Kisho Kakutani と）"
+      ],
+      "collections": [
+        "**帝京大学（『風唄 / Kaze Utau』2024）**",
+        "**東京藝術大学（『信貴山縁起絵巻 模写』2024）**",
+        "**台東区役所（『幻想 / Gensō』2022）**"
+      ],
+      "awards": [
+        "2019：Shinseido Prize（KENZAN 展）",
+        "2020：安宅賞（Ataka Prize、東京藝術大学）",
+        "2021：Excellence Award（Bi-no-sha Student Selection Exhibition）",
+        "2022：Taito City Mayor's Prize",
+        "2022：Salon de Printemps Prize",
+        "2022：東京藝大 Art Renaissance Award",
+        "2023：Runner-up prize（月刊美術『Debut 2023』）",
+        "2024：法務大臣賞（湯河の会展）"
+      ],
+      "secondary_note": [
+        "Whitestone プライマリー中心、プライマリー価格 30-100 万円台と推定"
+      ],
+      "sns_note": "SNS 継続発信。",
+      "scores": {
+        "awards": "B",
+        "collections": "C",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "C",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: Whitestone 公式 CV（whitestone-gallery.com/blogs/artist/kosuke-harasawa）より全項目抽出（2026-07-20）。生年 1997 東京、藝大絵画科日本画 2018 学部入学 / 2022 修士 / 2026 現在博士 2 年次在籍（公式）。安宅賞 2020、法務大臣賞 2024、藝大 Art Renaissance 2022、Taito City Mayor 2022（公式）。帝京大・藝大・台東区役所 3 収蔵（公式）。神山財団奨学生 2022（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "KYNE",
+      "name_kana": "きね",
+      "name_en": "KYNE",
+      "birth_year": 1988,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Kaikai Kiki Gallery（東京、Takashi Murakami、2019 出会い・2021 共同展示）",
+        "ON AIR（福岡、共同アトリエ／ショップ）",
+        "Phillips New York で 2024 米国デビュー個展"
+      ],
+      "profile": "1988 年福岡県生まれ、匿名で活動する福岡拠点のアーティスト。大学で日本画（Nihonga）を専攻し、陶芸・ドローイング・彫刻・油画も研究。日本画の技法をストリートアートに落とし込む、若い女性のミニマリスティックな肖像を、クリーンでスムーズなカートゥーン風の線とシルクスクリーンによる平面色で描く。マンガと浮世絵・日本画の感性を融合。2019 年 Takashi Murakami との出会いを機に、2021 年 Kaikai Kiki Gallery で共同展示。**2024 年 4-6 月に初の日本大規模個展『ADAPTATION – KYNE』福岡市美術館**（新作壁画・絵画・版画・ライトボックス・立体作品計約 150 点）。国内オークションで極めて強い市場性、日本人若手のセカンダリ市場トップ層。",
+      "exhibitions": [
+        "【個展・主要展示】",
+        "2021：個展 Kaikai Kiki Gallery（東京、Takashi Murakami との共同展示、KYNE の肖像＋村上のスマイリング・フラワー背景の版画）",
+        "2024：初の日本大規模個展『ADAPTATION – KYNE』福岡市美術館（4/20-6/30、Kaikai Kiki 主催、150 点）",
+        "2024：『Paintings for the Drop』米国デビュー個展 Phillips ニューヨーク",
+        "その他：国内個展複数（東京・福岡）",
+        "国内外コラボレーション（アパレル・ブランド等）多数"
+      ],
+      "collections": [
+        "**福岡市美術館 関連（ADAPTATION 個展 2024）**",
+        "個人コレクター中心、企業コラボ多数"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "国内オークション（Est-Ouest / SBI / Mainichi）で継続的高値落札、100-1000 万円台の実績多数",
+        "Phillips NY 米国デビュー個展 2024 で欧米市場に本格進出",
+        "日本人若手の市場性トップ層（井田幸昌・ロッカクアヤコと並ぶ）"
+      ],
+      "sns_note": "Instagram フォロワー数十万規模、極めて活発。",
+      "scores": {
+        "awards": "E",
+        "collections": "C",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "B",
+        "secondary": "A",
+        "reputation": "B",
+        "sns": "S"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 kyne.jp、Kaikai Kiki gallery en 公式、Ocula、Fukuoka Art Museum ADAPTATION 2024（tokyoartbeat, houyhnhnm, casereal）、Phillips NY 2024 個展（exhibitions.phillips.com）、Murakami 出会い 2019・共同展示 2021（Ocula）。生年 1988 福岡（公式）、日本画専攻・ON AIR 共同アトリエ 2017（kaitoriart）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "磯村 暖",
+      "name_kana": "いそむら だん",
+      "name_en": "Dan Isomura",
+      "birth_year": 1992,
+      "genre": [
+        "絵画",
+        "インスタレーション",
+        "彫刻"
+      ],
+      "gallery": [
+        "Bambinart Gallery（東京）",
+        "eukaryote（東京）",
+        "新大久保 UGO（自主主宰スペース）"
+      ],
+      "profile": "1992 年東京都生まれ、東京拠点。2005-2007 年オーストラリア・ケアンズ留学、2015 年タイ・シラパコーン大学レジデンス、2016 年東京藝術大学美術学部絵画科油画専攻卒業。ゲンロン カオス*ラウンジ 新芸術校第 2 期。絵画・彫刻・映像・インスタレーションを横断し、社会背景や身近な人間関係に根差した LGBTQ・移民難民・宗教・地獄・死者などのモチーフで、社会風刺的作品を制作。アーティスト・ラン・スペース『新大久保 UGO』主宰。2023 年 TEDxUTokyo 登壇。",
+      "exhibitions": [
+        "【個展・グループ展 主要】",
+        "2016：東京藝術大学卒業制作 展示",
+        "2017：ゲンロン カオス*ラウンジ 新芸術校第 2 期 金賞",
+        "2019：Forbes JAPAN 30 UNDER 30 選出",
+        "2019：Asian Cultural Council Fellowship（NY 滞在）",
+        "2021：『Asian Art Biennial 2021』国立台湾美術館",
+        "2023：TEDxUTokyo 登壇",
+        "2023：東京ビエンナーレ 2023『おしぼり リンケージ』",
+        "その他：Bambinart Gallery（東京）、eukaryote（東京）、meet your art 等での個展・グループ展"
+      ],
+      "collections": [
+        "上島コレクション"
+      ],
+      "awards": [
+        "2017：ゲンロン カオス*ラウンジ 新芸術校第 2 期 金賞",
+        "2019：Forbes JAPAN 30 UNDER 30 アート部門",
+        "2019：Asian Cultural Council ニューヨークフェローシップ"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的"
+      ],
+      "sns_note": "SNS 継続発信。",
+      "scores": {
+        "awards": "B",
+        "collections": "C",
+        "gallery": "C",
+        "international": "B",
+        "domestic": "B",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 生年 1992 東京（bijutsutecho, ARTnews, ueshima-collection）、藝大絵画卒 2016、新芸術校第 2 期金賞 2017（NEUT）、ACC Fellowship 2019、Forbes 30U30 2019、Asian Art Biennial 2021 国立台湾美術館（bijutsutecho）、東京ビエンナーレ 2023（oshibori.tokyobiennale.jp）。IG @danisomura（公式）。所属 Bambinart・eukaryote（各ギャラリー公式）。",
+      "instagram_url": "https://www.instagram.com/danisomura/",
+      "instagram_followers": null
+    },
+    {
+      "name": "片山 真理",
+      "name_kana": "かたやま まり",
+      "name_en": "Mari Katayama",
+      "birth_year": 1987,
+      "genre": [
+        "写真",
+        "彫刻",
+        "絵画",
+        "ミクストメディア",
+        "パフォーマンス"
+      ],
+      "gallery": [
+        "Galerie Suzanne Tarasieve（パリ）",
+        "Gallery ETHER（東京、2023 個展）",
+        "AKIO NAGASAWA（東京、写真集出版継続）"
+      ],
+      "profile": "1987 年埼玉県生まれ、群馬県育ち。9 歳のとき先天性の疾患により両下肢を切断。2010 年群馬県立女子大学文学部美学美術史学科卒業、2012 年東京藝術大学大学院美術研究科先端芸術表現専攻修士修了。自らの身体を模した手縫いオブジェ、ペインティング、コラージュ、そしてそれらの作品を用いて細部まで演出を施したセルフポートレイトを制作。2011 年より『ハイヒールプロジェクト』を展開し、義足用ハイヒールを装着してステージに立つパフォーマンスを継続。第 45 回木村伊兵衛写真賞（2020）、第 58 回ヴェネチアビエンナーレ企画展参加（2019）で国際評価を確立。**テート・モダン、V&A、森美術館、国立国際美術館、東京都写真美術館ほか 30 機関以上に収蔵**、日本人若手最上位クラスの国際的地位。関西国際大学教員。",
+      "exhibitions": [
+        "【個展】",
+        "2024：『this is how we stand our ground』Galerie Suzanne Tarasieve（パリ）",
+        "2023：『Cavern』Gallery ETHER（東京）",
+        "2022-2023：個展 複数（パリ、東京、京都、ロンドン、リトアニア、岡山、直島、群馬 等）",
+        "2019-2021：個展 複数",
+        "2014-2017：個展 複数",
+        "2008-2009：初期個展",
+        "【主要グループ展】",
+        "2019：第 58 回ヴェネチアビエンナーレ 国際美術展 企画展『May You Live in Interesting Times』（イタリア）",
+        "2005-2023：シカゴ・ヴェネチア・パリ・ミラノ・バンコク 等国際グループ展多数"
+      ],
+      "collections": [
+        "**テート・モダン Tate Modern（ロンドン）**",
+        "**ヴィクトリア・アンド・アルバート美術館 V&A（ロンドン）**",
+        "**森美術館**",
+        "**国立国際美術館（大阪）**",
+        "**東京都写真美術館**",
+        "その他 30 機関以上（公式 HP）"
+      ],
+      "awards": [
+        "2005：群馬青年ビエンナーレ 奨励賞",
+        "2012：アートアワードトーキョー丸の内 グランプリ",
+        "2015：3331 Art Fair 受賞",
+        "2019：第 35 回写真の町東川賞 新人作家賞",
+        "2020：第 45 回木村伊兵衛写真賞（写真集『GIFT』および第 58 回ヴェネチアビエンナーレ企画展出品作品対象）"
+      ],
+      "secondary_note": [
+        "国内オークションで実績、100-500 万円台と推定",
+        "写真集『GIFT』（2019）『Synthesis』（2025）『Un certain désordre #1』（2021）",
+        "テート・V&A 収蔵、Galerie Suzanne Tarasieve パリ経由で欧州プライマリー市場に接続、価格レンジ上昇余地大"
+      ],
+      "scores": {
+        "awards": "S",
+        "collections": "S",
+        "gallery": "A",
+        "international": "S",
+        "domestic": "S",
+        "secondary": "C",
+        "reputation": "S",
+        "sns": "B"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP marikatayama.com/cv-3/ より全項目抽出（2026-07-20）。生年 1987 埼玉、藝大院修了 2012（公式）。木村伊兵衛写真賞 45 回 2020・東川賞 2019・アートアワード丸の内 2012（公式）。ヴェネチア 2019（公式）。テート・V&A・森美・国立国際・東京都写真美 5 館明示、30 機関以上（公式）。所属 Galerie Suzanne Tarasieve パリ（公式）。IG/X @katayamari（公式）。",
+      "instagram_url": "https://www.instagram.com/katayamari/",
+      "instagram_followers": null
+    },
+    {
+      "name": "西條 茜",
+      "name_kana": "さいじょう あかね",
+      "name_en": "Akane Saijo",
+      "birth_year": 1989,
+      "genre": [
+        "工芸",
+        "インスタレーション"
+      ],
+      "gallery": [
+        "BLUM（東京・LA）",
+        "ARTCOURT Gallery（大阪、初期継続契約）",
+        "Dohjidai Gallery（京都）"
+      ],
+      "profile": "1989 年兵庫県生まれ、京都在住・制作。2012 年京都市立芸術大学美術科陶磁器専攻卒業、2014 年京都市立芸術大学大学院美術研究科修士修了（陶磁器）。2013 年 Royal College of Art（ロンドン）交換留学。2020 年京都市芸術文化特別奨励制度受賞。陶芸と現代美術の境界を横断し、身体・声を陶の中空に吹き込むパフォーマンス的立体を展開。BLUM 東京・LA を主要窓口として国際展開。**Aichi Prefectural Museum of Art（愛知県美術館）と森美術館の 2 機関収蔵**、第 1 回 MIMOCA EYE 大賞受賞記念個展を丸亀市猪熊弦一郎現代美術館で 2025 年に開催。",
+      "exhibitions": [
+        "【個展】",
+        "2015：『Hollow Tool Box』Gallery Miyagawa 京都",
+        "2016：『Creeping Mountains』Dohjidai Gallery 京都",
+        "2017：『Folly』Art Space Niji 京都",
+        "2018：『Grotta / solitude in the womb』Dohjidai Gallery 京都",
+        "2019：『Grace of Taboo』WACOAL STUDYHALL KYOTO Gallery",
+        "2021：『Tainai Tea Ceremony』京都市営地下鉄 醍醐車庫",
+        "2022：『Phantom Body』ARTCOURT Gallery 大阪",
+        "2022：『Rudiment』日本橋高島屋 美術画廊 X",
+        "2023：『山の呼吸／The Ebb and Flow of the Mountain』天理 Art and Culture Village and Barn",
+        "2025：**『西條茜展 ダブル・タッチ』丸亀市猪熊弦一郎現代美術館 MIMOCA**（1/26-3/30、第 1 回 MIMOCA EYE 大賞受賞記念個展、初の美術館個展）",
+        "【主要グループ展】",
+        "2013：『DOMO』Hackney Gallery ロンドン",
+        "2016：『ROKKO MEETS ART 2016』六甲山牧場（Art Walk 賞）",
+        "2017：『Ascending Art Annual Vol. 1』スパイラルガーデン 東京",
+        "2017：『Test Case XI』European Ceramic Workcentre（オランダ）",
+        "2019：『KOGEI as Contemporary Craft』金沢 21 世紀美術館",
+        "2019：『Kyoto Art for Tomorrow 2019』京都文化博物館",
+        "2020：『美をもって世を化す』高島屋 京都",
+        "2021：『Genta Ishizuka + Akane Saijo』CADAN 有楽町",
+        "2021：『Gazing into the Dark, Touching the Light』ARTCOURT Gallery 大阪",
+        "2022：『第 1 回 MIMOCA EYE』丸亀市猪熊弦一郎現代美術館（大賞受賞）",
+        "2023：『Our Ecology: Toward a Planetary Living』**森美術館**",
+        "2023：『Slow Culture #kogei』京都市立芸術大学 @KCUA",
+        "2024：『Deep Japan Contemporary: Made in Shiga』表参道クロッシングパーク",
+        "2024：『Akane Saijo, Yukie Ishikawa』BLUM 東京",
+        "2024：『When Two Collections Meet』愛知県美術館（あいちトリエンナーレ 2025 プレ）",
+        "2024：『Thirty Years: Written with a Splash of Blood』BLUM 東京 & LA",
+        "2025：あいちトリエンナーレ 2025 参加"
+      ],
+      "collections": [
+        "**Aichi Prefectural Museum of Art（愛知県美術館）**",
+        "**森美術館（Mori Art Museum、東京）**"
+      ],
+      "awards": [
+        "2011：京都市立芸術大学作品展 富本賞",
+        "2016：Rokko Meet Art Art Walk 賞",
+        "2019：Kyoto Art Cultural Special Promotion",
+        "2022：**第 1 回 MIMOCA EYE 大賞**（丸亀市猪熊弦一郎現代美術館）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的（陶芸のためプライマリー中心）"
+      ],
+      "sns_note": "SNS 中規模。",
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "S",
+        "secondary": "D",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: BLUM 公式 CV（backup.blum-gallery.com/artists/akane_saijo/cv）より抽出（2026-07-20）。生年 1989 兵庫、京都市芸大 BA 2012 / MA 2014、RCA 交換留学 2013（公式）。第 1 回 MIMOCA EYE 大賞 2022（公式、mimoca.org）。愛知県美術館・森美術館 2 収蔵（BLUM 公式）。BLUM 東京 & LA 所属（公式）。IG @saijoakane（Instagram）。",
+      "instagram_url": "https://www.instagram.com/saijoakane/",
+      "instagram_followers": null
+    },
+    {
+      "name": "百瀬 文",
+      "name_kana": "ももせ あや",
+      "name_en": "Aya Momose",
+      "birth_year": 1988,
+      "genre": [
+        "映像"
+      ],
+      "gallery": [
+        "TALION GALLERY（東京、継続契約）",
+        "Camden Art Centre（ロンドン、2024-2025 個展開催）"
+      ],
+      "profile": "1988 年東京都生まれ、東京拠点。2013 年武蔵野美術大学大学院造形研究科美術専攻油絵コース修了。映像とパフォーマンスを主軸に、映像自体を通じて映像の構造を再考する自己言及的方法論で、他者とのコミュニケーションの多層的複雑性を扱う。近年は映像における身体表現に焦点を当て、セクシュアリティ・ジェンダー問題を深く探究。国内主要美術館 4 館（東京都現代美術館・愛知県美術館・横浜美術館・大阪中之島美術館）に収蔵、Camden Art Centre 個展（ロンドン）で国際評価確立。",
+      "exhibitions": [
+        "【個展】",
+        "2019：『I.C.A.N.S.E.E.Y.O.U』EFAG East Factory Art Gallery（東京）",
+        "2020：『Born to Die』",
+        "2020：『I.C.A.N.S.E.E.Y.O.U』",
+        "2022：『百瀬文 口を寄せる』十和田市現代美術館（青森）",
+        "2023：『My Open Seam』久留米シティプラザ（福岡）",
+        "2024：『10 Years』TALION GALLERY（東京）",
+        "2024-2025：個展 Camden Art Centre（ロンドン）",
+        "【グループ展・受賞歴】",
+        "2014：『Voice Samples』横浜美術館 Art Gallery 1",
+        "2022：ARTnews JAPAN 若手 30 人選出",
+        "『交換日記』（イム・フンスンとの共同制作）全州国際映画祭 正式招待",
+        "MEET YOUR ART FESTIVAL 2023「Time to Change」",
+        "多摩美術大学芸術学科 特別講義 21 世紀文化論（2024）"
+      ],
+      "collections": [
+        "**東京都現代美術館（MOT）**",
+        "**愛知県美術館**",
+        "**横浜美術館**",
+        "**大阪中之島美術館（Nakanoshima Museum of Art）**"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "セカンダリ流通なし（映像／エディション作品中心）"
+      ],
+      "sns_note": "SNS 中規模。",
+      "scores": {
+        "awards": "C",
+        "collections": "S",
+        "gallery": "B",
+        "international": "A",
+        "domestic": "S",
+        "secondary": "E",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP ayamomose.com（2026-07-20）。生年 1988 東京、武蔵美院修了 2013（公式）。MOT・愛知県美・横浜美・中之島美 4 国公立美術館 収蔵（公式）。TALION GALLERY 2024 個展、Camden Art Centre ロンドン、十和田市現美 2022、久留米 2023 個展（公式）。IG @ayamomose（公式）。",
+      "instagram_url": "https://www.instagram.com/ayamomose/",
+      "instagram_followers": null
+    },
+    {
+      "name": "木村 翔馬",
+      "name_kana": "きむら しょうま",
+      "name_en": "Shoma Kimura",
+      "birth_year": 1996,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "biscuit gallery（東京、継続契約）",
+        "ARTDYNE（東京、2022 個展）",
+        "ART GALLERY UMEDA（大阪）",
+        "AIR Kamo Nasu（京都）",
+        "gallery trax（山梨）",
+        "JBIG meets Art gallery（東京、2024 個展）",
+        "京都髙島屋 蔦屋書店 6F（京都、2024 個展）"
+      ],
+      "profile": "1996 年 1 月 28 日大阪府生まれ。2018 年京都市立芸術大学美術科油画専攻卒業、2020 年京都市立芸術大学大学院美術研究科絵画専攻修士修了。「デジタル・ネイティブ世代の作家」を自任し、キャンバスに絵具で描く伝統的絵画と 3DCG / VR による作品を並行制作。第 4 回 CAF 賞（2017）最優秀賞、京都市長賞 2018。京都・東京の複数ギャラリーで継続的個展開催、VR ペインティングワークショップも実施。",
+      "exhibitions": [
+        "【個展】",
+        "2018：『dream のあとから（浮遊する絵画と VR の不確定）』ninetytwo13gallery 東京",
+        "2019：『Crystal☆Polygons』ARTISTS' FAIR KYOTO 2019 BLOWBALL KYOTO ART HOSTEL kumagusuku 京都",
+        "2020：『ザ・トライアングル 木村翔馬：水中スペック』京都市京セラ美術館",
+        "2022：『The boundary between paintings and leaves, and between trees and forests』ARTDYNE 東京",
+        "2022：『Sounds of the forest, Wind passing』gallery trax 山梨",
+        "2022：『FLOWER GARDEN』CANDYBAR Gallery 京都",
+        "2022：『In the soft afternoon sun』AIR Kamo Nasu 京都",
+        "2023：『Lakeside Castle』ART GALLERY UMEDA 大阪",
+        "2024：『Garden and Vase』JBIG meets Art gallery 東京",
+        "2024：『Room with Flowers』京都髙島屋蔦屋書店 6F 京都",
+        "個展 biscuit gallery（複数）",
+        "【主要グループ展】",
+        "2015-2017：京都市立芸術大学作品展",
+        "2022：ARTnews JAPAN 若手 30 人選出"
+      ],
+      "collections": [
+        "確認できず（京都市京セラ美術館 個展開催関連要 Verify）"
+      ],
+      "awards": [
+        "2017：第 4 回 CAF 賞 最優秀賞",
+        "2018：京都市立芸術大学作品展 市長賞"
+      ],
+      "secondary_note": [
+        "国内オークションで実績あり、100-500 万円台と推定"
+      ],
+      "sns_note": "SNS 継続発信。",
+      "scores": {
+        "awards": "B",
+        "collections": "C",
+        "gallery": "B",
+        "international": "C",
+        "domestic": "A",
+        "secondary": "C",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 CV（kimurashoma.wixsite.com/kimurashoma-artworks/cv）、biscuit gallery 公式（biscuitgallery.com/shoma-kimura/）、biscuitgallery.com 2022-2024 展示（2026-07-20）。生年 1996-01-28 大阪、京都市芸大院修了 2020（公式）。CAF 賞最優秀 2017、京セラ美術館個展 2020、biscuit gallery 継続関係（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "藤倉 麻子",
+      "name_kana": "ふじくら あさこ",
+      "name_en": "Asako Fujikura",
+      "birth_year": 1992,
+      "genre": [
+        "映像",
+        "メディアアート"
+      ],
+      "gallery": [
+        "WAITINGROOM（東京、継続契約）",
+        "CALM & PUNK GALLERY（東京、2021 個展）"
+      ],
+      "profile": "1992 年埼玉県生まれ、東京拠点。2016 年東京外国語大学言語文化学部（ペルシャ語）卒業、2018 年東京藝術大学大学院映像研究科メディア映像専攻修士修了。主に 3D CG アニメーション技法を用い、都市と郊外にまたがるインフラや、それに付随する景観の深度を主題に制作。近年は埋立地の物流のダイナミズム、都市内の庭の出現を扱う空間表現を展開。ICC・ACAC 青森・PROJECT ATAMI 等で継続発表、Machine Love（森美術館 2024）等主要美術館展示に選出。",
+      "exhibitions": [
+        "【個展】",
+        "2024：『Sunlight Announcements / 日当たりの予告群』WAITINGROOM 東京",
+        "2021：『Paradise for Free』CALM & PUNK GALLERY 東京",
+        "【主要グループ展】",
+        "2020：『Close to Nature, Next to Humanity』Taitung Art Museum（台湾）",
+        "2021：『Encounters in Parallel』ANB Tokyo",
+        "2021：『CULTURE GATE to JAPAN』東京国際クルーズターミナル",
+        "2024：『Machine Love: Video Games, AI and Contemporary Art』森美術館（東京）",
+        "2025：『Layering Time: Depicting This World』金沢 21 世紀美術館",
+        "2025：第 19 回ヴェネチアビエンナーレ国際建築展 日本館『Neutral Point』（イタリア）",
+        "その他：国際芸術センター青森（ACAC）レジデンス、ICC 出品、PROJECT ATAMI"
+      ],
+      "collections": [
+        "森美術館 関連（Machine Love 2024、要 Verify 収蔵）"
+      ],
+      "awards": [
+        "2020：LUMINE meets ART AWARD 2020 グランプリ"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（映像／エディション作品中心）"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "C",
+        "gallery": "B",
+        "international": "A",
+        "domestic": "S",
+        "secondary": "E",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP afujikura.com（2026-07-20）。生年 1992 埼玉、外大 2016 卒 / 藝大映像研 2018 修了 (公式)。WAITINGROOM 個展 2024・CALM & PUNK 個展 2021（公式）。森美術館 Machine Love 2024・金沢 21 世紀 2025・ヴェネチア建築展日本館 2025（公式）。LUMINE meets ART AWARD 2020 GP（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "布施 琳太郎",
+      "name_kana": "ふせ りんたろう",
+      "name_en": "Rintaro Fuse",
+      "birth_year": 1994,
+      "genre": [
+        "映像",
+        "インスタレーション",
+        "絵画",
+        "ミクストメディア"
+      ],
+      "gallery": [
+        "SNOW Contemporary（東京、複数個展継続）"
+      ],
+      "profile": "1994 年東京都生まれ、神奈川県湯河原町育ち。2013 年神奈川県立平塚江南高校卒業。2017 年東京藝術大学美術学部絵画科油画専攻卒業、2019 年東京藝術大学大学院映像研究科メディア映像専攻修了（首席修了・東京藝術大学美術館買い上げ賞）。「iPhone 以降の都市における『新しい孤独』」「二人であること」をテーマに、詩や批評を出発点とした絵画・映像・インスタレーション・パフォーマンスを制作。展覧会企画（キュレーション）にも継続的に参画する多面的な実践者。美術手帖・現代詩手帖・ユリイカ・新潮等への執筆多数。",
+      "exhibitions": [
+        "【個展】",
+        "2025：『人工呼吸、あるいは自画像の自画像』",
+        "2024：『性と大地』",
+        "2023：『ふたつでなくひとつであること、あるいはひとつになれないことのメカニズム』",
+        "2023：『絶縁のステートメント』",
+        "2022：『新しい死体』（PARCO Museum Tokyo）",
+        "2022：『イヴの肉屋』",
+        "2021：『すべて最初のラブソング』",
+        "2021：『名前たちのキス』",
+        "2019：『原料状態の孤独を、この（その）親指の腐敗へと特殊化する』",
+        "2018：『はじめての洞窟壁画』",
+        "2016：『still life』『不誠実な声帯』『布施なき世界』",
+        "2014：『布施琳太郎生誕 20 周年記念パーティ展』",
+        "【主要グループ展】",
+        "2025：『Art Here 2025 Shadows』",
+        "2025：『無宿』",
+        "2025：『150 年』",
+        "2024：『神戸六甲ミーツ・アート 2024 beyond』",
+        "2024：『新・今日の作家展 2024 あなたの中のわたし』",
+        "2024：『MEET YOUR ART FESTIVAL 2024 -NEW ERA-』",
+        "2022：『時を超えるイヴ・クラインの想像力』",
+        "2021：『Reborn-Art Festival 2021-22』",
+        "2019：3331 Art Fair",
+        "【キュレーション（主要）】",
+        "2025：『パビリオン・ゼロ』",
+        "2023：『砂の本』",
+        "2022：『惑星ザムザ』",
+        "2021：『沈黙のカテゴリー』",
+        "2020：『楕円のつくり方』『化石観測』『隔離式濃厚接触室』『余白』",
+        "2018：『モデルルーム』『孤独の地図』『ソラリスの酒場』",
+        "2017：『新しい孤独』"
+      ],
+      "collections": [
+        "高橋コレクション",
+        "国際日本文化研究センター",
+        "東京藝術大学美術館"
+      ],
+      "awards": [
+        "2015：安宅賞（東京藝術大学）",
+        "2019：東京藝術大学美術館買い上げ賞（首席修了）",
+        "2019：第 16 回美術手帖芸術評論募集『新しい孤独』佳作入選",
+        "2022：平山郁夫賞（東京藝術大学）",
+        "2023：Forbes JAPAN 30 UNDER 30『世界を変える 30 歳未満』"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー＋自主企画中心"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "B",
+        "international": "C",
+        "domestic": "A",
+        "secondary": "D",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP rintarofuse.com/about/ より全項目抽出（2026-07-20）。生年 1994-09-06 東京、藝大絵画卒 2017 / 映像研修了 2019 首席（公式）。SNOW Contemporary 所属（公式）。Forbes 30U30 2023 (公式)、平山郁夫賞 2022 (公式)、藝大美術館買い上げ 2019 (公式)。収蔵 3 館 (公式)。キュレーション実績豊富。",
+      "instagram_url": "https://www.instagram.com/rintarofuse/",
+      "instagram_followers": null
+    },
+    {
+      "name": "永田 康祐",
+      "name_kana": "ながた こうすけ",
+      "name_en": "Kosuke Nagata",
+      "birth_year": 1990,
+      "genre": [
+        "映像",
+        "写真",
+        "メディアアート",
+        "彫刻"
+      ],
+      "gallery": [
+        "ANOMALY（東京、継続契約）",
+        "shhh（韓国・仁川、2024 個展）"
+      ],
+      "profile": "1990 年愛知県生まれ、神奈川県拠点。2012 年東京藝術大学美術学部卒業（B.A.）、2014 年東京藝術大学大学院美術研究科修士修了（M.A.）、2023 年 9 月東京藝術大学大学院映像研究科博士修了（Ph.D.）。写真・映像・インスタレーションで、自己と他者、自然と文化、身体と環境などの二項対立とその潜在的曖昧性を探究。近年は食事コース形式の映像エッセイ・パフォーマンスで、食文化と国家アイデンティティ、テーブルマナーの身体技法・権力関係、食品生産における動植物の生命管理を扱う。多摩美術大学非常勤講師（2018〜継続）、東京大学工学部・工学院大学建築学部でも非常勤講師歴。JSPS 特別研究員 DC1（2017-2020）。",
+      "exhibitions": [
+        "【個展】",
+        "2016：『Therapist』トーキョーワンダーサイト本郷",
+        "2020：『αM Project 2020-2021: Eat』Gallery αM（東京、11/27-2021/3/5）",
+        "2021：『Equilibres』ANOMALY 東京（10/2-11/7）",
+        "2022：『Feasting Wild』karch 石川（9/10-19）",
+        "2023：『One and Several Narratives』安城市民ギャラリー（12/16-2024/1/20）",
+        "2024：『Ruminant』shhh 仁川（韓国、5/14-6/1）",
+        "2025：『Becoming Salmon』ANOMALY 東京（3/15-4/12）",
+        "【主要グループ展】",
+        "2017：『Malformed Objects』山本現代（東京）",
+        "2018：『Open Space 2018: In Transition』NTT ICC（5/2-2019/3/10）",
+        "2018：恵比寿映像祭 2018 東京都写真美術館",
+        "2019：あいちトリエンナーレ 2019『情の時代』愛知県美術館（8/1-10/14）",
+        "2019：『False Spaces』Tokyo Arts and Space",
+        "2020：『Echoes of Monologues』ANOMALY",
+        "2020：『traNslatioNs - Understanding Misunderstanding』21_21 design sight",
+        "2021：VOCA 2021 上野の森美術館",
+        "2022：『恵比寿映像祭』Contemporary Japanese Photography vol.19『触るように視る』東京都写真美術館",
+        "2022：『DAZZLER』京都芸術センター",
+        "2024：『Becoming Feral』十和田市現代美術館（4/13-11/17）",
+        "2025：恵比寿映像祭 2025 東京都写真美術館",
+        "2025：『Parallel II: Interzone』Noir Row Art Space（ウドンタニ、タイ）",
+        "【レジデンス】",
+        "2023：SeMA Nanji Residency 交換プログラム（ソウル、9-11 月）",
+        "2025：Zhengbin Art Space Moor（基隆、台湾、6-8 月）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2020：平山郁夫美術基金（東京藝術大学）",
+        "2021：Kumagai Masatoshi Culture Foundation 助成",
+        "2021：小笠原敏晶記念財団 COVID-19 特別助成",
+        "2024：Agency for Cultural Affairs 新進芸術家海外研修制度",
+        "2024：Agency for Cultural Affairs 展示助成プログラム",
+        "2024：Arts Commission Yokohama ACY Artist Fellowship",
+        "JSPS 特別研究員 DC1（2017-2020）"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、映像・パフォーマンス中心"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "D",
+        "gallery": "B",
+        "international": "B",
+        "domestic": "A",
+        "secondary": "D",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP knagata.org より全項目抽出（2026-07-20）。生年 1990 愛知、藝大 B.A.2012/M.A.2014/Ph.D.2023、多摩美講師 2018〜（公式）。ANOMALY 継続個展 2021/2025、shhh 韓国 2024、十和田市現美 2024、あいちトリエンナーレ 2019、VOCA 2021（公式）。ACC/文化庁研修/横浜 ACY 各種助成（公式）。IG @knagata_org（公式）。",
+      "instagram_url": "https://www.instagram.com/knagata_org/",
+      "instagram_followers": null
+    },
+    {
+      "name": "水野 里奈",
+      "name_kana": "みずの りな",
+      "name_en": "Rina Mizuno",
+      "birth_year": 1989,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "ミヅマアートギャラリー（東京、継続契約）",
+        "六本木ヒルズ A/D Gallery（東京）",
+        "ポーラミュージアムアネックス（東京、継続展示）"
+      ],
+      "profile": "1989 年愛知県生まれ。2010 年 University of Brighton（英）Fine Art Painting 留学（学部長賞・一等賞）、2012 年名古屋芸術大学美術学部油画卒業（卒業制作優秀賞）、2014 年多摩美術大学大学院美術研究科絵画専攻油画修士修了。ボールペンと油絵具を併用し、中東的な繊細な装飾と中国水墨画的な動的筆致を融合させる緻密＆ビビッドな独自スタイル。VOCA 展 2015 奨励賞・愛知県芸術文化選奨新人賞 2022 等、国内主要受賞多数。大原美術館ほか国内 8 コレクション、スイス Jean-Pierre Zappy Collection 収蔵。Art Basel Hong Kong 2024 出品、Art Miami 継続出品で国際市場にも接続。書籍装画（島田雅彦『パンとサーカス』等）でも活動を広げる。",
+      "exhibitions": [
+        "【個展】",
+        "2023：『水野里奈展 -アトリエの景色-』新宿髙島屋",
+        "2023：『Garden』六本木ヒルズ A/D ギャラリー",
+        "2020：『みてもみきれない。』ミヅマアートギャラリー",
+        "2019：『思わず立ち止まらざるをえない』ポーラミュージアムアネックス",
+        "2018：『水の結びめ』ギャラリー桜林",
+        "2018：『入れ子の繋がり -nested structure-』六本木ヒルズ A/D ギャラリー",
+        "2017：『ARKO 2017 水野里奈』大原美術館",
+        "2016：『絵画とドローイングの境界線』第一生命ギャラリー",
+        "2015：『入れ子状の蜃気楼』taimatz",
+        "2014：『庭にはびこる』丸ビル 7F ロビー",
+        "2013：『Dazzle Painting』taimatz",
+        "2012：『視界に移り住むとき』H.P.FRANCE WINDOW GALLERY MARUNOUCHI",
+        "2012：『水野里奈』taimatz",
+        "【主要グループ展・フェア】",
+        "2026：アートフェア東京 2026 / ART FAIR NAGOYA",
+        "2025：『Blooming towards the sky』ポーラミュージアムアネックス",
+        "2025：第 1・2 期コレクション展 愛知県美術館",
+        "2024：Art Basel HONG KONG 2024",
+        "2024：『Place in my heart』ポーラミュージアムアネックス",
+        "2024：『異文化は共鳴するのか？大原コレクションでひらく近代への扉』大原美術館",
+        "2023：『V〜VOCA の Venus たち〜』第一生命保険株式会社",
+        "2023：京都市京セラ美術館 チャリティーオークション & ガラ・ディナー",
+        "2023：『Plastic Revives』ポーラミュージアムアネックス",
+        "2023：東京現代（パシフィコ横浜）／ DNA 深圳／ Art Miami",
+        "2023：『日本・現代・藝術家 視線和感性』Humarish Club マカオ",
+        "2022：Art Miami",
+        "2022：『パンとサーカス展』ミヅマアートギャラリー",
+        "2021-2022：『現代美術のポジション 2021-2022』名古屋市美術館",
+        "2021：『BOUNDLESS』HWA'S Gallery 上海",
+        "2021：Art Miami + ONLINE",
+        "2020：『数奇景 / NEW VIEW』三菱地所アルティアム福岡・福岡三越・日本橋三越本店 3 会場巡回",
+        "2019：Art Miami",
+        "2019：『Eyes Curiosity - Flowers in the Field』Mizuma Gallery シンガポール",
+        "2019：『あざみ野コンテンポラリー vol.10』横浜市民ギャラリーあざみ野",
+        "2019：『優しい眼差し』HWA'S Gallery 上海",
+        "2017：『片山正道的百科全書 Life is hard…Let's go shopping.』東京オペラシティアートギャラリー",
+        "2016：『アーツチャレンジ 2016』愛知芸術文化センター",
+        "2015：『豊穣なるもの 現代美術 in 豊川』豊川市桜ヶ丘ミュージアム",
+        "2015：VOCA 展 2015（VOCA 奨励賞）上野の森美術館",
+        "2014：『東京五美術大学連合卒業・修了制作展 2014』国立新美術館",
+        "2013：あいちトリエンナーレ 2013『揺れる大地』ARTISAN ビル"
+      ],
+      "collections": [
+        "大原美術館",
+        "愛知県美術館",
+        "名古屋市美術館",
+        "三菱地所",
+        "第一生命保険株式会社",
+        "**Jean-Pierre Zappy Collection（Japigozzi Collection、スイス）**",
+        "倉敷中央病院",
+        "高橋コレクション"
+      ],
+      "awards": [
+        "2012：名古屋芸術大学卒業制作優秀賞、ブライトン大学一等賞・学部長賞",
+        "2012：アッシュ・ペー・フランス賞（アートアワードトーキョー丸の内 2012）",
+        "2014：三菱地所賞（アートアワードトーキョー丸の内 2014）",
+        "2014：若松友治賞（3331 Art Fair）",
+        "2015：第 30 回ホルベイン・スカラシップ奨学生",
+        "2015：VOCA 奨励賞（VOCA 展 2015）",
+        "2022：愛知県芸術文化選奨 新人賞"
+      ],
+      "secondary_note": [
+        "国内オークションで継続的落札、100-300 万円台と推定",
+        "Art Basel HK 2024 出品・Art Miami 継続で欧米市場接続、Japigozzi Collection スイス収蔵"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "A",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "A",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP rinamizuno.com/cv/ より全項目抽出（2026-07-20）。生年 1989 愛知（公式）、多摩美修士 2014（公式）。VOCA 奨励賞 2015、愛知県選奨 2022（公式）。ミヅマ・六本木ヒルズ A/D・ポーラ 3 ギャラリー（公式）。Art Basel HK 2024・Art Miami 4 回（公式）。8 コレクション（公式）。書籍装画実績（公式）。",
+      "instagram_url": "https://www.instagram.com/_rinamizuno/",
+      "instagram_followers": null
+    },
+    {
+      "name": "迎 英里子",
+      "name_kana": "むかい えりこ",
+      "name_en": "Eriko Mukai",
+      "birth_year": 1990,
+      "genre": [
+        "彫刻",
+        "パフォーマンス",
+        "インスタレーション"
+      ],
+      "gallery": [
+        "要確認"
+      ],
+      "profile": "1990 年兵庫県生まれ、秋田在住。2015 年京都市立芸術大学大学院美術研究科彫刻専攻修了。2024 年〜愛知県立芸術大学講師。屠殺・石油採掘・国債の仕組み・水蒸気循環など、社会に潜む不可視の現象・制度をモチーフに、そのメカニズムを等身大の装置に翻訳して稼働させるパフォーマンス作品を制作。",
+      "exhibitions": [
+        "2016：『approach 2 (Oil)』Gallery PARC 京都",
+        "2019：『Structure 3』FINCH ARTS 京都",
+        "2020：『ARTS & ROUTES -あばたのなかで-』秋田県立近代美術館",
+        "2021：『300/500000(1942)』広島アートセンター",
+        "2022：あいちトリエンナーレ 2022 参加",
+        "2022：ARTnews JAPAN 若手 30 人選出",
+        "2023：『approach 13.1』anonymous bldg. 東京"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [],
+      "secondary_note": [
+        "セカンダリ流通なし（パフォーマンス／装置作品中心）"
+      ],
+      "scores": {
+        "awards": "C",
+        "collections": "D",
+        "gallery": "D",
+        "international": "C",
+        "domestic": "B",
+        "secondary": "E",
+        "reputation": "C",
+        "sns": "D"
+      },
+      "impression": "",
+      "sources": "Verified: 生年 1990 (aichi-fam-u.ac.jp, ARTnews), 京都市立芸大彫刻修了 2015 (aichi-fam-u.ac.jp), あいちトリエンナーレ 2022 (aichitriennale.jp), 愛知県立芸大講師 2024〜 (aichi-fam-u.ac.jp)。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "村上 早",
+      "name_kana": "むらかみ さき",
+      "name_en": "Saki Murakami",
+      "birth_year": 1992,
+      "genre": [
+        "版画"
+      ],
+      "gallery": [
+        "コバヤシ画廊（東京、継続契約）"
+      ],
+      "profile": "1992 年群馬県高崎市生まれ（実家は動物病院）。2016 年武蔵野美術大学大学院版画コース修士修了。銅版画のリフトグラウンド技法を用い、ポスターカラーで直接銅版に線を描き腐蝕させる作風。銅版を心、線を心的外傷、インクを血、紙を包帯・ガーゼに見立てる。学生時代から複数の主要賞を受賞し注目された版画家。**東京国立近代美術館（MOMAT）**に収蔵。",
+      "exhibitions": [
+        "2015：FACE 2015 東京海上日動美術賞 優秀賞",
+        "2015：第 6 回山本鼎版画展 大賞",
+        "2015：東京ワンダーウォール賞",
+        "2016：個展 Wonder Wall 東長寺（東京）",
+        "2016：VOCA 展 2016 選出",
+        "2016：Art Award Tokyo Marunouchi フランス大使館賞",
+        "2016〜：『Gallery Statement 新世代への視点 2017 村上早展』コバヤシ画廊（以降毎年開催）",
+        "2017：群馬青年ビエンナーレ 優秀賞",
+        "2019：『gone girl 村上早展』上田市立美術館（長野）",
+        "2022：New Artist Picks: Wall Project 村上早『Stray Child』横浜美術館",
+        "2022：ARTnews JAPAN 若手 30 人選出",
+        "2025：個展 コバヤシ画廊"
+      ],
+      "collections": [
+        "**東京国立近代美術館 MOMAT（The National Museum of Modern Art, Tokyo）**",
+        "横浜美術館 関連（New Artist Picks 2022）",
+        "上田市立美術館 関連"
+      ],
+      "awards": [
+        "2015：FACE 2015 東京海上日動美術賞 優秀賞",
+        "2015：第 6 回山本鼎版画展 大賞",
+        "2015：東京ワンダーウォール賞",
+        "2016：Art Award Tokyo Marunouchi フランス大使館賞",
+        "2016：VOCA 展 2016 選出",
+        "2017：群馬青年ビエンナーレ 優秀賞"
+      ],
+      "secondary_note": [
+        "版画作品として国内オークションで継続的取引、10-100 万円台と推定"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "A",
+        "gallery": "B",
+        "international": "C",
+        "domestic": "B",
+        "secondary": "C",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式（gallerykobayashi.jp、asianw-art.com、ARTnews）。生年 1992 群馬、武蔵美院修了 2016（公式）。**MOMAT 収蔵**（momat.go.jp 公式アーティスト一覧）。上田市立美個展 2019（santomyuze.com）、横浜美 2022（yokohama.art.museum）、FACE / 山本鼎版画 / TWW 2015、Art Award Marunouchi フランス大使館賞 2016（Wikipedia, ARTnews）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "持田 敦子",
+      "name_kana": "もちだ あつこ",
+      "name_en": "Atsuko Mochida",
+      "birth_year": 1989,
+      "genre": [
+        "彫刻",
+        "インスタレーション"
+      ],
+      "gallery": [
+        "TERRADA ART AWARD 参加継続",
+        "TODA BUILDING APK Public プログラム参加（東京、2024-2026）",
+        "Akademie Schloss Solitude 所属フェロー（シュトゥットガルト）"
+      ],
+      "profile": "1989 年東京都生まれ、飯田市（長野）拠点。2013 年武蔵野美術大学日本画学科卒業、2018 年 Bauhaus-Universität Weimar 大学院（Public Art and New Artistic Strategies、ドイツ）＋東京藝術大学大学院先端芸術表現専攻 修了。2018-2019 ポーラ美術振興財団 在外研修（独・シンガポール）。既存の空間・建築に壁・階段・仮設要素を挿入し、公／私・内／外・上／下の関係性を反転させるインスタレーションを制作。ドイツ・チリ・キューバ・シンガポール・アルメニアなど広範な国際レジデンス経験。**2025 年ヴェネチアビエンナーレ第 19 回国際建築展 参加**、Akademie Schloss Solitude フェロー、第 35 回髙島屋美術賞と国際的地位確立中。ドキュメンタリー映画『Unbuilding』でイメージフォーラムフェスティバル 2024 観客賞。",
+      "exhibitions": [
+        "【主要展示・プロジェクト（時系列）】",
+        "2013：個展『Space, Violence』東大和第五中学校（東京）",
+        "2014：『KAKEHASHI-project』（米国・国際交流基金）",
+        "2014：『Rokko Meets Art 2014』六甲山（兵庫）",
+        "2015：『IMAGINARY BAUHAUS MUSEUM』2. Berliner Herbstsalon（Maxim Gorki Theater、ベルリン）",
+        "2015：『The Principle of Happiness』Kunstfest Weimar（元刑務所、ドイツ）",
+        "2015：『Universe 69』ギュムリ（アルメニア）",
+        "2016：『Push The Wall』ZK/U（ベルリン）",
+        "2017：『Desintegriert Euch!』3. Berliner Herbstsalon（Maxim Gorki Theater、ベルリン）",
+        "2017：『THE REVOLVING HOUSE OF T.』水戸市（茨城）",
+        "2017：『Entre Quatro Paredes』ワイマール（ドイツ）",
+        "2018：『Contemporary Art Foundation Award 2018』ヒルサイドフォーラム 代官山（斎藤精一賞受賞）",
+        "2018：Art Award Tokyo Marunouchi 2018 東京駅（今村有策賞受賞）",
+        "2018：『Going Away Closer』Spiral Garden 東京 & Centro de Arte Contemporaneo ハバナ",
+        "2018：Affordable Art Fair Young Talent Programme（シンガポール）",
+        "2019：Reborn-Art Festival 2019（宮城）",
+        "2019：3331 Art Fair（東京）",
+        "2019：FUTURESCAPE PROJECT ZOU-NO-HANA（横浜）",
+        "2020：札幌国際芸術祭（北海道）",
+        "2020：『Sazaedo Hall 2020 – Contemporary spiral and 100 paintings』（群馬）",
+        "2021：『Steps』TERRADA ART AWARD 2021 ファイナリスト展（寺田倉庫、Jury's Award 受賞）",
+        "2021：Northern Alps Art Festival 2020-2021（長野）",
+        "2023：『SHINBISM 5』信州高遠美術館（長野、12/-2024/1）",
+        "2023：『Echigo-Tsumari: Aspects of Snow I』越後妻有里山現代美術館（新潟）",
+        "2023：KOBE Re: Public ART PROJECT KIITO（兵庫）",
+        "2024：『Unbuilding』ドキュメンタリー映画公開（Image Forum Festival 2024 観客賞）",
+        "2024：Public art プログラム APK Public（TODA BUILDING、東京、2024-2026）",
+        "2025：**La Biennale di Venezia 第 19 回国際建築展**（ヴェネチア、5-11 月）",
+        "2025：『Opacity : Transmission』Akademie Schloss Solitude（シュトゥットガルト）",
+        "2025：『Kiosk for a Magic Future』7. Berliner Herbstsalon（Maxim Gorki Theater、ベルリン）",
+        "2025：『Hyper-/Un-/Sur-Real』ショップウィンドウズ（シュトゥットガルト）",
+        "【レジデンス】",
+        "2015：Sapporo Tenjinyama Art Studio（北海道）",
+        "2016：ZK/U（ベルリン、10-12 月）",
+        "2017：Kunstraum Kreuzberg/Bethanien（ベルリン、Tokyo Wonder Site 交換）",
+        "2018：Artista x Artista（ハバナ、キューバ）",
+        "2018：INSTINC（シンガポール、8-12 月）",
+        "2019：PILOTENKUECHE（ライプツィヒ、1-3 月）",
+        "2019：bi-PARADISE（松戸、10 月）",
+        "2025：Akademie Schloss Solitude（シュトゥットガルト、3-10 月）"
+      ],
+      "collections": [
+        "確認できず（インスタレーション性質上、館蔵は限定的、要 Verify）"
+      ],
+      "awards": [
+        "2015：Bauhaus Essentials Award（『Piercing The Prison』）",
+        "2015：JASSO 留学支援プログラム",
+        "2016-2017：TOBITATE! Young Ambassador Program",
+        "2018：Salon de Printemps Prize",
+        "2018：斎藤精一賞（Contemporary Art Foundation Award）",
+        "2018：今村有策賞（Art Award Tokyo Marunouchi）",
+        "2018-2019：POLA 美術振興財団 在外研修（独・シンガポール）",
+        "2021：Mitsubishi Corporation ART GATE Program / Activation（2021-2023）",
+        "2021：Jury's Award『Steps』（TERRADA ART AWARD 2021）",
+        "2022：ARTnews JAPAN 30 artists under 35",
+        "2023-2024：Kumagai Masatoshi Culture Foundation 助成",
+        "2024：Agency for Cultural Affairs 新進メディア芸術家海外研修",
+        "2024：Image Forum Festival 2024 観客賞（『Unbuilding』）",
+        "2025：第 35 回髙島屋美術賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（空間介入作品中心）"
+      ],
+      "scores": {
+        "awards": "S",
+        "collections": "D",
+        "gallery": "B",
+        "international": "S",
+        "domestic": "A",
+        "secondary": "E",
+        "reputation": "A",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP atsukomochida.jp/cv/ より全項目抽出（2026-07-20）。生年 1989 東京、Bauhaus Weimar & 藝大 2018 修了、飯田市拠点（公式）。**ヴェネチア建築展 2025 参加**（公式）、Akademie Schloss Solitude 2025（公式）、第 35 回髙島屋美術賞 2025、TERRADA 2021、CAF 2018 & Marunouchi 2018 各賞（公式）。ARTnews 30U35 2022、8 か国レジデンス経験（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "石原 海",
+      "name_kana": "いしはら うみ",
+      "name_en": "Umi Ishihara (UMMMI.)",
+      "birth_year": 1993,
+      "genre": [
+        "映像",
+        "映画"
+      ],
+      "gallery": [
+        "要確認（美術展・映画祭並行発表）"
+      ],
+      "profile": "1993 年 1 月 1 日生まれ。ロンドン／北九州拠点。東京藝術大学 BA 卒業後、ロンドン University for the Creative Arts で MA Filmmaking 修了。作家名は UMMMI.。個人記憶と社会現実を交差させ、周縁化されたコミュニティのライフヒストリーに光を当てる実験的ナラティヴ映画を制作。両親のもと日本のナイトクラブ／フリーレイヴシーンで育った経験を作品世界の基層とする。非職業的俳優や地域住民との協働制作を継続。",
+      "exhibitions": [
+        "【個展・美術展示】",
+        "2021：『重力の光』資生堂ギャラリー（東京）",
+        "2024：『激雷』Gallery 舞台裏（東京）",
+        "2024：『あらがう』福岡市美術館",
+        "2026：『Nocturnal Melody』Gasworks（ロンドン）",
+        "【主要グループ展】",
+        "2023：『Home Sweet Home』国立国際美術館（大阪）",
+        "【映画・映像作品】",
+        "2018：『The Garden Apartment（ガーデンアパート）』",
+        "2019：『忘却の先駆者（Precursor to Oblivion）』（東京藝大卒業制作）",
+        "2019：『Janitor of Lunacy / 狂気の管理人』BBC4 テレビ委託作品",
+        "『重力の光』ドキュメンタリー（パンデミック時に英国から北九州帰国後に撮影）",
+        "【映画祭選出】",
+        "2019：ロッテルダム国際映画祭 Bright Future 部門",
+        "2019：Bloomberg New Contemporaries",
+        "2026：Locarno Filmmakers Academy",
+        "2026：CHANEL X BIFF Asian Film Academy"
+      ],
+      "collections": [
+        "**国立国際美術館（大阪）**",
+        "**福岡市美術館**"
+      ],
+      "awards": [
+        "2015：CAF Award（現代芸術振興財団）",
+        "2019：Bloomberg New Contemporaries",
+        "2019：江副記念リクルート財団 奨学生（第 47 回生）",
+        "2021：資生堂 art egg 賞",
+        "2024：GQ Global Creativity Awards"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（映像／映画作品中心）"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "D",
+        "international": "A",
+        "domestic": "A",
+        "secondary": "E",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP ummmi.net/about より抽出（2026-07-20）。生年 1993-01-01 (mydramalist)。藝大 BA、UCA ロンドン MA (公式)。ロッテルダム映画祭 2019・BBC4 委託 2019（公式）。国立国際美術館・福岡市美 収蔵（公式）。GQ Global Creativity Awards 2024・資生堂 art egg 2021・Bloomberg 2019・CAF Award 2015・江副リクルート財団 (公式・recruit-foundation)。IG @_____81, X @___ummmi（公式）。",
+      "instagram_url": "https://www.instagram.com/_____81/",
+      "instagram_followers": null
+    },
+    {
+      "name": "近藤 亜樹",
+      "name_kana": "こんどう あき",
+      "name_en": "Aki Kondo",
+      "birth_year": 1987,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "ShugoArts（東京六本木・清澄・天王寺、継続契約）"
+      ],
+      "profile": "1987 年北海道生まれ、山形在住。2012 年東北芸術工科大学大学院美術研究科修士修了。山形での大学院在学中に東日本大震災を経験し、これが作風の転機となる。強い色彩と動的な筆致で、生命と希望を主題とした絵画を制作、「絵は人生そのもの」を信条とする。約 14,000 コマの油絵アニメーションと実写を合成した短編映画『HIKARI』（2015）以降、映像作品・音楽家との即興ライブペインティング・壁画にも展開。ShugoArts の中核作家として東京六本木・清澄・天王寺の 3 拠点で継続的に個展を開催、ロンドン・台北・山形美術館などでも個展。",
+      "exhibitions": [
+        "【個展】",
+        "2012：『たべる地球』ShugoArts 清澄",
+        "2013：『近藤亜樹の生態』実家 JIKKA（東京）",
+        "2014：『Works on paper 2011-2014』ShugoArts 清澄",
+        "2015：『HIKARI』ShugoArts 清澄",
+        "2016：『HIKARI』Daiwa Foundation Japan House（ロンドン）",
+        "2016：Weekend Gallery Mitsushuku",
+        "2017：『飛べ、こぶた』ShugoArts 六本木",
+        "2017：『From Island to Island』TKG+ 台北",
+        "2017：パフォーマンス『ナナフシ』近藤亜樹 × DÉ DÉ MOUSE セゾン美術館",
+        "2018：『Grow Wings』銀座蔦屋書店",
+        "2018：『あの日を待つ 明日を待つ 今日』ShugoArts 清澄",
+        "2021：『ここにあるしあわせ』ShugoArts 清澄（作品集刊行記念）",
+        "2021：『Aki Kondo — Stars, Sparkling／近藤亜樹 ─星、光る』山形美術館",
+        "2022：『ともだちになるためにぼくらはここにいるんだよ』游庵",
+        "2023：『わたしはあなたに会いたかった』ShugoArts 六本木",
+        "【主要グループ展】",
+        "2017：『高橋コレクション・マインドフルネス 2017』山形美術館",
+        "2018：『絵画の現在』府中市美術館",
+        "2022：ARTnews JAPAN 若手 30 人選出",
+        "2022：あいちトリエンナーレ 2022",
+        "2025：ShugoArts Show 『Sprout』ShugoArts 六本木",
+        "2025：Tokyo Gendai"
+      ],
+      "collections": [
+        "**山形美術館**",
+        "**高松市美術館**",
+        "**福岡市美術館**",
+        "上島コレクション（UESHIMA MUSEUM）",
+        "高橋龍太郎コレクション",
+        "その他"
+      ],
+      "awards": [
+        "2022：VOCA 2022 佳作賞"
+      ],
+      "secondary_note": [
+        "国内オークションで実績、100-500 万円台と推定"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "A",
+        "gallery": "S",
+        "international": "B",
+        "domestic": "A",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP shugoarts.com/artists/aki-kondo/ より抽出（2026-07-20）。生年 1987 北海道、東北芸工大院修了 2012（公式）。ShugoArts 継続契約（公式）、山形美・高松市美・福岡市美・UESHIMA・高橋コレクション（bijutsutecho）。VOCA 2022 佳作（公式）。ARTnews 30 人 2022（artnewsjapan）。ロンドン Daiwa Foundation 2016、台北 TKG+ 2017 個展（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "對木 裕里",
+      "name_kana": "つゐき ゆり",
+      "name_en": "Yuri Tsuiki",
+      "birth_year": 1987,
+      "genre": [
+        "彫刻"
+      ],
+      "gallery": [
+        "板室温泉大黒屋（栃木、継続的展示）",
+        "所属関係の詳細は要 Verify"
+      ],
+      "profile": "1987 年神奈川県生まれ、東京在住。2009 年武蔵野美術大学造形学部彫刻学科卒業、2011 年京都市立芸術大学大学院美術研究科彫刻専攻修士修了。石膏および多様な素材を用いた立体作品を制作。粘土の手仕事の質感を残すシンプルな彫刻フォルムに、パステル調のペインティングを組み合わせる作風。粘土でオリジナルフォルムを作って石膏で型取り、時に野菜・果物と抽象フォルムを組み合わせる。近年は美術館ワークショップ講師としても活動的（横須賀美術館、箱根彫刻の森、埼玉県立近美、平塚市美術館、福島県立美術館、国立新美術館等）。",
+      "exhibitions": [
+        "【個展】",
+        "2024：『日々の水やり』板室温泉大黒屋（栃木）",
+        "2022：『ONE』HOME PICNIC STORE HOUSE（滋賀）",
+        "2022：『Shells』NADiff a/p/a/r/t（東京）",
+        "2021：『ばらばらの速度』横浜市民ギャラリーあざみ野",
+        "2021：『てのたび では いっておいで』神奈川県民ホール",
+        "2021：『みぞおちの石』ギャラリー NEW 新九郎（神奈川）",
+        "2020：『VOID はひとつの MASS になる』VOID A PART（滋賀）",
+        "2018：『玉と敷物』switch point（東京）",
+        "2017：『對木裕里展』板室温泉大黒屋（栃木）",
+        "2017：『ざらざら』gFAL 武蔵野美術大学内",
+        "2015：『左みずうみ』Alainistheonlyone（東京）",
+        "2015：『本の場第 4 回新鋭作家展』川口市立アートギャラリー・アトリア（埼玉）",
+        "2014：『分け入って、分け入って』古書まどそら堂（東京）",
+        "【主要グループ展】",
+        "2023：『窓の来し方、空間の行方』ART DYNE（東京）",
+        "2021：『トゥーマッチな風呂敷』（民佐穂との二人展）second.2（東京）",
+        "2021：『憑依する作法』小金井アートスポットシャトー 2F",
+        "2021：『Playground』亀戸アートセンター",
+        "2019：『zine vorstellung #1』polygue（ライプツィヒ、ドイツ）",
+        "2017：群馬青年ビエンナーレ 2017 群馬県立近代美術館",
+        "2016：『Identity XII – Memorandum on Sublime』nichido contemporary art（東京）",
+        "2016：第 11 回大黒屋現代アート公募展（栃木）",
+        "その他多数（2007-2021）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2011：京都市立芸術大学同窓会賞",
+        "2013：第 8 回大黒屋現代アート公募展 入賞",
+        "2014：第 9 回大黒屋現代アート公募展 入賞",
+        "2014：第 4 回新鋭作家展 優秀賞",
+        "2016：第 11 回大黒屋現代アート公募展 大賞",
+        "2017：群馬青年ビエンナーレ 入選"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー中心"
+      ],
+      "scores": {
+        "awards": "C",
+        "collections": "D",
+        "gallery": "C",
+        "international": "C",
+        "domestic": "B",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP yuritsuiki.com/cv/ より全項目抽出（2026-07-20）。生年 1987 神奈川、武蔵美卒 2009 / 京都芸大院修了 2011（公式）。大黒屋公募 2016 大賞、群馬青年ビエンナーレ 2017（公式）。板室温泉大黒屋との継続関係（公式）。IG @tsuiqri（公式）。",
+      "instagram_url": "https://www.instagram.com/tsuiqri/",
+      "instagram_followers": null
+    },
+    {
+      "name": "熊谷 亜莉沙",
+      "name_kana": "くまがい ありさ",
+      "name_en": "Arisa Kumagai",
+      "birth_year": 1991,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "Gallery Koyanagi（東京、主要契約）",
+        "Kyoto Tsutaya Books（2026 個展）"
+      ],
+      "profile": "1991 年大阪府生まれ、大阪拠点。2013 年京都造形芸術大学油画コース卒業、2015 年京都造形芸術大学大学院総合造形修士修了。写実絵画で、素肌と宝飾品、ヴェルサーチを着る男性、光沢のあるヒョウ柄オブジェ、花などをモチーフに不穏な雰囲気を醸成。実家が大阪ミナミの高級ブティックであった背景を作品世界に投影、親密性・記憶・家庭生活の心理的次元を扱う。**東京都現代美術館（MOT）永久コレクション**に収蔵。Gallery Koyanagi 継続個展体制、2026 年京都で個展。",
+      "exhibitions": [
+        "【個展】",
+        "2013：『MAMA』ATAMATOTE 2-3-3（東京）",
+        "2015：『Leisure Class』Gallery Art Composition（東京）",
+        "2019：『Single bed』Gallery Koyanagi 東京",
+        "2022：『My yearning to be You／私はお前に生まれたかった』Gallery Koyanagi 東京",
+        "2023-2024：『...apparently God is Forgiving／神はお許しになられるらしい』Gallery Koyanagi 東京（10/31-2024/1/13）",
+        "2025：『Heaven Stolen』Gallery Koyanagi 東京（8/23-10/11）",
+        "2026：『Interwoven Chapters』Kyoto Tsutaya Books（3/6-3/27）",
+        "【主要グループ展】",
+        "2013：シェル美術賞 2013 国立新美術館",
+        "2014：第 32 回上野の森美術館大賞展 選出",
+        "2017：『Portrait』Gallery Koyanagi 東京",
+        "2020：Shell Art Award 2020 国立新美術館",
+        "2021：『GROUP SHOW: 5 ARTISTS』KOSAKU KANECHIKA 東京",
+        "2022：第 1 回 MIMOCA EYE 丸亀市猪熊弦一郎現代美術館",
+        "2022：『Under Current』Powerlong Museum 上海",
+        "2022：『young okazaki vol.02』MtK Contemporary Art 京都",
+        "2022：ARTnews JAPAN 若手 30 人選出",
+        "2024：『On Hare Day』SCÈNE 東京",
+        "2024：『ONE SINGLE BOOK』Gallery Koyanagi 東京",
+        "2024：『TO KYOTO TEN – The Echoes of East Kyoto』WHAT CAFE 東京",
+        "2024：『Collection #08』rin art association 群馬",
+        "2024：『Observation』YUKIKO MIZUTANI 東京"
+      ],
+      "collections": [
+        "**東京都現代美術館 MOT 永久コレクション**"
+      ],
+      "awards": [
+        "2013：シェル美術賞",
+        "2014：上野の森美術館大賞展 選出",
+        "浅田彰賞、卒業・修了展 優秀賞",
+        "佐藤国際文化育英財団 奨学生"
+      ],
+      "secondary_note": [
+        "国内オークションで継続的落札、100-500 万円台と推定"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "A",
+        "gallery": "A",
+        "international": "B",
+        "domestic": "B",
+        "secondary": "C",
+        "reputation": "B",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: Gallery Koyanagi 公式 CV（gallerykoyanagi.com/en/artists/arisa-kumagai/）より全項目抽出（2026-07-20）。生年 1991 大阪、京造大 B.A.2013 / M.A.2015（公式）。MOT 永久コレクション（公式）。Gallery Koyanagi 6 回個展継続（公式）。ARTnews 30 人 2022（artnewsjapan）。Kyoto Tsutaya Books 2026 個展（公式）。IG @arisakumagai_art（公式）。",
+      "instagram_url": "https://www.instagram.com/arisakumagai_art/",
+      "instagram_followers": null
+    },
+    {
+      "name": "橋本 晶子",
+      "name_kana": "はしもと あきこ",
+      "name_en": "Akiko Hashimoto",
+      "birth_year": 1988,
+      "genre": [
+        "絵画",
+        "インスタレーション"
+      ],
+      "gallery": [
+        "Gallery Koyanagi（東京、2021 個展）",
+        "Cité internationale des arts（パリ、2 度のレジデンス個展）"
+      ],
+      "profile": "1988 年生まれ、東京拠点。武蔵野美術大学日本画（B.A.2009-2013／M.A.2013-2015）修了。武蔵野美術大学非常勤講師（2021-2025）。精緻な鉛筆ドローイングを白い空間に配置するインスタレーションで、作品同士が展示空間全体で呼応し、空間全体が一つの作品として機能する制作を展開。「絵画で風景を作る」アプローチ。第 14 回 shiseido art egg 賞（2020）、Cité internationale des arts パリ賞・レジデンス（2018）。",
+      "exhibitions": [
+        "【個展】",
+        "2016：『Call if you notice』gallery blanka（愛知）",
+        "2017：『There is something I want to talk about』ARC 森ビル（東京）",
+        "2018：『It's soon』Little Barrel（東京）",
+        "2018：『Yesterday's story』Cité internationale des arts（パリ）",
+        "2019：『Will it Rain?』Cité internationale des arts（パリ）",
+        "2020：『Ask him』資生堂ギャラリー（東京、第 14 回 shiseido art egg 賞）",
+        "2021：『I saw it, it was yours』Gallery Koyanagi（東京）",
+        "2022：『Calling Shadows』国際芸術センター青森 ACAC",
+        "【主要グループ展】",
+        "2011-2024：東京・北京・サンパウロ・パリ 各会場で複数",
+        "2022：ARTnews JAPAN 若手 30 人選出"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2014：シェル美術賞 審査員賞",
+        "2014：佐藤国際文化育英財団 奨学生",
+        "2015：武蔵野美術大学 大学院修了展 優秀賞",
+        "2017：ART IN THE OFFICE 2017",
+        "2018：Paris Award／ Cité internationale des arts レジデンス",
+        "2020：第 14 回 shiseido art egg 賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、プライマリー＋美術館展示中心"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "D",
+        "gallery": "B",
+        "international": "B",
+        "domestic": "B",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP akikoh.com/biography より全項目抽出（2026-07-20）。生年 1988、武蔵美日本画 B.A.2013 / M.A.2015、武蔵美講師 2021-25（公式）。shiseido art egg 2020、Paris Award & Cité レジデンス 2018、シェル賞 2014、佐藤国際 2014（公式）。Gallery Koyanagi 2021 個展、ACAC 2022 個展（公式）。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "大岩 雄典",
+      "name_kana": "おおいわ ゆうすけ",
+      "name_en": "Euske Oiwa",
+      "birth_year": 1993,
+      "genre": [
+        "インスタレーション",
+        "映像"
+      ],
+      "gallery": [
+        "Komagome SOKO（東京、2019 個展）",
+        "十和田市現代美術館 プロジェクト展開歴あり",
+        "主要所属関係は要 Verify"
+      ],
+      "profile": "1993 年埼玉県生まれ。2017 年東京藝術大学美術学部デザイン科卒業、2019 年同大学院美術研究科デザイン専攻修士修了、2024 年 3 月東京藝術大学大学院映像研究科博士課程修了（博士号取得）。現代アーティスト＋文筆家。「空間」を単なる形態を越えてゲーム的可能性・他者との親近感・時間・契約と欲望・言葉の効力・歴史／フィクションの織り合わせとして捉え、インスタレーション・アートを再解釈する作品を展開。多摩美・京都市立芸大・早稲田・女子美等でゲスト講師（2019-2024）。",
+      "exhibitions": [
+        "【個展】",
+        "2015：『Pleasure』TWS-Emerging",
+        "2019：『Slow Actor』Komagome SOKO",
+        "2020：『バカンス』",
+        "2021：『Blind｜無闇』（サミュエル・ベケット『クワッド』参照）",
+        "2021：『margin reception』",
+        "2021：『Catchup』",
+        "2021：『Chill｜悪寒』",
+        "2022：『P in case｜渦中の P』十和田市現代美術館",
+        "2023：『Work』（分散型自律展示）",
+        "その他 ARTnews JAPAN 若手 30 人選出（2022）"
+      ],
+      "collections": [
+        "確認できず"
+      ],
+      "awards": [
+        "2014：東京ワンダーウォール 選出",
+        "2014：シェル美術賞 選出",
+        "2016：平山郁夫奨学金",
+        "2017：CAF アートアワード 海外研修助成賞",
+        "2019：第 16 回美術手帖芸術評論募集 選出",
+        "2024：平山郁夫美術基金"
+      ],
+      "secondary_note": [
+        "セカンダリ流通なし（インスタレーション中心）"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "D",
+        "gallery": "C",
+        "international": "C",
+        "domestic": "B",
+        "secondary": "E",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP euskeoiwa.com/cv.html より抽出（2026-07-20）。生年 1993、東京藝大デザイン修士 2019 / 映像研博士 2024。十和田市現代美術館 2022 個展 (公式)。各賞 2014-2024 (公式)。ゲスト講師実績多数 (公式)。所属ギャラリー・美術館収蔵は公式 HP 明記なし。",
+      "instagram_url": null,
+      "instagram_followers": null
+    },
+    {
+      "name": "皆藤 齋",
+      "name_kana": "かいとう いつき",
+      "name_en": "Itsuki Kaito",
+      "birth_year": 1993,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "LEESAYA（東京）",
+        "藤崎律己ギャラリー Ritsuki Fujisaki Gallery（東京）",
+        "Tang Contemporary Art（北京・バンコク）",
+        "Gallery MEME（ソウル）",
+        "MAMOTH（ロンドン）",
+        "Blue Velvet（チューリッヒ）",
+        "HIVE Center for Contemporary Art（北京）",
+        "HAGIWARA PROJECTS（東京）",
+        "14a（ハンブルク、ドイツ）"
+      ],
+      "profile": "1993 年札幌市生まれ、東京拠点。2016 年東北芸術工科大学美術学部洋画コース卒業、2019 年京都市立芸術大学大学院美術研究科絵画修士修了。クマ財団第 1・2 期奨学生、CAF 賞 2017 ノミネート。ヴィヴィッドな油彩で、顔のない男性・奇妙な形の犬や虎・剥製・爪や刃・ベルトやハーネス等、暴力を暗示するモチーフを不穏に配置する画風。日本・北京・上海・ソウル・バンコク・香港・ロンドン・チューリッヒ・ハンブルク・NY・ポートランド・パリ・シドニー等、極めて広範な国際ギャラリー網を持ち、日本人若手 30 歳代前半として国際展開の広さは最上位クラス。",
+      "exhibitions": [
+        "【個展】",
+        "2024：『Quadruped masking』Tang Contemporary Art 北京",
+        "2024：『TreedCodependency』Gallery MEME ソウル",
+        "2023：『Looming digits』Blue Velvet チューリッヒ",
+        "2023：『The Elastic Edges』Ritsuki Fujisaki Gallery 東京",
+        "2022：『The Monopolistic Sweet Spots』MAMOTH ロンドン",
+        "2022：『Tools are validated』Tang Contemporary Art バンコク",
+        "2022：『黩 Blacken』HIVE Center for Contemporary Art 北京",
+        "2022：『被制限的行動、心理電影』HUA Art Space 北京",
+        "2021：『現れるのに勝手はない / No excuses for showing up』LEESAYA 東京",
+        "2021：『Hierarchy of Beasts』Gallery MEME ソウル",
+        "2020：『In search of...』14a ハンブルク",
+        "2019：『たりない循獣 / Unsatisfied animals of the cycle』銀座蔦屋書店",
+        "2019：『IDÉE FIXE』Tong Gallery + Projects 北京",
+        "2018：『Tiger Poet』クリア・ギャラリー 東京",
+        "2017：『THE WOMEN FROM THE GROUND, DNA』N's Art Project 大阪",
+        "2017：『Jungle -7,000,000』森悠ギャラリー 京都",
+        "【主要グループ展】",
+        "2025：『あめのうらめ / AMENOURAME』A-SOKO 東京（マティアス・ガルシアと共同）",
+        "2024：『Contemporary Goth』Ritsuki Fujisaki Gallery 東京",
+        "2024：『FLY FLY FLY』KEENAXU 深圳",
+        "2023：『Fungal Fugue』HAGIWARA PROJECTS 東京",
+        "2023：『CARE PACKAGE』Blue Velvet Projects チューリッヒ",
+        "2022：『The Tale of Tales』G Museum 金鹰美術館 南京",
+        "2022：『Cope』No Gallery ニューヨーク",
+        "2022：『Temple』Seventh Gallery メルボルン",
+        "2021：『Couple of』Hive Contemporary Art Center 北京",
+        "2021：『Low Fever』Tang Contemporary Art 香港",
+        "2020：『COLLECTION AS POEM IN THE AGE OF EPHEMERALITY』X Museum 北京",
+        "2020：『Y -generation artists』銀座蔦屋書店",
+        "2020：『A Delinquent Child Having An Out Of Body Experience』The Residence Gallery ロンドン",
+        "2019：『Complete Metamorphosis』SuperDutches ニューヨーク",
+        "2019：『Scaffolds of Meaning / 懶音』MINE PROJECT 香港",
+        "2019：『KUMA EXHIBITION 2019』スパイラル 東京",
+        "2018：『Encounters』PDX Contemporary Arts ポートランド",
+        "2018：『KAISEI』Pehu 大阪／Galerie P38 パリ／KG 東京",
+        "2017：『The 4th CAF prize exhibition』ヒルサイドテラス 東京"
+      ],
+      "collections": [
+        "**Star Museum スター・ミュージアム（上海）**",
+        "**He Art Museum ホー・アート・ミュージアム（広東）**",
+        "**X Museum X 美術館（北京）**",
+        "**東北芸術工科大学（山形）**"
+      ],
+      "awards": [
+        "2017：クマ財団 第 1・2 期 奨学生",
+        "2017：CAF 賞 ノミネート（第 4 回 CAF prize）",
+        "2020：ピーター・S・リード財団 助成金",
+        "2021：ARTnews Japan『30 artist Under 35』ノミネート",
+        "2022：ARTnews Japan『30 artists nominated』"
+      ],
+      "secondary_note": [
+        "国際ギャラリー網でプライマリー中心、価格レンジ拡大中",
+        "美術手帖 2021 年 2 月号『ニューカマー・アーティスト 100』掲載",
+        "Elephant Web、GLAMCULT、VICE China、マダム・フィガロ中国版 等国際メディア掲載",
+        "Forbes Japan 2018 掲載"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "A",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "B",
+        "secondary": "C",
+        "reputation": "A",
+        "sns": "B"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP kaito-itsuki.com/en より全項目抽出（2026-07-20）。生年 1993 札幌、東北芸工大卒 2016 / 京都市芸大院修了 2019（公式）。9 カ国以上のギャラリー個展、Star Museum・He Art Museum・X Museum・東北芸工大 収蔵（公式）。ARTnews 30 Under 35（2021 & 2022）、クマ財団、CAF 賞、リード財団（公式）。美術手帖 2021 年 2 月号「ニューカマー 100」（公式）。IG @kaito_itsuki（公式）。",
+      "instagram_url": "https://www.instagram.com/kaito_itsuki/",
+      "instagram_followers": null
+    },
+    {
+      "name": "森本 啓太",
+      "name_kana": "もりもと けいた",
+      "name_en": "Keita Morimoto",
+      "birth_year": 1990,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "KOTARO NUKAGA（東京、継続契約）",
+        "Almine Rech（ニューヨーク／パリ／ロンドン／上海）",
+        "Nicholas Metivier Gallery（トロント）",
+        "Long Story Short（パリ）",
+        "Night Gallery（ロサンゼルス）",
+        "ATM Gallery（ニューヨーク）"
+      ],
+      "profile": "1990 年大阪府生まれ、東京・トロント拠点。16 歳でカナダ移住、2012 年 OCAD University 美術学部卒業。2006-2022 年トロント拠点、2022 年帰国し東京へ。古典絵画のキアロスクーロ（明暗法）技法と現代の都市景観を融合させ、街灯・看板・自販機など人工光を主題に「ヘテロトピア」的な情景を描く。KOTARO NUKAGA を中心に、Almine Rech（欧米メガギャラリー）、Nicholas Metivier（カナダ）、Night Gallery（LA）、ATM（NY）、Long Story Short（パリ）と 6 大陸級のプライマリー体制を構築し、日本人若手の中でも国際市場での確立が最も広範。",
+      "exhibitions": [
+        "【個展】",
+        "2026：『what we told ourselves』KOTARO NUKAGA 天王洲",
+        "2025：『Quiet Light』Kunsthal n",
+        "2025：『To Nowhere and Back』Almine Rech（ニューヨーク）",
+        "2024：『Illuminated Solitude』銀座蔦屋書店",
+        "2024：『Fading Moments』Long Story Short（パリ）",
+        "2023：『as we didn't know it』Night Gallery（LA）",
+        "2023：『A Little Closer』KOTARO NUKAGA",
+        "2022：『In Between Shadows』ATM Gallery（NY）",
+        "2022：『Contrasting Memories』Nicholas Metivier Gallery（トロント）",
+        "2021：『After Dark』KOTARO NUKAGA",
+        "2020：『Garden of Light』Nicholas Metivier Gallery",
+        "2018：『Light Passage』Nicholas Metivier Gallery",
+        "2016：『Strange Guild』Nicholas Metivier Gallery",
+        "2014：『The Nightwatchers』MOCA Toronto",
+        "【主要グループ展・プロジェクト】",
+        "2026：『Worlding - No Oars, No Shore』ポーラミュージアムアネックス",
+        "2026：『The Exact Hour』CCA Andratx",
+        "2026：表参道ヒルズ 20 周年企画",
+        "2025：Mimasaka Art Temperature",
+        "2025：『In the Flesh』Adler Beatty",
+        "2025：『Stories of Your Lives』Galerie Max Hetzler",
+        "2024：『Studiolo』Adler Beatty",
+        "2024：White Columns Benefit Auction",
+        "2024：『36 Paintings』Harper's",
+        "2024：『Golden Memories』OKETA COLLECTION",
+        "2023：『Descendants』K11 MUSEA（香港）",
+        "2023：『Dieci』Palazzo Coardi di Carpeneto（イタリア）",
+        "2022：『Under Current』宝龍美術館（上海）",
+        "2022：『What It Could Be』Theaster Gates Stony Island Arts Bank",
+        "2022：『Seasons In The City』Palazzo Capris"
+      ],
+      "collections": [
+        "National Gallery of Canada（カナダ国立美術館）",
+        "Dallas Museum of Art（米・ダラス）",
+        "High Museum of Art（米・アトランタ）",
+        "Institute of Contemporary Art Miami（ICA マイアミ）",
+        "Peabody Essex Museum（米・セイラム）",
+        "MOCA Toronto",
+        "Fort Wayne Museum of Art",
+        "K11 MUSEA（香港）",
+        "Powerlong Museum（上海）",
+        "Urban Nation Museum（ベルリン）",
+        "Fondazione Sandretto Re Rebaudengo（イタリア・トリノ）",
+        "Fundación Almine y Bernard Ruiz Picasso（マドリード／マラガ）",
+        "滋賀県立美術館",
+        "京都市京セラ美術館",
+        "アーツ前橋",
+        "上島美術館",
+        "桶田コレクション"
+      ],
+      "awards": [
+        "2011：The Other Competition 1 位",
+        "2012：Creative Quarterly 28 Award",
+        "2012：Donna MacLean Award",
+        "2012：Patricia Joy Alpert Memorial Award",
+        "2016：RBC Canadian Painting Competition ファイナリスト",
+        "2017：The Kingston Prize ファイナリスト",
+        "2019：Vermont Studio Center Residency Full Fellowship",
+        "2019：Toronto Arts Council Visual Artists Grant",
+        "2026：CCA Andratx Artist Residency Program"
+      ],
+      "secondary_note": [
+        "国内・アジアオークションで継続的落札、300-1500 万円台と推定",
+        "Almine Rech・Long Story Short・Night Gallery 経由で欧米プライマリー価格レンジ上昇中（日本人若手のセカンダリ市場を予感させる作家）"
+      ],
+      "scores": {
+        "awards": "B",
+        "collections": "S",
+        "gallery": "S",
+        "international": "S",
+        "domestic": "A",
+        "secondary": "B",
+        "reputation": "A",
+        "sns": "B"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP keitamorimoto.com/cv より全項目抽出（2026-07-20）。生年 1990-01-08 大阪、OCAD 卒 2012（公式）。所属 6 ギャラリー（KOTARO NUKAGA、Almine Rech、Nicholas Metivier、Long Story Short、Night Gallery、ATM）（公式）。国内外 17 コレクション（公式）。IG @morimotostudio、X @morimotostudio（公式）。",
+      "instagram_url": "https://www.instagram.com/morimotostudio/",
+      "instagram_followers": null
+    },
+    {
+      "name": "丹羽 優太",
+      "name_kana": "にわ ゆうた",
+      "name_en": "Yuta Niwa",
+      "birth_year": 1993,
+      "genre": [
+        "絵画"
+      ],
+      "gallery": [
+        "ARTDYNE（東京、2021 個展）",
+        "東福寺塔頭光明院（京都、住み込み制作先）",
+        "所属関係の詳細は要 Verify"
+      ],
+      "profile": "1993 年神奈川県生まれ。2015 年 2-6 月ジュネーブ造形芸術大学交換留学、2017 年 3 月京都造形芸術大学（現・京都芸術大学）美術工芸学科日本画コース卒業、2019 年京都造形芸術大学大学院修士課程修了。2019 年 8 月 -2020 年 2 月北京留学。2021 年より屋台研究家・下寺孝典と協働ユニット『親指姫』を始動、2021 年 MIDTOWN AWARD グランプリ。2022-2025 年に東福寺塔頭光明院に住み込み、32 面の襖絵制作。日本画の伝統技法（和紙・墨・膠・岩絵具）で鯰・大山椒魚を主要モチーフに、不可視の災害・不可抗力の歴史を暗喩する画風。",
+      "exhibitions": [
+        "【個展】",
+        "2021：『なまずのこうみょう』東福寺塔頭光明院（京都）",
+        "2021：『PAINT IT BLACK』ARTDYNE（東京）",
+        "2023：『なまず公園』千總ギャラリー（京都）",
+        "2023：『キメラ流行記』蔦屋書店（京都）",
+        "2025：東福寺塔頭光明院 襖絵奉納（京都）",
+        "【主要グループ展・プロジェクト】",
+        "2019：KUAD ANNUAL 2019（東京都現代美術館）",
+        "2019：KUMA EXHIBITION 2019（スパイラルガーデン、東京）",
+        "2019：アートアワード丸の内 2019（新東京ビルヂング）",
+        "2020：やんばるアートフェスティバル 山原知新（沖縄）",
+        "2021：MIDTOWN AWARD 2021（東京ミッドタウン）",
+        "2022：AKAO ART RESIDENCE #5（ホテルニューアカオ、熱海）",
+        "2022：ATAMI ART GRANT（ホテルニューアカオ、熱海）",
+        "2023：ニュイ・ブランシュ KYOTO（京都、親指姫として）",
+        "2023：Art Collaboration Kyoto（光明院、京都）",
+        "2024：やんばるアートフェスティバル（沖縄）",
+        "2024：ロイヤルオンタリオ博物館 アーティストトーク・作品所蔵（カナダ）",
+        "2024：特別展示『驚異と怪異』国立アイヌ民族博物館（北海道）",
+        "2024：Vivienne Westwood RED LABEL LAFORET HARAJUKU（東京）",
+        "2025：ARTISTS' FAIR KYOTO 2025（京都新聞ビル）",
+        "2025：Biennale Jogja 18（ジョグジャカルタ）"
+      ],
+      "collections": [
+        "**ロイヤルオンタリオ博物館（Royal Ontario Museum、カナダ）**"
+      ],
+      "awards": [
+        "2017：アートアワードトーキョー丸の内 2017 入選",
+        "2018：クマ財団奨学生、佐藤国際文化育英財団奨学生、日本文化藝術財団奨学生",
+        "2019：アートアワード丸の内 2019 ゲスト審査員賞",
+        "2019：京都府新鋭選抜展 朝日新聞社賞",
+        "2019：京都造形芸大 大学院賞",
+        "2021：MIDTOWN AWARD 2021 グランプリ（親指姫）",
+        "2022：京都日本画新展 京都商工会議所会頭賞"
+      ],
+      "secondary_note": [
+        "セカンダリ流通は限定的、日本画・襖絵の性質上プライマリー中心"
+      ],
+      "scores": {
+        "awards": "A",
+        "collections": "B",
+        "gallery": "C",
+        "international": "B",
+        "domestic": "B",
+        "secondary": "D",
+        "reputation": "C",
+        "sns": "C"
+      },
+      "impression": "",
+      "sources": "Verified: 公式 HP yutaniwa.com/about/ より全項目抽出（2026-07-20）。生年 1993 神奈川、京造大院修了 2019、光明院住み込み 2022-25、MIDTOWN AWARD 2021 グランプリ、京都日本画新展 2022（公式）。ロイヤルオンタリオ博物館収蔵 2024（公式）。IG @yuta_niwa（公式）。",
+      "instagram_url": "https://www.instagram.com/yuta_niwa/",
+      "instagram_followers": null
+    }
+  ]
+}
+</script>
+
+<script>
+const GRADES = { S:5, A:4, B:3, C:2, D:1, E:0 };
+const BAND = [
+  { g:'S', min:36 },
+  { g:'A', min:28 },
+  { g:'B', min:20 },
+  { g:'C', min:12 },
+  { g:'D', min:4 },
+  { g:'E', min:0 }
+];
+let RUBRIC = null;
+let DATA = [];
+let sortKey = 'total';
+let sortDir = 'desc';
+
+function boot() {
+  document.getElementById('build-date').textContent = new Date().toISOString().slice(0,10);
+  try {
+    RUBRIC = JSON.parse(document.getElementById('rubric-data').textContent);
+    const rawData = JSON.parse(document.getElementById('artist-data').textContent);
+    DATA = rawData.artists.map(withScore);
+  } catch (e) {
+    document.getElementById('tbody').innerHTML =
+      '<tr><td colspan="14" class="p-6 text-center text-red-600">埋込データの読み込みに失敗しました：' + e.message + '</td></tr>';
+    return;
+  }
+  document.getElementById('count-total').textContent = DATA.length;
+  bindUI();
+  render();
+}
+
+function withScore(a) {
+  let total = 0;
+  RUBRIC.axes.forEach(ax => {
+    const g = a.scores?.[ax.key] || 'E';
+    total += (GRADES[g] ?? 0) * ax.weight;
+  });
+  const band = BAND.find(b => total >= b.min).g;
+  return { ...a, _total: total, _band: band };
+}
+
+function bindUI() {
+  document.getElementById('search').addEventListener('input', render);
+  document.getElementById('genre-filter').addEventListener('change', render);
+  document.getElementById('grade-filter').addEventListener('change', render);
+  document.querySelectorAll('.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const k = th.dataset.sort;
+      if (sortKey === k) sortDir = (sortDir === 'desc' ? 'asc' : 'desc');
+      else { sortKey = k; sortDir = 'desc'; }
+      render();
+    });
+  });
+  document.getElementById('download-json').addEventListener('click', downloadJSON);
+}
+
+function render() {
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  const genre = document.getElementById('genre-filter').value;
+  const grade = document.getElementById('grade-filter').value;
+
+  let rows = DATA.filter(a => {
+    if (genre && !(a.genre || []).includes(genre)) return false;
+    if (grade) {
+      const target = ['S','A','B','C','D','E'].indexOf(grade);
+      const actual = ['S','A','B','C','D','E'].indexOf(a._band);
+      if (actual > target) return false;
+    }
+    if (q) {
+      const hay = [
+        a.name, a.name_kana, a.name_en,
+        (a.gallery || []).join(' '),
+        (a.genre || []).join(' '),
+        (a.exhibitions || []).join(' '),
+        Array.isArray(a.collections) ? a.collections.join(' ') : (a.collections || ''),
+        (a.awards || []).join(' '),
+        a.profile, a.impression, a.secondary_note, a.sources
+      ].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  rows.sort((a,b) => {
+    let va, vb;
+    if (sortKey === 'total' || sortKey === 'rank') { va = a._total; vb = b._total; }
+    else if (['awards','collections','gallery','international','domestic','secondary','reputation','sns'].includes(sortKey)) {
+      va = GRADES[a.scores?.[sortKey] || 'E'];
+      vb = GRADES[b.scores?.[sortKey] || 'E'];
+    } else if (sortKey === 'birth') {
+      va = a.birth_year || 9999;
+      vb = b.birth_year || 9999;
+    } else if (sortKey === 'sns_followers') {
+      va = typeof a.instagram_followers === 'number' ? a.instagram_followers : -1;
+      vb = typeof b.instagram_followers === 'number' ? b.instagram_followers : -1;
+    } else {
+      va = (a[sortKey] || '').toString();
+      vb = (b[sortKey] || '').toString();
+    }
+    if (va < vb) return sortDir === 'asc' ? -1 : 1;
+    if (va > vb) return sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  // ランキング再付与
+  const ranked = [...DATA].sort((a,b) => b._total - a._total);
+  const rankMap = new Map(ranked.map((a,i) => [a.name, i+1]));
+
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = rows.map(a => renderRow(a, rankMap.get(a.name))).join('');
+  document.getElementById('count-visible').textContent = rows.length;
+
+  document.querySelectorAll('.sortable').forEach(th => {
+    const arrow = th.querySelector('.sort-arrow');
+    if (th.dataset.sort === sortKey) {
+      arrow.textContent = sortDir === 'desc' ? '▼' : '▲';
+      arrow.classList.add('sort-active');
+    } else {
+      arrow.textContent = '▲▼';
+      arrow.classList.remove('sort-active');
+    }
+  });
+}
+
+function renderRow(a, rank) {
+  const badge = g => `<span class="grade-badge grade-${g}">${g}</span>`;
+  const s = a.scores || {};
+
+  const listCell = (v) => {
+    if (!v) return '<span class="text-gray-300">—</span>';
+    if (Array.isArray(v)) {
+      if (v.length === 0) return '<span class="text-gray-300">—</span>';
+      return '<ul class="list-disc pl-4 space-y-0.5">' + v.map(x => `<li>${x}</li>`).join('') + '</ul>';
+    }
+    return `<div>${v}</div>`;
+  };
+
+  const igUrl = a.instagram_url || '';
+  const igCell = igUrl
+    ? `<a href="${igUrl}" target="_blank" rel="noopener" class="text-blue-600 hover:underline break-all">${igUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</a>`
+    : '<span class="text-gray-300">要 Verify</span>';
+
+  const followers = a.instagram_followers;
+  const followersCell = (followers === null || followers === undefined || followers === '')
+    ? '<span class="text-gray-300">要 Verify</span>'
+    : (typeof followers === 'number' ? followers.toLocaleString('ja-JP') : followers);
+
+  const impressionCell = a.impression
+    ? `<div>${a.impression}</div>`
+    : '<span class="text-gray-300 italic">（CEO 記入待ち）</span>';
+
+  return `
+    <tr class="border-b border-gray-100 hover:bg-blue-50 align-top">
+      <td class="px-2 py-2 font-bold text-gray-500">${rank}</td>
+      <td class="px-3 py-2">
+        <details>
+          <summary>
+            <div class="font-semibold text-gray-900">${a.name}</div>
+            <div class="text-[11px] text-gray-500">${a.name_kana || ''} ${a.name_en ? '／ '+a.name_en : ''}</div>
+            <div class="text-[10px] text-blue-600 mt-0.5">▶ プロフィール</div>
+          </summary>
+          <div class="mt-2 p-3 bg-gray-50 rounded text-[11px] leading-relaxed">${a.profile || '（未記入）'}</div>
+        </details>
+      </td>
+      <td class="px-2 py-2 text-gray-600 whitespace-nowrap">${a.birth_year || '-'}</td>
+      <td class="px-2 py-2 text-gray-600">${(a.genre || []).join(' / ')}</td>
+      <td class="px-2 py-2">${listCell(a.gallery)}</td>
+      <td class="px-2 py-2">${listCell(a.exhibitions)}</td>
+      <td class="px-2 py-2">${listCell(a.collections)}</td>
+      <td class="px-2 py-2">${listCell(a.awards)}</td>
+      <td class="px-2 py-2">${listCell(a.secondary_note)}</td>
+      <td class="px-2 py-2">${igCell}</td>
+      <td class="px-2 py-2 text-right whitespace-nowrap">${followersCell}</td>
+      <td class="text-center px-1 py-2">${badge(s.awards || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.collections || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.gallery || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.international || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.domestic || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.secondary || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.reputation || 'E')}</td>
+      <td class="text-center px-1 py-2">${badge(s.sns || 'E')}</td>
+      <td class="text-center px-2 py-2 whitespace-nowrap">
+        <span class="grade-total grade-${a._band}">${a._band}</span>
+        <div class="text-[10px] text-gray-400 mt-0.5">${a._total.toFixed(1)}</div>
+      </td>
+      <td class="px-2 py-2">${impressionCell}</td>
+      <td class="px-2 py-2 text-[10px] text-gray-500">${a.sources || ''}</td>
+    </tr>
+  `;
+}
+
+function downloadJSON() {
+  const blob = new Blob([JSON.stringify({ artists: DATA.map(({_total,_band,...rest}) => rest) }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'data.json'; a.click();
+  URL.revokeObjectURL(url);
+}
+
+boot();
+</script>
+</body>
+</html>
