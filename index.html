@@ -36,6 +36,13 @@
   .modal-section h3 { font-size:12px; font-weight:700; color:#1f2937; border-bottom:1px solid #e5e7eb; padding-bottom:4px; margin-bottom:6px; letter-spacing:.02em; }
   .modal-section ul { list-style:disc; padding-left:1.1rem; }
   .modal-section li { font-size:12px; line-height:1.6; margin-bottom:2px; }
+  .update-log-badge { display:inline-block; font-size:10px; font-weight:600; padding:2px 8px; border-radius:10px; margin-right:8px; letter-spacing:.03em; }
+  .update-badge-add { background:#dbeafe; color:#1e40af; }
+  .update-badge-verify { background:#dcfce7; color:#166534; }
+  .update-badge-update { background:#fef3c7; color:#92400e; }
+  .update-badge-fix { background:#f3e8ff; color:#6b21a8; }
+  .update-badge-remove { background:#fee2e2; color:#991b1b; }
+  .update-badge-ui { background:#e0e7ff; color:#3730a3; }
 </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -144,10 +151,106 @@
   </div>
 </div>
 
+<section class="max-w-[1600px] mx-auto px-6 py-6">
+  <div class="bg-white rounded-lg border border-gray-200 p-5">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-bold text-gray-800">更新履歴</h2>
+      <div class="text-xs text-gray-500">
+        <span class="update-log-badge update-badge-add">追加</span>
+        <span class="update-log-badge update-badge-verify">検証</span>
+        <span class="update-log-badge update-badge-update">更新</span>
+        <span class="update-log-badge update-badge-fix">修正</span>
+        <span class="update-log-badge update-badge-ui">UI</span>
+        <span class="update-log-badge update-badge-remove">除外</span>
+      </div>
+    </div>
+    <div id="update-log-body" class="text-xs"></div>
+  </div>
+</section>
+
 <footer class="max-w-[1600px] mx-auto px-6 py-8 text-xs text-gray-500">
   <p>本リストは M.I. GARDEN 株式会社 COO による叩き台であり、丹原健翔氏をはじめとする外部レビュアーの意見を反映して更新される。</p>
   <p class="mt-1">評価軸の定義は <code>../artist_top100_project.md</code>、重み付けは <code>rubric.json</code> を参照。</p>
 </footer>
+
+<script type="application/json" id="update-history">
+{
+  "entries": [
+    {
+      "date": "2026-07-22",
+      "type": "fix",
+      "title": "IG URL・フォロワー数を表フィールドに反映",
+      "detail": "sns_note のみに記録されていた Instagram handle と数値を専用フィールド（instagram_url / instagram_followers）に移し替え、表内で 98 URL・83 数値が可視化されるよう修正。"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "verify",
+      "title": "IG フォロワー verify を 98/110 名（89%）まで拡大",
+      "detail": "Phase 5-C。5 バッチ並列 Agent で 47 名分の handle 特定、うち 32 名で数値を取得し SNS スコアに反映。森本啓太が唯一の S=134,000、中村将太 B=22,000、山田康平 B=15,000。"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "verify",
+      "title": "IG フォロワー verify を 47/110 名（42%）まで実施",
+      "detail": "Phase 5-B。29 名の数値を追加取得し、SNS スコア反映。中村萌 A=31,000、磯村暖 B=11,000、井田幸昌 A=78K を確認。"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "update",
+      "title": "19 主要ギャラリー洗い出しから所属ギャラリー情報を 10 名更新",
+      "detail": "SCAI / タカ・イシイ / Ota Fine Arts / Mizuma / 小山登美夫 / TARO NASU / ShugoArts など 19 ギャラリーの公式所属アーティストを照合し、既存 10 名のギャラリー情報を追記・訂正。"
+    },
+    {
+      "date": "2026-07-22",
+      "type": "add",
+      "title": "19 ギャラリー調査から 8 名追加、計 110 名",
+      "detail": "Phase 5-A。Maria Farrar・岡本瑛里・松平莉奈・中井波花・井上七海・森夕香・白畑花子（実表記：白簱花呼）・松川朋奈を追加。TOP 100 のバッファ 10 名を確保。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "add",
+      "title": "8 名追加で計 102 名、TOP 100 到達",
+      "detail": "Phase 4-C。バッチ 14 完了。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "add",
+      "title": "15 名追加で計 94 名",
+      "detail": "Phase 4-B。バッチ 9-13。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "add",
+      "title": "33 名追加で計 79 名",
+      "detail": "Phase 4-A。バッチ 6-8。CEO 事前情報の誤り 8 件（生年・出身校・表記）を Agent 検証で発見・訂正。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "remove",
+      "title": "5 名を除外",
+      "detail": "吉元れい花は別人（元ダンサー→刺繍作家で 40 歳超）と判明し削除。大府元由・八重樫ゆい・小左誠一郎・江口綾音の 4 名は 1985 年生で生月未 verify のため一旦 Skip。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "verify",
+      "title": "初版 46 名を全員、公式 CV から全件展開",
+      "detail": "「多数」「複数」等の要約表現を排除。CEO 指摘「片山真理が要約になっている」を起点に全 46 名を再検証。S/A バンド 3 名 + バッチ 1-5 で計 46 名の展示歴・収蔵・受賞・セカンダリを全件列挙。"
+    },
+    {
+      "date": "2026-07-21",
+      "type": "ui",
+      "title": "作家名クリックでモーダル詳細表示に変更",
+      "detail": "テーブル本体は件数と直近 2 件プレビューに圧縮。最小幅を 2600px → 1800px に短縮。× ボタン / 背景クリック / ESC で閉じる。"
+    },
+    {
+      "date": "2026-07-20",
+      "type": "add",
+      "title": "初版 46 名を収録（Phase 3 verify 済）",
+      "detail": "CEO 直伝の候補プールから 46 名を選定し、8 軸スコアリング（受賞・収蔵・GL・国際・国内・2次・評価・SNS）を実施。公開先 https://momokoshimoda1008.github.io/artist-top100/"
+    }
+  ]
+}
+</script>
 
 <script type="application/json" id="rubric-data">
 {
@@ -7371,6 +7474,49 @@ function boot() {
   document.getElementById('count-total').textContent = DATA.length;
   bindUI();
   render();
+  renderUpdateLog();
+}
+
+function renderUpdateLog() {
+  const el = document.getElementById('update-log-body');
+  if (!el) return;
+  const raw = document.getElementById('update-history');
+  if (!raw) return;
+  let entries = [];
+  try {
+    entries = JSON.parse(raw.textContent).entries || [];
+  } catch (e) {
+    el.innerHTML = '<div class="text-red-600">更新履歴の読み込みに失敗しました：' + e.message + '</div>';
+    return;
+  }
+  const typeLabel = { add:'追加', verify:'検証', update:'更新', fix:'修正', remove:'除外', ui:'UI' };
+  // 日付降順（同日は元順序を維持）
+  const sorted = entries.slice().sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const grouped = {};
+  sorted.forEach(e => {
+    if (!grouped[e.date]) grouped[e.date] = [];
+    grouped[e.date].push(e);
+  });
+  const html = Object.keys(grouped).map(date => {
+    const items = grouped[date].map(e => {
+      const badgeClass = 'update-badge-' + (e.type || 'update');
+      const label = typeLabel[e.type] || '更新';
+      return `
+        <li class="mb-2 leading-relaxed">
+          <span class="update-log-badge ${badgeClass}">${label}</span>
+          <strong class="text-gray-800">${e.title}</strong>
+          ${e.detail ? `<div class="text-gray-600 mt-0.5 ml-1">${e.detail}</div>` : ''}
+        </li>
+      `;
+    }).join('');
+    return `
+      <div class="mb-4 pb-3 border-b border-gray-100 last:border-b-0">
+        <div class="text-sm font-semibold text-gray-700 mb-1.5">${date}</div>
+        <ul class="ml-0 list-none">${items}</ul>
+      </div>
+    `;
+  }).join('');
+  el.innerHTML = html;
 }
 
 function withScore(a) {
